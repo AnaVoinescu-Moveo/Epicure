@@ -2,7 +2,8 @@
   "name": "@org/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {"dev": "nx run-many --targets=serve,develop --parallel",
+    "dev:all": "concurrently \"nx serve frontend\" \"nx serve backend\" \"nx develop strapi\""},
   "private": true,
   "devDependencies": {
     "@eslint/js": "^9.8.0",
