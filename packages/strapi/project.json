@@ -1,0 +1,19 @@
+{
+  "name": "strapi",
+  "targets": {
+    "develop": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run develop",
+        "cwd": "packages/strapi"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run build",
+        "cwd": "packages/strapi"
+      }
+    }
+  }
+}
