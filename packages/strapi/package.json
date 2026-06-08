@@ -15,6 +15,8 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
+    "@strapi/design-system": "^2.2.0",
+    "@strapi/icons": "^2.2.0",
     "@strapi/plugin-cloud": "5.47.1",
     "@strapi/plugin-users-permissions": "5.47.1",
     "@strapi/strapi": "5.47.1",
