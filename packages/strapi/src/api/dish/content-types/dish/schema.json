@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dishes",
+  "info": {
+    "singularName": "dish",
+    "pluralName": "dishes",
+    "displayName": "Dish",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "isSignature": {
+      "type": "boolean",
+      "default": false
+    },
+    "isSpicy": {
+      "type": "boolean",
+      "default": false
+    },
+    "isVegetarian": {
+      "type": "boolean",
+      "default": false
+    },
+    "isVegan": {
+      "type": "boolean",
+      "default": false
+    },
+    "mealType": {
+      "type": "enumeration",
+      "enum": ["breakfast", "lunch", "dinner"]
+    },
+    "restaurant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::restaurant.restaurant",
+      "inversedBy": "dishes"
+    }
+  }
+}
