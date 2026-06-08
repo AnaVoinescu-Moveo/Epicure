@@ -1,1 +1,4 @@
-export * from './lib/shared-types.js';
+export * from './lib/strapi.types.js';
+export * from './lib/chef.types.js';
+export * from './lib/dish.types.js';
+export * from './lib/restaurant.types.js';
