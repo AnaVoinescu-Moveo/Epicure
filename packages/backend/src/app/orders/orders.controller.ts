@@ -19,7 +19,10 @@ export class OrdersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  createOrder(@Request() req: { user: { id: number } }, @Body() dto: CreateOrderDto) {
+  createOrder(
+    @Request() req: { user: { id: number } },
+    @Body() dto: CreateOrderDto,
+  ) {
     return this.ordersService.createOrder(req.user.id, dto);
   }
 
