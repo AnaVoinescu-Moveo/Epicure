@@ -26,7 +26,6 @@
 .topRow {
   position: relative;
   height: var(--header-height-mobile);
-  border-bottom: 1px solid #f2f2f2;
 }
 
 .closeBtn {
