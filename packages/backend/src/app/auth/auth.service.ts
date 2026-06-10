@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { QueryFailedError } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { RegisterPayload } from './dto/register.dto';
 import { LoginPayload } from './dto/login.dto';
@@ -24,14 +25,24 @@ export class AuthService {
       throw new ConflictException('Email already in use');
     }
     const hashedPassword = await bcrypt.hash(payload.password, 10);
-    const user = await this.usersService.create(
-      payload.email,
-      hashedPassword,
-      payload.firstName,
-      payload.lastName,
-    );
-    const { id, email, firstName, lastName, createdAt } = user;
-    return { id, email, firstName, lastName, createdAt };
+    try {
+      const user = await this.usersService.create(
+        payload.email,
+        hashedPassword,
+        payload.firstName,
+        payload.lastName,
+      );
+      const { id, email, firstName, lastName, createdAt } = user;
+      return { id, email, firstName, lastName, createdAt };
+    } catch (err) {
+      if (
+        err instanceof QueryFailedError &&
+        (err as { code?: string }).code === '23505'
+      ) {
+        throw new ConflictException('Email already in use');
+      }
+      throw err;
+    }
   }
 
   async login(payload: LoginPayload): Promise<LoginResponseDto> {
