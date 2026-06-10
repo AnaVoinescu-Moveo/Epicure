@@ -35,7 +35,7 @@ export class Order {
   })
   total!: number;
 
-  @Column({ nullable: true, length: 500 })
+  @Column({ type: 'varchar', nullable: true, length: 500 })
   comment!: string | null;
 
   @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.COMPLETED })
