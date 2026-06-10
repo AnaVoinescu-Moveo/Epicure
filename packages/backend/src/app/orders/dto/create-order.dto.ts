@@ -1,5 +1,6 @@
 import {
   IsString,
+  IsNotEmpty,
   IsNumber,
   IsArray,
   IsOptional,
@@ -30,9 +31,11 @@ export class OrderItemDto {
 
 export class CreateOrderDto {
   @IsString()
+  @IsNotEmpty()
   restaurantId!: string;
 
   @IsString()
+  @IsNotEmpty()
   restaurantName!: string;
 
   @IsArray()

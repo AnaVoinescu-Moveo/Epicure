@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { OrderResponseDto } from './dto/order-response.dto';
 
 @Injectable()
 export class OrdersService {
@@ -11,7 +12,33 @@ export class OrdersService {
     private readonly ordersRepository: Repository<Order>,
   ) {}
 
-  async createOrder(userId: number, dto: CreateOrderDto): Promise<Order> {
+  private toDto(order: Order): OrderResponseDto {
+    const {
+      id,
+      restaurantId,
+      restaurantName,
+      items,
+      total,
+      comment,
+      status,
+      createdAt,
+    } = order;
+    return {
+      id,
+      restaurantId,
+      restaurantName,
+      items,
+      total,
+      comment,
+      status,
+      createdAt,
+    };
+  }
+
+  async createOrder(
+    userId: number,
+    dto: CreateOrderDto,
+  ): Promise<OrderResponseDto> {
     const total = dto.items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0,
@@ -23,16 +50,18 @@ export class OrdersService {
       restaurantName: dto.restaurantName,
       items: dto.items,
       total: Math.round(total * 100) / 100,
-      comment: dto.comment,
+      comment: dto.comment ?? null,
     });
 
-    return this.ordersRepository.save(order);
+    const saved = await this.ordersRepository.save(order);
+    return this.toDto(saved);
   }
 
-  async getOrderHistory(userId: number): Promise<Order[]> {
-    return this.ordersRepository.find({
+  async getOrderHistory(userId: number): Promise<OrderResponseDto[]> {
+    const orders = await this.ordersRepository.find({
       where: { user: { id: userId } },
       order: { createdAt: 'DESC' },
     });
+    return orders.map((o) => this.toDto(o));
   }
 }
