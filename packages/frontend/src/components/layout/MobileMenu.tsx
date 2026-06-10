@@ -76,6 +76,7 @@ export function MobileMenu() {
             className={styles.panel}
             role="dialog"
             aria-modal="true"
+            aria-label="Navigation menu"
           >
             {/* Section 1: close button */}
             <div className={styles.closeRow}>
