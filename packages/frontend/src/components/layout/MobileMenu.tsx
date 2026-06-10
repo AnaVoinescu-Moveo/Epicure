@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './MobileMenu.module.css';
@@ -8,6 +8,7 @@ import styles from './MobileMenu.module.css';
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -16,6 +17,31 @@ export function MobileMenu() {
     };
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) panelRef.current?.querySelector<HTMLElement>('button')?.focus();
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const focusable =
+        panelRef.current?.querySelectorAll<HTMLElement>('button, a[href]');
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', handleTab);
+    return () => document.removeEventListener('keydown', handleTab);
   }, [isOpen]);
 
   return (
@@ -45,7 +71,12 @@ export function MobileMenu() {
             aria-hidden="true"
           />
 
-          <div className={styles.panel} role="dialog" aria-modal="true">
+          <div
+            ref={panelRef}
+            className={styles.panel}
+            role="dialog"
+            aria-modal="true"
+          >
             {/* Section 1: close button */}
             <div className={styles.closeRow}>
               <button
