@@ -23,7 +23,6 @@ export class UsersService {
       where: { email },
       select: ['id', 'email', 'password', 'firstName', 'lastName', 'createdAt'],
     });
-
   }
 
   create(
