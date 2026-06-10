@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsString, MinLength } from 'class-validator';
 
 export interface LoginPayload {
   email: string;
@@ -10,5 +10,6 @@ export class LoginDto implements LoginPayload {
   email!: string;
 
   @IsString()
+  @MinLength(1)
   password!: string;
 }

@@ -19,7 +19,6 @@ import { AuthModule } from './auth/auth.module';
         database: config.get<string>('DB_NAME', 'epicure'),
         autoLoadEntities: true,
         synchronize: false,
-        migrations: ['src/migrations/*.ts'],
       }),
       inject: [ConfigService],
     }),

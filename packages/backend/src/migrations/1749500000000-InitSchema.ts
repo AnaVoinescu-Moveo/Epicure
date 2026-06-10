@@ -11,6 +11,9 @@ export class InitSchema1749500000000 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             isNullable: false,
+            isGenerated: true,
+            generationStrategy: 'uuid',
+            default: 'gen_random_uuid()',
           },
           {
             name: 'email',
