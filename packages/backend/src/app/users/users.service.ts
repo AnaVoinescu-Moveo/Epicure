@@ -18,6 +18,14 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
+  findByEmailWithPassword(email: string): Promise<User | null> {
+    return this.usersRepository.findOne({
+      where: { email },
+      select: ['id', 'email', 'password', 'firstName', 'lastName', 'createdAt'],
+    });
+
+  }
+
   create(
     email: string,
     hashedPassword: string,
