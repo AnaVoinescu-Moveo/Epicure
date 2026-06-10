@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Header.module.css';
@@ -11,15 +11,39 @@ import { SearchInput } from '../search/SearchInput';
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
+  // Track whether we're on desktop — avoids rendering inline input on mobile
   useEffect(() => {
-    if (!isSearchOpen) return;
+    const mq = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  // Escape key closes search on desktop
+  useEffect(() => {
+    if (!isSearchOpen || !isDesktop) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsSearchOpen(false);
     };
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
-  }, [isSearchOpen]);
+  }, [isSearchOpen, isDesktop]);
+
+  // Click outside closes desktop search
+  useEffect(() => {
+    if (!isSearchOpen || !isDesktop) return;
+    const handleClick = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setIsSearchOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [isSearchOpen, isDesktop]);
 
   return (
     <>
@@ -49,12 +73,14 @@ export function Header() {
 
           {/* Right icons */}
           <div className={styles.rightIcons}>
-            {/* Desktop: inline search input replaces the button when open */}
-            {isSearchOpen ? (
-              <SearchInput
-                iconPosition="right"
-                className={styles.desktopSearchInput}
-              />
+            {/* Desktop inline search — only rendered when confirmed desktop */}
+            {isDesktop && isSearchOpen ? (
+              <div ref={searchRef}>
+                <SearchInput
+                  iconPosition="right"
+                  className={styles.desktopSearchInput}
+                />
+              </div>
             ) : (
               <button
                 type="button"
@@ -98,8 +124,10 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile search overlay — only renders on mobile via CSS */}
-      {isSearchOpen && <SearchOverlay onClose={() => setIsSearchOpen(false)} />}
+      {/* Mobile search overlay */}
+      {isSearchOpen && !isDesktop && (
+        <SearchOverlay onClose={() => setIsSearchOpen(false)} />
+      )}
     </>
   );
 }

@@ -134,14 +134,3 @@
     height: 41px;
   }
 }
-
-/* Hide desktop inline input on mobile — overlay is used instead */
-.desktopSearchInput {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .desktopSearchInput {
-    display: flex;
-  }
-}
