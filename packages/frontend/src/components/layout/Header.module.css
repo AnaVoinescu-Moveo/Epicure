@@ -17,7 +17,7 @@
   grid-template-columns: 1fr auto 1fr;
   grid-template-areas: 'left center right';
   align-items: center;
-  height: 46px;
+  height: var(--header-height-mobile);
   padding: 0 20px;
 }
 
@@ -76,7 +76,7 @@
   .inner {
     display: flex;
     align-items: center;
-    height: 64px;
+    height: var(--header-height-desktop);
     padding: 0 127px;
     gap: 32px;
   }
