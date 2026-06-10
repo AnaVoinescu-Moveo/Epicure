@@ -1,6 +1,13 @@
 import { IsEmail, IsString, MinLength, MaxLength } from 'class-validator';
 
-export class RegisterDto {
+export interface RegisterPayload {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
+export class RegisterDto implements RegisterPayload {
   @IsEmail()
   email!: string;
 
