@@ -13,32 +13,47 @@ permissions:
 jobs:
   main:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: epicure
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: epicure
+      JWT_SECRET: ci-test-secret
+
     steps:
       - uses: actions/checkout@v4
         with:
           filter: tree:0
           fetch-depth: 0
 
-      # Cache node_modules to speed up npm install
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: 'npm'
 
-      # Install dependencies
       - run: npm ci
 
-      # Install Playwright Browsers so E2E tests don't crash
       - run: npx playwright install --with-deps
 
-      # Check formatting
       - run: npx nx format:check --base="remotes/origin/main"
 
-      # Step 1: Run the static code health checks first (Build/Lint/Typecheck)
-      # We intentionally do not run "e2e" here so servers don't fight for port 3000 yet
       - run: npx nx run-many -t lint test typecheck build --exclude=backend-e2e,@org/frontend-e2e
 
-      # Step 2: Run E2E tasks properly 
-      # (If you have a dev-server collision, you may need to look at your project.json target options 
-      # to ensure Next.js or NestJS binds to port 3001 or 4000 instead of both trying 3000)
       - run: npx nx run-many -t e2e
