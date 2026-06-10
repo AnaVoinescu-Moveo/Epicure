@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { OrderItem } from '@org/shared-types';
+import { OrderStatus } from './order-status.enum';
 
 @Entity('orders')
 export class Order {
@@ -37,8 +38,8 @@ export class Order {
   @Column({ nullable: true, length: 500 })
   comment!: string | null;
 
-  @Column({ default: 'completed' })
-  status!: string;
+  @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.COMPLETED })
+  status!: OrderStatus;
 
   @CreateDateColumn()
   createdAt!: Date;

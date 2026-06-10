@@ -15,9 +15,11 @@ import { Type } from 'class-transformer';
 
 export class OrderItemDto {
   @IsString()
+  @IsNotEmpty()
   dishId!: string;
 
   @IsString()
+  @IsNotEmpty()
   dishName!: string;
 
   @IsNumber({ maxDecimalPlaces: 2 })

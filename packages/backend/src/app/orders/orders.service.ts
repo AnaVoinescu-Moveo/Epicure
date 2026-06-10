@@ -39,6 +39,9 @@ export class OrdersService {
     userId: number,
     dto: CreateOrderDto,
   ): Promise<OrderResponseDto> {
+    // Prices come from the client payload (Strapi dish prices).
+    // The total is always recalculated server-side to prevent client-side tampering.
+    // Full server-side price verification against Strapi is deferred until dish data is seeded.
     const total = dto.items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0,

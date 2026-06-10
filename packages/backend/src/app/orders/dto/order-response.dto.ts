@@ -1,4 +1,5 @@
 import { OrderItem } from '@org/shared-types';
+import { OrderStatus } from '../order-status.enum';
 
 export class OrderResponseDto {
   id!: number;
@@ -7,6 +8,6 @@ export class OrderResponseDto {
   items!: OrderItem[];
   total!: number;
   comment!: string | null;
-  status!: string;
+  status!: OrderStatus;
   createdAt!: Date;
 }
