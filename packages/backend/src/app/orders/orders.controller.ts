@@ -9,7 +9,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { JwtUser } from '../auth/jwt-user.interface';
+import type { AuthenticatedRequest } from '../auth/authenticated-request.interface';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderResponseDto } from './dto/order-response.dto';
@@ -22,7 +22,7 @@ export class OrdersController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   createOrder(
-    @Request() req: { user: JwtUser },
+    @Request() req: AuthenticatedRequest,
     @Body() dto: CreateOrderDto,
   ): Promise<OrderResponseDto> {
     return this.ordersService.createOrder(req.user.id, dto);
@@ -30,7 +30,7 @@ export class OrdersController {
 
   @Get('history')
   getOrderHistory(
-    @Request() req: { user: JwtUser },
+    @Request() req: AuthenticatedRequest,
   ): Promise<OrderResponseDto[]> {
     return this.ordersService.getOrderHistory(req.user.id);
   }
