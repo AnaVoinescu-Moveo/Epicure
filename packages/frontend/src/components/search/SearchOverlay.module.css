@@ -1,13 +1,12 @@
 .overlay {
   position: fixed;
   top: 0;
-  left: -1px;
+  left: 0;
   z-index: 201;
-  width: 377px;
+  width: 100vw;
   height: 413px;
   overflow-y: auto;
   background-color: var(--color-white);
-  border-right: 1px solid #f2f2f2;
   animation: slideIn 300ms ease-out forwards;
 }
 
@@ -43,11 +42,11 @@
   padding: 0;
 }
 
-/* Centered horizontally: (377 - 63) / 2 = 157px from each side */
 .title {
   position: absolute;
   top: 11px;
-  left: 157px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 63px;
   height: 22px;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
