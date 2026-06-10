@@ -18,7 +18,11 @@ const mockGroups: SearchResultGroup[] = [
   {
     label: 'Restaurants',
     items: [
-      { type: 'restaurant', name: 'The Blue Door', href: '/restaurants/blue-door' },
+      {
+        type: 'restaurant',
+        name: 'The Blue Door',
+        href: '/restaurants/blue-door',
+      },
     ],
   },
   {

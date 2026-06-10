@@ -16,16 +16,12 @@ jest.mock('next/image', () => ({
 describe('Hero', () => {
   it('renders the hero image', () => {
     render(<Hero />);
-    expect(
-      screen.getByAltText('Epicure restaurant scene'),
-    ).toBeInTheDocument();
+    expect(screen.getByAltText('Epicure restaurant scene')).toBeInTheDocument();
   });
 
   it('renders the heading text', () => {
     render(<Hero />);
-    expect(
-      screen.getByText(/Epicure works with the top/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Epicure works with the top/i)).toBeInTheDocument();
   });
 
   it('renders the search input', () => {

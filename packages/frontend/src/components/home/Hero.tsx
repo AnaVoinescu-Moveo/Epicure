@@ -8,8 +8,16 @@ const MOCK_DATA: SearchResultGroup[] = [
   {
     label: 'Restaurants',
     items: [
-      { type: 'restaurant', name: 'Tiger Lily', href: '/restaurants/tiger-lily' },
-      { type: 'restaurant', name: 'The Blue Door', href: '/restaurants/blue-door' },
+      {
+        type: 'restaurant',
+        name: 'Tiger Lily',
+        href: '/restaurants/tiger-lily',
+      },
+      {
+        type: 'restaurant',
+        name: 'The Blue Door',
+        href: '/restaurants/blue-door',
+      },
       { type: 'restaurant', name: 'Taizu', href: '/restaurants/taizu' },
     ],
   },
@@ -34,9 +42,7 @@ function mockSearch(query: string): SearchResultGroup[] {
   const q = query.toLowerCase();
   return MOCK_DATA.map((group) => ({
     ...group,
-    items: group.items.filter((item) =>
-      item.name.toLowerCase().startsWith(q),
-    ),
+    items: group.items.filter((item) => item.name.toLowerCase().startsWith(q)),
   })).filter((group) => group.items.length > 0);
 }
 
