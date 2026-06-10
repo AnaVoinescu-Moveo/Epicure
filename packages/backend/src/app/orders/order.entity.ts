@@ -35,7 +35,7 @@ export class Order {
   total!: number;
 
   @Column({ nullable: true, length: 500 })
-  comment!: string;
+  comment!: string | null;
 
   @Column({ default: 'completed' })
   status!: string;
