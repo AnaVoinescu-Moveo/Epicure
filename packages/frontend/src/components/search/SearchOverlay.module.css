@@ -1,0 +1,71 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 201;
+  width: 100vw;
+  max-height: 100dvh;
+  overflow-y: auto;
+  background-color: var(--color-white);
+  animation: slideIn 300ms ease-out forwards;
+}
+
+/* Hidden on desktop — search is inline in the header */
+@media (min-width: 1024px) {
+  .overlay {
+    display: none;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ── Top row: X + title ─────────────────────────────────── */
+
+.topRow {
+  position: relative;
+  height: var(--header-height-mobile);
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 11px;
+  left: 19px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.title {
+  position: absolute;
+  top: 11px;
+  left: 156px;
+  width: 63px;
+  height: 22px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 1.92px;
+  color: #000000;
+  white-space: nowrap;
+}
+
+/* ── Search input area ──────────────────────────────────── */
+
+.inputWrapper {
+  padding: 24px 0 24px 30px;
+}
