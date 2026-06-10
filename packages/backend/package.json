@@ -2,6 +2,11 @@
   "name": "@org/backend",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate src/migrations/migration -d src/data-source.ts",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
+    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/data-source.ts"
+  },
   "nx": {
     "name": "backend",
     "targets": {
