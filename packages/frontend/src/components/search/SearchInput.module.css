@@ -2,13 +2,14 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: 315px;
-  height: 30px;
+  width: var(--search-width, 315px);
+  height: var(--search-height, 30px);
   border: 0.5px solid #000000;
   border-radius: 4px;
   padding: 6px 12px;
-  gap: 8px;
-  background-color: var(--color-white);
+  gap: var(--search-gap, 8px);
+  background-color: var(--search-input-bg, var(--color-white));
+  box-sizing: border-box;
 }
 
 .input {
@@ -16,8 +17,9 @@
   border: none;
   outline: none;
   background: transparent;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 200;
-  font-size: 12px;
+  font-size: var(--search-font-size, 12px);
   letter-spacing: 1.29px;
   color: #000000;
 }
@@ -48,29 +50,51 @@
   border-radius: 4px;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 8px 0;
   z-index: 10;
   max-height: 300px;
   overflow-y: auto;
 }
 
-.dropdownItem {
-  display: flex;
-  gap: 8px;
-  padding: 10px 12px;
-  cursor: pointer;
+.group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.group + .group {
+  margin-top: 8px;
+}
+
+.group > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.groupLabel {
+  display: block;
+  padding: 4px 12px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 200;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 1.29px;
+  color: #000000;
+}
+
+.dropdownItem {
+  padding: 4px 12px 4px 20px;
+  cursor: pointer;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 1.29px;
   color: #000000;
 }
 
 .dropdownItem.active,
 .dropdownItem:hover {
   background-color: var(--color-card);
-}
-
-.resultType {
-  text-transform: capitalize;
-  opacity: 0.5;
-  min-width: 70px;
 }
