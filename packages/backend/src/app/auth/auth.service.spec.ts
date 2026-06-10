@@ -30,6 +30,7 @@ describe('AuthService', () => {
           provide: UsersService,
           useValue: {
             findByEmail: jest.fn(),
+            findByEmailWithPassword: jest.fn(),
             findById: jest.fn(),
             create: jest.fn(),
           },
@@ -98,7 +99,7 @@ describe('AuthService', () => {
     const payload = { email: 'test@test.com', password: 'password123' };
 
     it('returns access_token on valid credentials', async () => {
-      usersService.findByEmail.mockResolvedValue(mockUser as never);
+      usersService.findByEmailWithPassword.mockResolvedValue(mockUser as never);
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
       const result = await authService.login(payload);
@@ -111,7 +112,7 @@ describe('AuthService', () => {
     });
 
     it('throws UnauthorizedException when user is not found', async () => {
-      usersService.findByEmail.mockResolvedValue(null);
+      usersService.findByEmailWithPassword.mockResolvedValue(null);
 
       await expect(authService.login(payload)).rejects.toThrow(
         UnauthorizedException,
@@ -119,7 +120,7 @@ describe('AuthService', () => {
     });
 
     it('throws UnauthorizedException when password is wrong', async () => {
-      usersService.findByEmail.mockResolvedValue(mockUser as never);
+      usersService.findByEmailWithPassword.mockResolvedValue(mockUser as never);
       (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
       await expect(authService.login(payload)).rejects.toThrow(
