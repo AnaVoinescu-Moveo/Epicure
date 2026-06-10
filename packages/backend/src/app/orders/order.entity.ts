@@ -38,7 +38,7 @@ export class Order {
   @Column({ type: 'varchar', nullable: true, length: 500 })
   comment!: string | null;
 
-  @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.COMPLETED })
+  @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.PENDING })
   status!: OrderStatus;
 
   @CreateDateColumn()
