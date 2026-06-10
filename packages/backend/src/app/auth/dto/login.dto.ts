@@ -1,6 +1,11 @@
 import { IsEmail, IsString } from 'class-validator';
 
-export class LoginDto {
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export class LoginDto implements LoginPayload {
   @IsEmail()
   email!: string;
 
