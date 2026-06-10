@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './MobileMenu.module.css';
+import { NAV_LINKS } from '../../constants/nav';
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -93,7 +95,13 @@ export function MobileMenu() {
                 aria-label="Close navigation menu"
                 onClick={() => setIsOpen(false)}
               >
-                <img src="/icons/x.png" alt="" className={styles.closeIcon} />
+                <Image
+                  src="/icons/x.png"
+                  alt=""
+                  width={15}
+                  height={15}
+                  className={styles.closeIcon}
+                />
               </button>
             </div>
 
@@ -102,20 +110,16 @@ export function MobileMenu() {
 
             {/* Section 2: nav + footer links */}
             <nav className={styles.menuNav}>
-              <Link
-                href="/restaurants"
-                className={`${styles.menuLink} ${pathname === '/restaurants' ? styles.active : ''}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Restaurants
-              </Link>
-              <Link
-                href="/chefs"
-                className={`${styles.menuLink} ${pathname === '/chefs' ? styles.active : ''}`}
-                onClick={() => setIsOpen(false)}
-              >
-                Chefs
-              </Link>
+              {NAV_LINKS.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`${styles.menuLink} ${pathname === href ? styles.active : ''}`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {label}
+                </Link>
+              ))}
 
               <div className={styles.divider} />
 

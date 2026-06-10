@@ -115,16 +115,16 @@
   }
 
   /* Desktop icon sizes */
-  .iconBtn:nth-child(1) .iconSm {
+  .searchIcon {
     width: 24px;
     height: 24px;
-  } /* search */
-  .iconBtn:nth-child(2) .iconSm {
+  }
+  .profileIcon {
     width: 23px;
     height: 24px;
-  } /* profile */
-  .iconBtn:nth-child(3) .iconSm {
+  }
+  .cartIcon {
     width: 22px;
     height: 22px;
-  } /* cart */
+  }
 }

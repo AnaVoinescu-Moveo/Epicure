@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Header.module.css';
 import { MobileMenu } from './MobileMenu';
@@ -14,9 +15,11 @@ export function Header() {
 
         {/* Logo — visible on both breakpoints */}
         <Link href="/" className={styles.logoGroup} aria-label="Epicure home">
-          <img
+          <Image
             src="/icons/logoMobile.png"
             alt="Epicure"
+            width={33}
+            height={32}
             className={styles.logoIcon}
           />
           {/* EPICURE text — desktop only */}
@@ -31,13 +34,31 @@ export function Header() {
         {/* Right icons — visible on both breakpoints */}
         <div className={styles.rightIcons}>
           <button type="button" className={styles.iconBtn} aria-label="Search">
-            <img src="/icons/search.png" alt="" className={styles.iconSm} />
+            <Image
+              src="/icons/search.png"
+              alt=""
+              width={20}
+              height={20}
+              className={`${styles.iconSm} ${styles.searchIcon}`}
+            />
           </button>
           <button type="button" className={styles.iconBtn} aria-label="Profile">
-            <img src="/icons/profile.png" alt="" className={styles.iconSm} />
+            <Image
+              src="/icons/profile.png"
+              alt=""
+              width={20}
+              height={20}
+              className={`${styles.iconSm} ${styles.profileIcon}`}
+            />
           </button>
           <button type="button" className={styles.iconBtn} aria-label="Cart">
-            <img src="/icons/card.png" alt="" className={styles.iconSm} />
+            <Image
+              src="/icons/card.png"
+              alt=""
+              width={20}
+              height={20}
+              className={`${styles.iconSm} ${styles.cartIcon}`}
+            />
           </button>
         </div>
       </div>
