@@ -42,7 +42,8 @@
   left: -1px;
   z-index: 201;
   width: 377px;
-  height: 413px;
+  max-height: 100dvh;
+  overflow-y: auto;
   background-color: var(--color-white);
   border: 1px solid #f2f2f2;
   animation: slideIn 300ms ease-out forwards;
@@ -62,7 +63,7 @@
 /* ── Close row (section 1) ──────────────────────────────── */
 
 .closeRow {
-  width: 375px;
+  width: 100%;
   height: 46px;
   display: flex;
   align-items: center;
