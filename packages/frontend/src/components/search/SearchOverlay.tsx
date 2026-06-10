@@ -1,26 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
 import Image from 'next/image';
 import { SearchInput } from './SearchInput';
 import styles from './SearchOverlay.module.css';
+import { useScrollLock } from '../../hooks/useScrollLock';
+import { useEscapeKey } from '../../hooks/useEscapeKey';
 
 interface SearchOverlayProps {
   onClose: () => void;
 }
 
 export function SearchOverlay({ onClose }: SearchOverlayProps) {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    document.addEventListener('keydown', handleKey);
-    return () => {
-      document.body.style.overflow = '';
-      document.removeEventListener('keydown', handleKey);
-    };
-  }, [onClose]);
+  useScrollLock(true);
+  useEscapeKey(onClose, true);
 
   return (
     <div

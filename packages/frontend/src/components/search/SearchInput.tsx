@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef, KeyboardEvent } from 'react';
+import { useState, KeyboardEvent } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './SearchInput.module.css';
 
 export interface SearchResult {
@@ -21,10 +22,12 @@ export function SearchInput({
   className,
   onSearch,
 }: SearchInputProps) {
+  const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const inputRef = useRef<HTMLInputElement>(null);
+
+  const navigate = (href: string) => router.push(href);
 
   const handleChange = (value: string) => {
     setQuery(value);
@@ -43,21 +46,20 @@ export function SearchInput({
       setActiveIndex((i) => (i + 1) % results.length);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setActiveIndex((i) => (i - 1 + results.length) % results.length);
+      setActiveIndex((i) => (i <= 0 ? results.length - 1 : i - 1));
     } else if (e.key === 'Enter' && activeIndex >= 0) {
-      window.location.href = results[activeIndex].href;
+      navigate(results[activeIndex].href);
     }
   };
 
   return (
-    <div className={`${styles.wrapper} ${className ?? ''}`}>
+    <div className={[styles.wrapper, className].filter(Boolean).join(' ')}>
       {iconPosition === 'left' && (
         <span className={styles.icon}>
           <Image src="/icons/search.png" alt="" width={20} height={20} />
         </span>
       )}
       <input
-        ref={inputRef}
         type="search"
         className={styles.input}
         placeholder="Search for restaurant cuisine, chef"
@@ -81,10 +83,13 @@ export function SearchInput({
               key={result.href}
               role="option"
               aria-selected={i === activeIndex}
-              className={`${styles.dropdownItem} ${i === activeIndex ? styles.active : ''}`}
-              onClick={() => {
-                window.location.href = result.href;
-              }}
+              className={[
+                styles.dropdownItem,
+                i === activeIndex ? styles.active : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              onClick={() => navigate(result.href)}
               onMouseEnter={() => setActiveIndex(i)}
             >
               <span className={styles.resultType}>{result.type}</span>

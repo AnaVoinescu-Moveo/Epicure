@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Header.module.css';
@@ -14,6 +14,8 @@ export function Header() {
   const [isDesktop, setIsDesktop] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
+  const closeSearch = useCallback(() => setIsSearchOpen(false), []);
+
   // Track whether we're on desktop — avoids rendering inline input on mobile
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 1024px)');
@@ -23,27 +25,24 @@ export function Header() {
     return () => mq.removeEventListener('change', handler);
   }, []);
 
-  // Escape key closes search on desktop
+  // Escape + click outside — both only active on desktop when search is open
   useEffect(() => {
     if (!isSearchOpen || !isDesktop) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsSearchOpen(false);
+      if (e.key === 'Escape') closeSearch();
     };
-    document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
-  }, [isSearchOpen, isDesktop]);
-
-  // Click outside closes desktop search
-  useEffect(() => {
-    if (!isSearchOpen || !isDesktop) return;
     const handleClick = (e: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setIsSearchOpen(false);
+        closeSearch();
       }
     };
+    document.addEventListener('keydown', handleKey);
     document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [isSearchOpen, isDesktop]);
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, [isSearchOpen, isDesktop, closeSearch]);
 
   return (
     <>
@@ -125,9 +124,7 @@ export function Header() {
       </header>
 
       {/* Mobile search overlay */}
-      {isSearchOpen && !isDesktop && (
-        <SearchOverlay onClose={() => setIsSearchOpen(false)} />
-      )}
+      {isSearchOpen && !isDesktop && <SearchOverlay onClose={closeSearch} />}
     </>
   );
 }
