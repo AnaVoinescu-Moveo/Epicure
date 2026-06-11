@@ -16,7 +16,11 @@ export function Header() {
         </div>
 
         {/* Logo — visible on both breakpoints */}
-        <Link href="/" className={styles.logoGroup} aria-label={COPY.header.logoAriaLabel}>
+        <Link
+          href="/"
+          className={styles.logoGroup}
+          aria-label={COPY.header.logoAriaLabel}
+        >
           <Image
             src="/icons/logoMobile.png"
             alt={COPY.header.logoAlt}
