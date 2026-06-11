@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './MobileMenu.module.css';
 import { NAV_LINKS } from '../../constants/nav';
-import { COPY } from '../../constants/copy';
 import { useScrollLock } from '../../hooks/useScrollLock';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
 
@@ -16,13 +15,14 @@ export function MobileMenu() {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useScrollLock(isOpen);
-
   useEscapeKey(() => setIsOpen(false), isOpen);
 
+  // Focus close button when menu opens
   useEffect(() => {
     if (isOpen) panelRef.current?.querySelector<HTMLElement>('button')?.focus();
   }, [isOpen]);
 
+  // Focus trap: keep Tab inside the panel
   useEffect(() => {
     if (!isOpen) return;
     const handleTab = (e: KeyboardEvent) => {
@@ -45,12 +45,12 @@ export function MobileMenu() {
   }, [isOpen]);
 
   return (
-    <div className={styles.mobileLeft}>
+    <>
       {/* Hamburger button */}
       <button
         type="button"
         className={styles.hamburger}
-        aria-label={COPY.mobileMenu.openAriaLabel}
+        aria-label="Open navigation menu"
         aria-expanded={isOpen}
         onClick={() => setIsOpen(true)}
       >
@@ -76,14 +76,14 @@ export function MobileMenu() {
             className={styles.panel}
             role="dialog"
             aria-modal="true"
-            aria-label={COPY.mobileMenu.dialogAriaLabel}
+            aria-label="Navigation menu"
           >
             {/* Section 1: close button */}
             <div className={styles.closeRow}>
               <button
                 type="button"
                 className={styles.closeBtn}
-                aria-label={COPY.mobileMenu.closeAriaLabel}
+                aria-label="Close navigation menu"
                 onClick={() => setIsOpen(false)}
               >
                 <Image
@@ -119,26 +119,26 @@ export function MobileMenu() {
                 className={styles.menuLink}
                 onClick={() => setIsOpen(false)}
               >
-                {COPY.mobileMenu.contactUs}
+                Contact Us
               </Link>
               <Link
                 href="/terms"
                 className={styles.menuLink}
                 onClick={() => setIsOpen(false)}
               >
-                {COPY.mobileMenu.termsOfUse}
+                Terms of Use
               </Link>
               <Link
                 href="/privacy"
                 className={styles.menuLink}
                 onClick={() => setIsOpen(false)}
               >
-                {COPY.mobileMenu.privacyPolicy}
+                Privacy Policy
               </Link>
             </nav>
           </div>
         </>
       )}
-    </div>
+    </>
   );
 }

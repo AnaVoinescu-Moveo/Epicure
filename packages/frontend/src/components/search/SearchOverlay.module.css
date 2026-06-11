@@ -1,0 +1,63 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 201;
+  width: 100vw;
+  height: 413px;
+  overflow-y: auto;
+  background-color: var(--color-white);
+  animation: slideIn 300ms ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ── Top row: X + title ─────────────────────────────────── */
+
+.topRow {
+  position: relative;
+  height: var(--header-height-mobile);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 11px;
+  left: 19px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.title {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 63px;
+  height: 22px;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 1.92px;
+  color: #000000;
+  white-space: nowrap;
+}
+
+/* ── Search input: 31px from sides, 37px below title bottom ─ */
+
+.inputWrapper {
+  padding: 24px 31px;
+}
