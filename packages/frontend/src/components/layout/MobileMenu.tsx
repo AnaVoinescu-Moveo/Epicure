@@ -87,7 +87,7 @@ export function MobileMenu() {
                 onClick={() => setIsOpen(false)}
               >
                 <Image
-                  src="/icons/x.png"
+                  src="/icons/x.svg"
                   alt=""
                   width={15}
                   height={15}

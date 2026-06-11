@@ -29,7 +29,7 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
           aria-label="Close search"
           onClick={onClose}
         >
-          <Image src="/icons/x.png" alt="" width={24} height={24} />
+          <Image src="/icons/x.svg" alt="" width={24} height={24} />
         </button>
         <span className={styles.title}>Search</span>
       </div>

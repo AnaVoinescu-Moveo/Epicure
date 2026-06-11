@@ -88,7 +88,7 @@ export function Header() {
                 onClick={() => setIsSearchOpen(true)}
               >
                 <Image
-                  src="/icons/search.png"
+                  src="/icons/search.svg"
                   alt=""
                   width={20}
                   height={20}
@@ -103,7 +103,7 @@ export function Header() {
               aria-label="Profile"
             >
               <Image
-                src="/icons/profile.png"
+                src="/icons/profile.svg"
                 alt=""
                 width={20}
                 height={20}
@@ -112,7 +112,7 @@ export function Header() {
             </button>
             <button type="button" className={styles.iconBtn} aria-label="Cart">
               <Image
-                src="/icons/card.png"
+                src="/icons/card.svg"
                 alt=""
                 width={20}
                 height={20}
