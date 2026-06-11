@@ -102,15 +102,15 @@
     white-space: nowrap;
   }
 
-  /* Desktop nav visible */
+  /* Desktop nav: fill remaining space and centre the links */
   .desktopNav {
+    flex: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
-  /* Push icons to the far right */
   .rightIcons {
-    margin-left: auto;
     gap: 24px;
   }
 
