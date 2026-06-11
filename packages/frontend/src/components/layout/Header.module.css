@@ -21,9 +21,6 @@
   padding: 0 20px;
 }
 
-.mobileLeft {
-  grid-area: left;
-}
 
 .logoGroup {
   grid-area: center;

@@ -11,9 +11,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         {/* Mobile only: hamburger button + slide-in menu panel */}
-        <div className={styles.mobileLeft}>
-          <MobileMenu />
-        </div>
+        <MobileMenu />
 
         {/* Logo — visible on both breakpoints */}
         <Link

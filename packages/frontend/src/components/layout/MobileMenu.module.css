@@ -1,3 +1,15 @@
+/* ── Wrapper (positions in header grid, hidden on desktop) ─ */
+
+.mobileLeft {
+  grid-area: left;
+}
+
+@media (min-width: 1024px) {
+  .mobileLeft {
+    display: none;
+  }
+}
+
 /* ── Hamburger button ───────────────────────────────────── */
 
 .hamburger {

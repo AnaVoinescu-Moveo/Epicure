@@ -55,7 +55,7 @@ export function MobileMenu() {
   }, [isOpen]);
 
   return (
-    <>
+    <div className={styles.mobileLeft}>
       {/* Hamburger button */}
       <button
         type="button"
@@ -149,6 +149,6 @@ export function MobileMenu() {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }
