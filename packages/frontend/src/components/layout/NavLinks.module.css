@@ -1,0 +1,21 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.link {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1.92px;
+  color: #000000;
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 1.8px solid transparent;
+}
+
+.link.active {
+  border-bottom: 1.8px solid rgba(222, 146, 0, 0.898); /* #DE9200E5 */
+}

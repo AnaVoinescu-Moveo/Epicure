@@ -1,0 +1,43 @@
+.rightIcons {
+  grid-area: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.iconSm {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .rightIcons {
+    margin-left: auto;
+    gap: 24px;
+  }
+
+  .searchIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .profileIcon {
+    width: 23px;
+    height: 24px;
+  }
+
+  .cartIcon {
+    width: 22px;
+    height: 22px;
+  }
+}

@@ -1,0 +1,19 @@
+:root {
+  /* Colors */
+  --color-bg: #fafafa;
+  --color-card: #f9f4ea;
+  --color-accent: #de9200;
+  --color-white: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e5e5;
+
+  /* Header */
+  --header-height-mobile: 46px;
+  --header-height-desktop: 64px;
+
+  /* Layout */
+  --max-width: 1440px;
+  --page-padding-mobile: 16px;
+  --page-padding-desktop: 80px;
+}
