@@ -1,0 +1,80 @@
+/* Mobile first */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 273px;
+}
+
+/* Separate overflow:hidden to the image layer so the search dropdown
+   can extend beyond the hero section without being clipped */
+.imageWrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  right: 20px;
+  height: 144px;
+  background: #ffffffe0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  z-index: 1;
+}
+
+.heading {
+  margin: 0;
+  /* nowrap ensures the <br /> is the only line break — prevents
+     font-metric differences from splitting each line further */
+  white-space: nowrap;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 1.97px;
+  color: #000000;
+}
+
+.searchInput {
+  --search-input-bg: transparent;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .hero {
+    height: 696px;
+  }
+
+  .overlay {
+    top: 236px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 776px;
+    height: 221px;
+  }
+
+  .heading {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .searchInput {
+    --search-width: 505px;
+    --search-height: 48px;
+    --search-gap: 16px;
+    --search-font-size: 24px;
+  }
+}
