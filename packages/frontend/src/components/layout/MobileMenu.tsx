@@ -7,18 +7,14 @@ import { usePathname } from 'next/navigation';
 import styles from './MobileMenu.module.css';
 import { NAV_LINKS } from '../../constants/nav';
 import { COPY } from '../../constants/copy';
+import { useScrollLock } from '../../hooks/useScrollLock';
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const panelRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   useEffect(() => {
     if (!isOpen) return;
