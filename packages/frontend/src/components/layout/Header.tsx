@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './Header.module.css';
 import { MobileMenu } from './MobileMenu';
 import { NavLinks } from './NavLinks';
+import { HeaderIcons } from './HeaderIcons';
 import { COPY } from '../../constants/copy';
 
 export function Header() {
@@ -33,35 +34,7 @@ export function Header() {
         </div>
 
         {/* Right icons — visible on both breakpoints */}
-        <div className={styles.rightIcons}>
-          <button type="button" className={styles.iconBtn} aria-label={COPY.header.searchAriaLabel}>
-            <Image
-              src="/icons/search.png"
-              alt=""
-              width={20}
-              height={20}
-              className={`${styles.iconSm} ${styles.searchIcon}`}
-            />
-          </button>
-          <button type="button" className={styles.iconBtn} aria-label={COPY.header.profileAriaLabel}>
-            <Image
-              src="/icons/profile.png"
-              alt=""
-              width={20}
-              height={20}
-              className={`${styles.iconSm} ${styles.profileIcon}`}
-            />
-          </button>
-          <button type="button" className={styles.iconBtn} aria-label={COPY.header.cartAriaLabel}>
-            <Image
-              src="/icons/card.png"
-              alt=""
-              width={20}
-              height={20}
-              className={`${styles.iconSm} ${styles.cartIcon}`}
-            />
-          </button>
-        </div>
+        <HeaderIcons />
       </div>
     </header>
   );
