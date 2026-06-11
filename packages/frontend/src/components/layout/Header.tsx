@@ -34,11 +34,7 @@ export function Header() {
         {/* Right icons */}
         <div className={styles.rightIcons}>
           <HeaderSearch />
-          <button
-            type="button"
-            className={styles.iconBtn}
-            aria-label="Profile"
-          >
+          <button type="button" className={styles.iconBtn} aria-label="Profile">
             <Image
               src="/icons/profile.svg"
               alt=""
