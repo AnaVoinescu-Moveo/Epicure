@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './Header.module.css';
 import { MobileMenu } from './MobileMenu';
 import { NavLinks } from './NavLinks';
+import { COPY } from '../../constants/copy';
 
 export function Header() {
   return (
@@ -14,16 +15,16 @@ export function Header() {
         </div>
 
         {/* Logo — visible on both breakpoints */}
-        <Link href="/" className={styles.logoGroup} aria-label="Epicure home">
+        <Link href="/" className={styles.logoGroup} aria-label={COPY.header.logoAriaLabel}>
           <Image
             src="/icons/logoMobile.png"
-            alt="Epicure"
+            alt={COPY.header.logoAlt}
             width={33}
             height={32}
             className={styles.logoIcon}
           />
           {/* EPICURE text — desktop only */}
-          <span className={styles.logoText}>EPICURE</span>
+          <span className={styles.logoText}>{COPY.header.logoText}</span>
         </Link>
 
         {/* Desktop only: nav links with active state */}
@@ -33,7 +34,7 @@ export function Header() {
 
         {/* Right icons — visible on both breakpoints */}
         <div className={styles.rightIcons}>
-          <button type="button" className={styles.iconBtn} aria-label="Search">
+          <button type="button" className={styles.iconBtn} aria-label={COPY.header.searchAriaLabel}>
             <Image
               src="/icons/search.png"
               alt=""
@@ -42,7 +43,7 @@ export function Header() {
               className={`${styles.iconSm} ${styles.searchIcon}`}
             />
           </button>
-          <button type="button" className={styles.iconBtn} aria-label="Profile">
+          <button type="button" className={styles.iconBtn} aria-label={COPY.header.profileAriaLabel}>
             <Image
               src="/icons/profile.png"
               alt=""
@@ -51,7 +52,7 @@ export function Header() {
               className={`${styles.iconSm} ${styles.profileIcon}`}
             />
           </button>
-          <button type="button" className={styles.iconBtn} aria-label="Cart">
+          <button type="button" className={styles.iconBtn} aria-label={COPY.header.cartAriaLabel}>
             <Image
               src="/icons/card.png"
               alt=""

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './MobileMenu.module.css';
 import { NAV_LINKS } from '../../constants/nav';
+import { COPY } from '../../constants/copy';
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +60,7 @@ export function MobileMenu() {
       <button
         type="button"
         className={styles.hamburger}
-        aria-label="Open navigation menu"
+        aria-label={COPY.mobileMenu.openAriaLabel}
         aria-expanded={isOpen}
         onClick={() => setIsOpen(true)}
       >
@@ -85,14 +86,14 @@ export function MobileMenu() {
             className={styles.panel}
             role="dialog"
             aria-modal="true"
-            aria-label="Navigation menu"
+            aria-label={COPY.mobileMenu.dialogAriaLabel}
           >
             {/* Section 1: close button */}
             <div className={styles.closeRow}>
               <button
                 type="button"
                 className={styles.closeBtn}
-                aria-label="Close navigation menu"
+                aria-label={COPY.mobileMenu.closeAriaLabel}
                 onClick={() => setIsOpen(false)}
               >
                 <Image
@@ -128,21 +129,21 @@ export function MobileMenu() {
                 className={styles.menuLink}
                 onClick={() => setIsOpen(false)}
               >
-                Contact Us
+                {COPY.mobileMenu.contactUs}
               </Link>
               <Link
                 href="/terms"
                 className={styles.menuLink}
                 onClick={() => setIsOpen(false)}
               >
-                Terms of Use
+                {COPY.mobileMenu.termsOfUse}
               </Link>
               <Link
                 href="/privacy"
                 className={styles.menuLink}
                 onClick={() => setIsOpen(false)}
               >
-                Privacy Policy
+                {COPY.mobileMenu.privacyPolicy}
               </Link>
             </nav>
           </div>

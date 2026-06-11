@@ -1,13 +1,13 @@
 import './global.css';
 import { Header } from '../components/layout/Header';
+import { COPY } from '../constants/copy';
 
 export const metadata = {
   title: {
-    default: 'Epicure',
-    template: '%s | Epicure',
+    default: COPY.site.name,
+    template: COPY.site.titleTemplate,
   },
-  description:
-    'Discover the finest restaurant experiences, curated by world-class chefs.',
+  description: COPY.site.description,
 };
 
 export default function RootLayout({
