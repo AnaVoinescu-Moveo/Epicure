@@ -8,6 +8,8 @@ import { MobileMenu } from './MobileMenu';
 import { NavLinks } from './NavLinks';
 import { SearchOverlay } from '../search/SearchOverlay';
 import { SearchInput } from '../search/SearchInput';
+import { useEscapeKey } from '../../hooks/useEscapeKey';
+import { useIsClickedOutside } from '../../hooks/useIsClickedOutside';
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -25,24 +27,8 @@ export function Header() {
     return () => mq.removeEventListener('change', handler);
   }, []);
 
-  // Escape + click outside — both only active on desktop when search is open
-  useEffect(() => {
-    if (!isSearchOpen || !isDesktop) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeSearch();
-    };
-    const handleClick = (e: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        closeSearch();
-      }
-    };
-    document.addEventListener('keydown', handleKey);
-    document.addEventListener('mousedown', handleClick);
-    return () => {
-      document.removeEventListener('keydown', handleKey);
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, [isSearchOpen, isDesktop, closeSearch]);
+  useEscapeKey(closeSearch, isSearchOpen && isDesktop);
+  useIsClickedOutside(searchRef, closeSearch, isSearchOpen && isDesktop);
 
   return (
     <>
