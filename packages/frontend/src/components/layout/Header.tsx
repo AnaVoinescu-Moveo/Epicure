@@ -2,8 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Header.module.css';
 import { MobileMenu } from './MobileMenu';
-import { NavLinks } from './NavLinks';
 import { HeaderIcons } from './HeaderIcons';
+import { DesktopNav } from './DesktopNav';
 import { COPY } from '../../constants/copy';
 
 export function Header() {
@@ -33,9 +33,7 @@ export function Header() {
         </Link>
 
         {/* Desktop only: nav links with active state */}
-        <div className={styles.desktopNav}>
-          <NavLinks />
-        </div>
+        <DesktopNav />
 
         {/* Right icons — visible on both breakpoints */}
         <HeaderIcons />

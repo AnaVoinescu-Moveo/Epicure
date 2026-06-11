@@ -43,11 +43,6 @@
   display: none;
 }
 
-/* Hidden on mobile — nav lives inside the mobile menu */
-.desktopNav {
-  display: none;
-}
-
 /* ── Desktop (1024px+) ──────────────────────────────────── */
 
 @media (min-width: 1024px) {
@@ -78,11 +73,5 @@
     letter-spacing: 1.35px;
     color: #000000;
     white-space: nowrap;
-  }
-
-  /* Desktop nav visible */
-  .desktopNav {
-    display: flex;
-    align-items: center;
   }
 }
