@@ -38,8 +38,6 @@ export function mockSearch(query: string): SearchResultGroup[] {
   const q = query.toLowerCase();
   return MOCK_SEARCH_DATA.map((group) => ({
     ...group,
-    items: group.items.filter((item) =>
-      item.name.toLowerCase().startsWith(q),
-    ),
+    items: group.items.filter((item) => item.name.toLowerCase().startsWith(q)),
   })).filter((group) => group.items.length > 0);
 }
