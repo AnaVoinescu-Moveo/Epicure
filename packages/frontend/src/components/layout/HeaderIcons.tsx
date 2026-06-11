@@ -11,7 +11,7 @@ export function HeaderIcons() {
         aria-label={COPY.header.searchAriaLabel}
       >
         <Image
-          src="/icons/search.png"
+          src="/icons/search.svg"
           alt=""
           width={20}
           height={20}
@@ -24,7 +24,7 @@ export function HeaderIcons() {
         aria-label={COPY.header.profileAriaLabel}
       >
         <Image
-          src="/icons/profile.png"
+          src="/icons/profile.svg"
           alt=""
           width={20}
           height={20}
@@ -37,7 +37,7 @@ export function HeaderIcons() {
         aria-label={COPY.header.cartAriaLabel}
       >
         <Image
-          src="/icons/card.png"
+          src="/icons/card.svg"
           alt=""
           width={20}
           height={20}
