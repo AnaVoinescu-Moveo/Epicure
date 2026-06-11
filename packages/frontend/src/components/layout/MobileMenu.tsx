@@ -8,6 +8,7 @@ import styles from './MobileMenu.module.css';
 import { NAV_LINKS } from '../../constants/nav';
 import { COPY } from '../../constants/copy';
 import { useScrollLock } from '../../hooks/useScrollLock';
+import { useEscapeKey } from '../../hooks/useEscapeKey';
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,14 +17,7 @@ export function MobileMenu() {
 
   useScrollLock(isOpen);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsOpen(false);
-    };
-    document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
-  }, [isOpen]);
+  useEscapeKey(() => setIsOpen(false), isOpen);
 
   useEffect(() => {
     if (isOpen) panelRef.current?.querySelector<HTMLElement>('button')?.focus();
