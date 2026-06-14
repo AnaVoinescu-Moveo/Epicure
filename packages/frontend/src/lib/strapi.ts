@@ -2,10 +2,13 @@ import { STRAPI_URL } from '@/config/env';
 
 const BASE = STRAPI_URL;
 
+// Prepend BASE only for relative paths; absolute URLs (e.g. from a CDN media provider) are returned as-is.
 export function strapiUrl(path: string): string {
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
   return `${BASE}${path}`;
 }
 
+// path must NOT include /api — this helper prepends it automatically.
 export async function strapiGet<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE}/api${path}`, { next: { revalidate: 60 } });
   if (!res.ok) throw new Error(`Strapi ${res.status}: ${path}`);

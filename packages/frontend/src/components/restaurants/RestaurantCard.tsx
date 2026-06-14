@@ -31,6 +31,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
               src={imageUrl}
               alt={image?.alternativeText ?? name}
               fill
+              sizes="(min-width: 1024px) 379px, 245px"
               className={styles.image}
             />
           ) : (
