@@ -44,3 +44,16 @@ export interface Restaurant {
   rating: number | null;
   chef: StrapiChef | null;
 }
+
+export interface Dish {
+  id: number;
+  documentId: string;
+  name: string;
+  description: string | null;
+  price: number;
+  isSignature: boolean;
+  isSpicy: boolean;
+  isVegetarian: boolean;
+  isVegan: boolean;
+  image: StrapiImage | null;
+}

@@ -29,4 +29,13 @@ export const COPY = {
     ctaText: 'All restaurants',
     ctaArrowAlt: 'View all restaurants',
   },
+  signatureDishes: {
+    sectionTitle: 'SIGNATURE DISH OF:',
+    ctaText: 'All restaurants',
+    ctaArrowAlt: 'View all restaurants',
+    spicyAlt: 'Spicy',
+    vegetarianAlt: 'Vegetarian',
+    veganAlt: 'Vegan',
+    shekelAlt: 'Price in shekels',
+  },
 } as const;
