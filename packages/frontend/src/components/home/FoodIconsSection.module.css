@@ -1,3 +1,5 @@
+/* ─── Mobile base ─────────────────────────────────────── */
+
 .section {
   background-color: #fafafa;
   width: 100%;
@@ -22,6 +24,23 @@
   flex-direction: column;
   align-items: center;
   gap: 32px;
+  width: 136px;
+}
+
+.iconWrapperSpicy {
+  width: 46px;
+  height: 36px;
+}
+
+.iconWrapperLarge {
+  width: 77px;
+  height: 60px;
+}
+
+.iconImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .label {
@@ -32,4 +51,30 @@
   text-align: center;
   margin: 0;
   color: var(--color-text);
+}
+
+/* ─── Desktop overrides ───────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .section {
+    margin-top: 80px;
+    padding: 39px 0;
+  }
+
+  .iconsContainer {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    gap: 40px;
+  }
+
+  .iconWrapperSpicy {
+    width: 77px;
+    height: 60px;
+  }
+
+  .label {
+    font-size: 24px;
+  }
 }

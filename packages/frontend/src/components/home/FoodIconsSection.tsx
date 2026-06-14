@@ -8,22 +8,19 @@ const ICONS = [
     src: '/icons/Spicy.svg',
     alt: COPY.foodIcons.spicyAlt,
     label: COPY.foodIcons.spicyLabel,
-    width: 46,
-    height: 36,
+    wrapperClassName: styles.iconWrapperSpicy,
   },
   {
     src: '/icons/Vegetarian.svg',
     alt: COPY.foodIcons.vegetarianAlt,
     label: COPY.foodIcons.vegetarianLabel,
-    width: 77,
-    height: 60,
+    wrapperClassName: styles.iconWrapperLarge,
   },
   {
     src: '/icons/Vegan.svg',
     alt: COPY.foodIcons.veganAlt,
     label: COPY.foodIcons.veganLabel,
-    width: 77,
-    height: 60,
+    wrapperClassName: styles.iconWrapperLarge,
   },
 ];
 
@@ -32,9 +29,11 @@ export function FoodIconsSection() {
     <section className={styles.section}>
       <SectionTitle>{COPY.foodIcons.sectionTitle}</SectionTitle>
       <div className={styles.iconsContainer}>
-        {ICONS.map(({ src, alt, label, width, height }) => (
+        {ICONS.map(({ src, alt, label, wrapperClassName }) => (
           <div key={label} className={styles.iconGroup}>
-            <Image src={src} alt={alt} width={width} height={height} />
+            <div className={wrapperClassName}>
+              <Image src={src} alt={alt} width={77} height={60} className={styles.iconImage} />
+            </div>
             <p className={styles.label}>{label}</p>
           </div>
         ))}

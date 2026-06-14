@@ -39,7 +39,7 @@ export const COPY = {
     shekelSign: '₪',
   },
   foodIcons: {
-    sectionTitle: 'THE MEANING OF OUR ICONS',
+    sectionTitle: 'THE MEANING OF OUR ICONS:',
     spicyLabel: 'Spicy',
     spicyAlt: 'Spicy dish icon',
     vegetarianLabel: 'Vegetarian',
