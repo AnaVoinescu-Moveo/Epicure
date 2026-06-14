@@ -1,24 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { strapiGet, type Dish, type StrapiListResponse } from '@/lib/strapi';
+import { getSignatureDishes } from '@/services/dishService';
 import { COPY } from '@/constants/copy';
 import { DishCard } from '@/components/dishes/DishCard';
 import styles from './SignatureDishesSection.module.css';
 
-async function getSignatureDishes(): Promise<Dish[]> {
+export async function SignatureDishesSection() {
+  let dishes = [];
+
   try {
-    const data = await strapiGet<StrapiListResponse<Dish>>(
-      '/dishes?filters[isSignature][$eq]=true&pagination[limit]=3&populate[image]=true',
-    );
-    return data.data ?? [];
+    dishes = await getSignatureDishes();
   } catch (err) {
     console.error('[SignatureDishesSection] Failed to fetch dishes:', err);
-    return [];
+    return null;
   }
-}
-
-export async function SignatureDishesSection() {
-  const dishes = await getSignatureDishes();
 
   if (dishes.length === 0) return null;
 
