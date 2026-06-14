@@ -32,7 +32,13 @@ export function FoodIconsSection() {
         {ICONS.map(({ src, alt, label, wrapperClassName }) => (
           <div key={label} className={styles.iconGroup}>
             <div className={wrapperClassName}>
-              <Image src={src} alt={alt} width={77} height={60} className={styles.iconImage} />
+              <Image
+                src={src}
+                alt={alt}
+                width={77}
+                height={60}
+                className={styles.iconImage}
+              />
             </div>
             <p className={styles.label}>{label}</p>
           </div>
