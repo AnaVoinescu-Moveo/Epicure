@@ -138,7 +138,6 @@
     font-weight: 200;
     line-height: 30px;
     gap: 8px;
-    justify-content: center;
   }
 
   .price::before,

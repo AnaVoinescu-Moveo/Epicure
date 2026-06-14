@@ -22,7 +22,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: clip;
+  overflow-x: hidden; /* Safari < 16 fallback */
+  overflow-x: clip; /* preferred: doesn't create scroll container */
 }
 
 img,
