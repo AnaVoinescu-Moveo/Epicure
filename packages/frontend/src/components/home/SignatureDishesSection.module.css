@@ -19,7 +19,7 @@
   text-transform: uppercase;
   color: var(--color-text);
   margin: 0;
-  width: 190px;
+  white-space: nowrap;
 }
 
 .carousel {
@@ -31,8 +31,8 @@
   justify-content: flex-start;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  overscroll-behavior-x: contain;
   margin-top: 8px;
 }
 
@@ -76,7 +76,6 @@
   }
 
   .title {
-    width: auto;
     text-align: center;
   }
 

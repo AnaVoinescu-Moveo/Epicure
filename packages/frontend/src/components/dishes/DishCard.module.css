@@ -63,22 +63,26 @@
   margin: 0 0 16px;
 }
 
+.bottomFixed {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .icons {
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
 }
 
 .price {
   display: flex;
   align-items: center;
   gap: 4px;
-}
-
-.priceValue {
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
   letter-spacing: 1.97px;
   color: var(--color-text);
+  margin: 0;
 }

@@ -7,8 +7,8 @@ export function SectionTitle({ children }: SectionTitleProps) {
     <h2
       style={{
         fontWeight: 200,
-        fontSize: '30px',
-        lineHeight: '35px',
+        fontSize: '18px',
+        lineHeight: '24px',
         letterSpacing: '1.25px',
         textTransform: 'uppercase',
         margin: 0,
