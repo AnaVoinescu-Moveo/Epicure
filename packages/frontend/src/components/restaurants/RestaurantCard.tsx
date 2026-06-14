@@ -19,7 +19,10 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
   const chefName = chef?.name ?? CHEF_NAME_OVERRIDES[name] ?? null;
 
   return (
-    <Link href={`/restaurants/${restaurant.documentId}`} className={styles.link}>
+    <Link
+      href={`/restaurants/${restaurant.documentId}`}
+      className={styles.link}
+    >
       <article className={styles.card}>
         <div className={styles.imageWrapper}>
           {imageUrl ? (
