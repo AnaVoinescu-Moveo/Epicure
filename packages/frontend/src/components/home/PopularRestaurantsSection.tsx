@@ -1,23 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  strapiGet,
-  type Restaurant,
-  type StrapiListResponse,
-} from '@/lib/strapi';
+import { getPopularRestaurants } from '@/services/restaurantService';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { RestaurantCard } from '@/components/restaurants/RestaurantCard';
 import { COPY } from '@/constants/copy';
 import styles from './PopularRestaurantsSection.module.css';
 
 export async function PopularRestaurantsSection() {
-  let restaurants: Restaurant[] = [];
+  let restaurants = [];
 
   try {
-    const data = await strapiGet<StrapiListResponse<Restaurant>>(
-      '/restaurants?sort=rating:desc&pagination[limit]=3&populate[chef]=true&populate[image]=true',
-    );
-    restaurants = data.data;
+    restaurants = await getPopularRestaurants();
   } catch (err) {
     console.error(
       '[PopularRestaurantsSection] Failed to fetch restaurants:',
