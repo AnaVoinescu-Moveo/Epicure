@@ -10,7 +10,6 @@ export interface RestaurantAttributes {
   priceRange: PriceRange | null;
   distance: number | null;
   isNew: boolean;
-  popularityScore: number;
   openingTime: string | null;
   closingTime: string | null;
   latitude: number | null;

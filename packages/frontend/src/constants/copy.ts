@@ -21,4 +21,10 @@ export const COPY = {
     termsOfUse: 'Terms of Use',
     privacyPolicy: 'Privacy Policy',
   },
+  popularRestaurants: {
+    sectionTitle: 'POPULAR RESTAURANT IN EPICURE',
+    ctaText: 'All restaurants',
+    ctaArrowAlt: 'View all restaurants',
+    starsAriaLabel: (rating: number) => `${rating} out of 5 stars`,
+  },
 } as const;

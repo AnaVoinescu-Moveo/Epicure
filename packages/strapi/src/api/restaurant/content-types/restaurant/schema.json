@@ -37,10 +37,6 @@
       "type": "boolean",
       "default": false
     },
-    "popularityScore": {
-      "type": "integer",
-      "default": 0
-    },
     "openingTime": {
       "type": "time"
     },

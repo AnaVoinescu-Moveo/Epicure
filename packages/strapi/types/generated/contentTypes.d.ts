@@ -543,7 +543,6 @@ export interface ApiRestaurantRestaurant extends Struct.CollectionTypeSchema {
     longitude: Schema.Attribute.Decimal;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     openingTime: Schema.Attribute.Time;
-    popularityScore: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     priceRange: Schema.Attribute.Enumeration<['low', 'medium', 'high']>;
     publishedAt: Schema.Attribute.DateTime;
     rating: Schema.Attribute.Decimal &
