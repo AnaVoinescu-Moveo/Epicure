@@ -1,4 +1,6 @@
-const BASE = process.env.NEXT_PUBLIC_STRAPI_URL ?? 'http://localhost:1337';
+import { STRAPI_URL } from '@/config/env';
+
+const BASE = STRAPI_URL;
 
 export function strapiUrl(path: string): string {
   return `${BASE}${path}`;
