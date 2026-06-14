@@ -45,7 +45,9 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             // TODO: Add chef name in Strapi for this restaurant
             <p className={styles.chefPlaceholder}>&nbsp;</p>
           )}
-          <RatingStars rating={rating ?? 0} />
+          <div className={styles.rating}>
+            <RatingStars rating={rating ?? 0} />
+          </div>
         </div>
       </article>
     </Link>

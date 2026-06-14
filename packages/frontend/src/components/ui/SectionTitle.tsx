@@ -11,7 +11,6 @@ export function SectionTitle({ children }: SectionTitleProps) {
         lineHeight: '35px',
         letterSpacing: '1.25px',
         textTransform: 'uppercase',
-        textAlign: 'center',
         margin: 0,
         color: 'var(--color-text)',
       }}

@@ -45,3 +45,40 @@
   text-transform: capitalize;
   white-space: nowrap;
 }
+
+@media (max-width: 1023px) {
+  .section {
+    margin-top: 48px;
+    align-items: flex-start;
+    gap: 0;
+    padding-left: 20px;
+  }
+
+  .grid {
+    width: calc(100vw - 20px);
+    max-width: unset;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    margin-top: 17px;
+  }
+
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ctaWrapper {
+    width: auto;
+    max-width: unset;
+    margin-top: 18.2px;
+    justify-content: flex-start;
+  }
+
+  .cta {
+    width: auto;
+    justify-content: flex-start;
+  }
+}
