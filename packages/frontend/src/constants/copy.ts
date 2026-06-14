@@ -38,4 +38,13 @@ export const COPY = {
     veganAlt: 'Vegan',
     shekelSign: '₪',
   },
+  foodIcons: {
+    sectionTitle: 'THE MEANING OF OUR ICONS',
+    spicyLabel: 'Spicy',
+    spicyAlt: 'Spicy dish icon',
+    vegetarianLabel: 'Vegetarian',
+    vegetarianAlt: 'Vegetarian dish icon',
+    veganLabel: 'Vegan',
+    veganAlt: 'Vegan dish icon',
+  },
 } as const;
