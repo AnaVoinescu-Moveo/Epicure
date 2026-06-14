@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   width: var(--search-width, 315px);
+  max-width: 100%;
   height: var(--search-height, 30px);
   border: 0.5px solid #000000;
   border-radius: 4px;

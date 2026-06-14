@@ -76,11 +76,13 @@
   }
 
   .title {
+    font-size: 30px;
+    line-height: 35px;
     text-align: center;
   }
 
   .carousel {
-    width: 1185px;
+    width: 1188px;
     max-width: 100%;
     scroll-snap-type: none;
     justify-content: center;
@@ -88,14 +90,6 @@
   }
 
   .ctaWrapper {
-    width: 1185px;
-    max-width: 100%;
-    justify-content: flex-end;
-    margin-top: -24px;
-  }
-
-  .cta {
-    width: 226px;
-    justify-content: flex-end;
+    display: none;
   }
 }
