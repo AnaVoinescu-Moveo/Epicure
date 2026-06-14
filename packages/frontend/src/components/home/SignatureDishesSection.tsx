@@ -11,7 +11,8 @@ async function getSignatureDishes(): Promise<Dish[]> {
       '/dishes?filters[isSignature][$eq]=true&pagination[limit]=3&populate[image]=true',
     );
     return data.data ?? [];
-  } catch {
+  } catch (err) {
+    console.error('[SignatureDishesSection] Failed to fetch dishes:', err);
     return [];
   }
 }

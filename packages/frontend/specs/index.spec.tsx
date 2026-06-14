@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import Page from '../src/app/page';
 
@@ -8,6 +7,10 @@ jest.mock('next/navigation', () => ({
 
 jest.mock('../src/components/home/PopularRestaurantsSection', () => ({
   PopularRestaurantsSection: () => null,
+}));
+
+jest.mock('../src/components/home/SignatureDishesSection', () => ({
+  SignatureDishesSection: () => null,
 }));
 
 jest.mock('next/image', () => ({
