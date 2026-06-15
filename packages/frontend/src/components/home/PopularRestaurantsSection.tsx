@@ -35,7 +35,7 @@ export async function PopularRestaurantsSection() {
             {COPY.popularRestaurants.ctaText}
           </span>
           <Image
-            src="/icons/Erow.svg"
+            src="/icons/Arrow.svg"
             alt={COPY.popularRestaurants.ctaArrowAlt}
             width={24}
             height={18}

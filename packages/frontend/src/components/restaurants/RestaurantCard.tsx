@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { strapiUrl, type Restaurant } from '@/lib/strapi';
 import { RatingStars } from '@/components/ui/RatingStars';
@@ -26,9 +27,10 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
       <article className={styles.card}>
         <div className={styles.imageWrapper}>
           {imageUrl ? (
-            <img
+            <Image
               src={imageUrl}
               alt={image?.alternativeText ?? name}
+              fill
               className={styles.image}
             />
           ) : (
