@@ -26,5 +26,10 @@ module.exports = async () => {
       value[1] = { ...value[1], resolvedBaseUrl: undefined };
     }
   }
+  // Map @/* alias so Jest can resolve src-relative imports.
+  resolved.moduleNameMapper = {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    ...resolved.moduleNameMapper,
+  };
   return resolved;
 };
