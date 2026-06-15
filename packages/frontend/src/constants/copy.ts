@@ -25,8 +25,17 @@ export const COPY = {
     privacyPolicy: 'Privacy Policy',
   },
   popularRestaurants: {
-    sectionTitle: 'POPULAR RESTAURANT IN EPICURE',
+    sectionTitle: 'POPULAR RESTAURANT IN EPICURE:',
     ctaText: 'All restaurants',
     ctaArrowAlt: 'View all restaurants',
+  },
+  signatureDishes: {
+    sectionTitle: 'SIGNATURE DISH OF:',
+    ctaText: 'All restaurants',
+    ctaArrowAlt: 'View all restaurants',
+    spicyAlt: 'Spicy',
+    vegetarianAlt: 'Vegetarian',
+    veganAlt: 'Vegan',
+    shekelSign: '₪',
   },
 } as const;

@@ -9,10 +9,20 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0;
 }
 
-.grid {
+.title {
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 35px;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.carousel {
   width: calc(100vw - 20px);
   display: flex;
   flex-direction: row;
@@ -23,17 +33,17 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   overscroll-behavior-x: contain;
-  margin-top: 17px;
+  margin-top: 8px;
 }
 
-.grid::-webkit-scrollbar {
+.carousel::-webkit-scrollbar {
   display: none;
 }
 
 .ctaWrapper {
   display: flex;
   justify-content: flex-start;
-  margin-top: 18.2px;
+  margin-top: 26px;
 }
 
 .cta {
@@ -55,7 +65,7 @@
   white-space: nowrap;
 }
 
-/* ─── Desktop overrides ───────────────────────────────── */
+/* ─── Desktop ─────────────────────────────────────────── */
 
 @media (min-width: 1024px) {
   .section {
@@ -65,7 +75,11 @@
     gap: 40px;
   }
 
-  .grid {
+  .title {
+    text-align: center;
+  }
+
+  .carousel {
     width: 1185px;
     max-width: 100%;
     scroll-snap-type: none;
