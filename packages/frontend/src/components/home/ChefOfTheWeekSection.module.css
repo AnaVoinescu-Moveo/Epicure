@@ -113,11 +113,9 @@
     align-items: stretch;
   }
 
-  /* Gray container: title (centered at top) + image (left) + description (right) */
   .container {
     position: relative;
-    height: 447px;
-    background: var(--color-section-bg);
+    height: 472px;
     display: block;
     flex-shrink: 0;
   }
@@ -128,7 +126,7 @@
 
   .imageWrapper {
     position: absolute;
-    top: 75px;
+    top: 100px;
     left: 0;
     width: 478px;
     height: 372px;
@@ -138,7 +136,7 @@
   .nameOverlay {
     width: 478px;
     height: 78px;
-    top: 294px; /* 372 - 78, flush with image bottom */
+    top: 294px; /* image height 372 - overlay height 78, relative to imageWrapper */
   }
 
   .chefName {
@@ -149,9 +147,9 @@
 
   .rightColumn {
     position: absolute;
-    top: 96px;
-    left: 541.5px; /* 478px image + 63.5px gap */
-    width: 642px;
+    top: 120px;
+    left: 565px; /* 478px image + 87px gap */
+    width: 619px;
   }
 
   .description {
