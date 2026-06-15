@@ -4,3 +4,5 @@
 /.nx/cache
 /.nx/workspace-data
 .nx/self-healing
+# Next.js auto-generates this file on every build with its own formatting
+**/next-env.d.ts

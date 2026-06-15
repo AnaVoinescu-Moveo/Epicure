@@ -1,3 +1,5 @@
+/* ─── Mobile base ─────────────────────────────────────── */
+
 .link {
   text-decoration: none;
   color: inherit;
@@ -5,26 +7,25 @@
 }
 
 .card {
-  width: 379px;
-  height: 405px;
+  width: 245px;
+  height: 232.8px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  flex-shrink: 0;
+  scroll-snap-align: start;
 }
 
 .imageWrapper {
   position: relative;
-  width: 379px;
-  height: 236px;
+  width: 100%;
+  height: 151.8px;
   overflow: hidden;
   flex-shrink: 0;
 }
 
 .image {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .imagePlaceholder {
@@ -35,39 +36,86 @@
 
 .bottom {
   background-color: var(--color-card);
-  height: 169px;
-  flex-shrink: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 16px;
   gap: 8px;
 }
 
 .name {
   font-weight: 400;
-  font-size: 40px;
-  line-height: 47px;
+  font-size: 18px;
+  line-height: 21px;
   letter-spacing: 2.67px;
   color: var(--color-text);
-  text-align: center;
+  text-align: left;
   margin: 0;
-  width: 100%;
 }
 
 .chef {
   font-weight: 200;
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 20px;
   letter-spacing: 1.97px;
-  text-align: center;
+  text-align: left;
   margin: 0;
   color: var(--color-text);
 }
 
 .chefPlaceholder {
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 20px;
   margin: 0;
+}
+
+.rating {
+  display: none;
+}
+
+/* ─── Desktop overrides ───────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .card {
+    width: 379px;
+    height: 405px;
+    flex-shrink: 0;
+    scroll-snap-align: none;
+  }
+
+  .imageWrapper {
+    height: 236px;
+  }
+
+  .bottom {
+    flex: unset;
+    height: 169px;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+
+  .name {
+    font-size: 40px;
+    line-height: 47px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .chef {
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+  }
+
+  .chefPlaceholder {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .rating {
+    display: flex;
+  }
 }

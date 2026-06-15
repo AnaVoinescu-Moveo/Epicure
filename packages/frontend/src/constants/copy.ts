@@ -1,4 +1,7 @@
 export const COPY = {
+  ui: {
+    starsAriaLabel: (rating: number) => `${rating} out of 5 stars`,
+  },
   site: {
     name: 'Epicure',
     titleTemplate: '%s | Epicure',
@@ -25,6 +28,5 @@ export const COPY = {
     sectionTitle: 'POPULAR RESTAURANT IN EPICURE',
     ctaText: 'All restaurants',
     ctaArrowAlt: 'View all restaurants',
-    starsAriaLabel: (rating: number) => `${rating} out of 5 stars`,
   },
 } as const;

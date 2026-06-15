@@ -1,29 +1,39 @@
+/* ─── Mobile base ─────────────────────────────────────── */
+
 .section {
   width: 100%;
   max-width: var(--max-width);
-  margin: 80px auto 0;
+  margin: 48px auto 0;
   padding-bottom: 40px;
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 40px;
+  align-items: flex-start;
+  gap: 0;
 }
 
 .grid {
-  width: 1185px;
-  max-width: 100%;
+  width: calc(100vw - 20px);
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   gap: 24px;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-top: 17px;
+}
+
+.grid::-webkit-scrollbar {
+  display: none;
 }
 
 .ctaWrapper {
-  width: 1185px;
-  max-width: 100%;
   display: flex;
-  justify-content: flex-end;
-  margin-top: -24px;
+  justify-content: flex-start;
+  margin-top: 18.2px;
 }
 
 .cta {
@@ -32,9 +42,8 @@
   gap: 12px;
   text-decoration: none;
   color: var(--color-text);
-  width: 226px;
   height: 35px;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .ctaText {
@@ -44,4 +53,35 @@
   letter-spacing: 2px;
   text-transform: capitalize;
   white-space: nowrap;
+}
+
+/* ─── Desktop overrides ───────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .section {
+    margin-top: 80px;
+    padding-left: 0;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .grid {
+    width: 1185px;
+    max-width: 100%;
+    scroll-snap-type: none;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .ctaWrapper {
+    width: 1185px;
+    max-width: 100%;
+    justify-content: flex-end;
+    margin-top: -24px;
+  }
+
+  .cta {
+    width: 226px;
+    justify-content: flex-end;
+  }
 }
