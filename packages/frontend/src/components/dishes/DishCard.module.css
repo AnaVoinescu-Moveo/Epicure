@@ -87,3 +87,64 @@
   color: var(--color-text);
   margin: 0;
 }
+
+/* ─── Desktop ─────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .card {
+    width: 380px;
+    height: 654px;
+  }
+
+  .imageWrapper {
+    height: 306px;
+  }
+
+  .bottom {
+    padding: 24px 16px 12px;
+    align-items: stretch;
+  }
+
+  .bottomFixed {
+    display: contents;
+  }
+
+  .name {
+    font-size: 40px;
+    line-height: 47px;
+    text-align: center;
+    margin: 0;
+  }
+
+  .icons {
+    order: 2;
+    margin-top: 8px;
+    justify-content: center;
+  }
+
+  .description {
+    order: 3;
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+  }
+
+  .price {
+    order: 4;
+    margin-top: auto;
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 30px;
+    gap: 8px;
+  }
+
+  .price::before,
+  .price::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--color-text);
+  }
+}
