@@ -2,6 +2,7 @@ import { Hero } from '../components/home/Hero';
 import { PopularRestaurantsSection } from '../components/home/PopularRestaurantsSection';
 import { SignatureDishesSection } from '../components/home/SignatureDishesSection';
 import { FoodIconsSection } from '../components/home/FoodIconsSection';
+import { ChefOfTheWeekSection } from '../components/home/ChefOfTheWeekSection';
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
       <PopularRestaurantsSection />
       <SignatureDishesSection />
       <FoodIconsSection />
+      <ChefOfTheWeekSection />
     </>
   );
 }

@@ -12,45 +12,60 @@ const CHEF_NAME_OVERRIDES: Record<string, string> = {
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
+  hideChef?: boolean;
+  compact?: boolean;
 }
 
-export function RestaurantCard({ restaurant }: RestaurantCardProps) {
+export function RestaurantCard({
+  restaurant,
+  hideChef = false,
+  compact = false,
+}: RestaurantCardProps) {
   const { name, image, rating, chef } = restaurant;
   const imageUrl = image ? strapiUrl(image.url) : null;
   const chefName = chef?.name ?? CHEF_NAME_OVERRIDES[name] ?? null;
+
+  const inner = (
+    <article
+      className={`${styles.card}${compact ? ` ${styles.cardCompact}` : ''}`}
+    >
+      <div className={styles.imageWrapper}>
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={image?.alternativeText ?? name}
+            fill
+            sizes={compact ? '231px' : '(min-width: 1024px) 379px, 245px'}
+            className={styles.image}
+          />
+        ) : (
+          <div className={styles.imagePlaceholder} />
+        )}
+      </div>
+      <div className={styles.bottom}>
+        <h3 className={styles.name}>{name}</h3>
+        {!hideChef &&
+          (chefName ? (
+            <p className={styles.chef}>{chefName}</p>
+          ) : (
+            // TODO: Add chef name in Strapi for this restaurant
+            <p className={styles.chefPlaceholder}>&nbsp;</p>
+          ))}
+        <div className={styles.rating}>
+          <RatingStars rating={rating ?? 0} />
+        </div>
+      </div>
+    </article>
+  );
+
+  if (compact) return inner;
 
   return (
     <Link
       href={`/restaurants/${restaurant.documentId}`}
       className={styles.link}
     >
-      <article className={styles.card}>
-        <div className={styles.imageWrapper}>
-          {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt={image?.alternativeText ?? name}
-              fill
-              sizes="(min-width: 1024px) 379px, 245px"
-              className={styles.image}
-            />
-          ) : (
-            <div className={styles.imagePlaceholder} />
-          )}
-        </div>
-        <div className={styles.bottom}>
-          <h3 className={styles.name}>{name}</h3>
-          {chefName ? (
-            <p className={styles.chef}>{chefName}</p>
-          ) : (
-            // TODO: Add chef name in Strapi for this restaurant
-            <p className={styles.chefPlaceholder}>&nbsp;</p>
-          )}
-          <div className={styles.rating}>
-            <RatingStars rating={rating ?? 0} />
-          </div>
-        </div>
-      </article>
+      {inner}
     </Link>
   );
 }

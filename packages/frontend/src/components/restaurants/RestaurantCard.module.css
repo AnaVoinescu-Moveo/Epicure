@@ -118,4 +118,36 @@
   .rating {
     display: flex;
   }
+
+  /* Compact variant: used in Chef of the Week section (non-clickable) */
+  .cardCompact {
+    width: 231px;
+    height: 357px;
+    cursor: default;
+  }
+
+  .cardCompact .imageWrapper {
+    height: 224px;
+  }
+
+  .cardCompact .bottom {
+    height: 133px;
+    padding: 20px 16px;
+    justify-content: flex-start;
+  }
+
+  .cardCompact .name {
+    font-size: 30px;
+    line-height: 47px;
+    max-height: calc(47px * 2);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width: 100%;
+  }
+
+  .cardCompact .rating {
+    display: none;
+  }
 }

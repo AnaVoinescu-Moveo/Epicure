@@ -13,6 +13,14 @@ jest.mock('../src/components/home/SignatureDishesSection', () => ({
   SignatureDishesSection: () => null,
 }));
 
+jest.mock('../src/components/home/FoodIconsSection', () => ({
+  FoodIconsSection: () => null,
+}));
+
+jest.mock('../src/components/home/ChefOfTheWeekSection', () => ({
+  ChefOfTheWeekSection: () => null,
+}));
+
 jest.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt }: { src: string; alt: string }) => (
