@@ -18,9 +18,10 @@ export function DishCard({ dish }: DishCardProps) {
       <article className={styles.card}>
         <div className={styles.imageWrapper}>
           {imageUrl ? (
-            <img
+            <Image
               src={imageUrl}
               alt={image?.alternativeText ?? name}
+              fill
               className={styles.image}
             />
           ) : (

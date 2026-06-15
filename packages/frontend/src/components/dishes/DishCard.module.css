@@ -17,6 +17,7 @@
 }
 
 .imageWrapper {
+  position: relative;
   width: 100%;
   height: 152px;
   overflow: hidden;
