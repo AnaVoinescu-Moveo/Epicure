@@ -51,4 +51,14 @@ export const COPY = {
     sectionTitle: 'CHEF OF THE WEEK:',
     restaurantsTitle: (firstName: string) => `${firstName}'s restaurants`,
   },
+  aboutUs: {
+    logoAlt: 'Epicure',
+    googleAlt: 'Get it on Google Play',
+    appleAlt: 'Download on the App Store',
+    title: 'ABOUT US',
+    paragraph1:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a lacus vel justo fermentum bibendum non eu ipsum. Cras porta malesuada eros, eget blandit turpis suscipit at. Vestibulum sed massa in magna sodales porta. Vivamus elit urna, dignissim a vestibulum.',
+    paragraph2:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a lacus vel justo fermentum bibendum non eu ipsum. Cras porta malesuada eros.',
+  },
 } as const;

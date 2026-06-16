@@ -1,0 +1,115 @@
+/* ─── Mobile base ────────────────────────────────────── */
+
+.section {
+  width: 100%;
+  background: var(--color-section-bg);
+  padding-top: 24px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 39px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.googleImage {
+  margin-top: 32px;
+  border-radius: 10px;
+  border: 0.5px solid var(--color-text);
+}
+
+.appleImage {
+  margin-top: 16px;
+  border-radius: 10px;
+  border: 0.5px solid var(--color-text);
+}
+
+.aboutTitle {
+  margin-top: 48px;
+  margin-bottom: 0;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 35px;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.textBlock {
+  margin-top: 16px;
+}
+
+.paragraph {
+  margin: 0;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 2.14px;
+  color: var(--color-text);
+}
+
+/* ─── Desktop ─────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .section {
+    position: relative;
+    height: 529px;
+    margin-top: 80px;
+    padding: 0;
+    display: block;
+  }
+
+  .logo {
+    position: absolute;
+    top: 174px;
+    right: 129px;
+    width: 178px;
+    height: 166px;
+    object-fit: contain;
+  }
+
+  .aboutTitle {
+    position: absolute;
+    top: 40px;
+    left: 132px;
+    margin-top: 0;
+    font-size: 30px;
+    line-height: 35px;
+    letter-spacing: 2.14px;
+    width: 665px;
+  }
+
+  .textBlock {
+    position: absolute;
+    top: 91px; /* 40px title + 35px height + 16px gap */
+    left: 132px;
+    width: 569px;
+    height: 330px;
+    overflow: hidden;
+    margin-top: 0;
+  }
+
+  .paragraph {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .paragraph + .paragraph {
+    margin-top: 30px; /* one line-height = visual blank line between paragraphs */
+  }
+
+  .appleImage {
+    position: absolute;
+    top: 437px; /* 91px + 330px + 16px */
+    left: 132px;
+    margin-top: 0;
+  }
+
+  .googleImage {
+    position: absolute;
+    top: 437px;
+    left: 328px; /* 132px + 180px apple + 16px gap */
+    margin-top: 0;
+  }
+}
