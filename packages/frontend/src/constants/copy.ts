@@ -47,4 +47,8 @@ export const COPY = {
     veganLabel: 'Vegan',
     veganAlt: 'Vegan dish icon',
   },
+  chefOfTheWeek: {
+    sectionTitle: 'CHEF OF THE WEEK:',
+    restaurantsTitle: (firstName: string) => `${firstName}'s restaurants`,
+  },
 } as const;

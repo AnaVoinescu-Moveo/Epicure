@@ -36,6 +36,16 @@ export interface StrapiChef {
   name: string;
 }
 
+export interface Chef {
+  id: number;
+  documentId: string;
+  name: string;
+  description: string | null;
+  image: StrapiImage | null;
+  isChefOfTheWeek: boolean;
+  restaurants: Restaurant[];
+}
+
 export interface Restaurant {
   id: number;
   documentId: string;
