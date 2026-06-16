@@ -6,3 +6,6 @@
 .nx/self-healing
 # Next.js auto-generates this file on every build with its own formatting
 **/next-env.d.ts
+# Lockfiles have their own formatting managed by the package manager
+pnpm-lock.yaml
+package-lock.json
