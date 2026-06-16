@@ -14,28 +14,42 @@ interface RestaurantCardProps {
   restaurant: Restaurant;
   hideChef?: boolean;
   compact?: boolean;
+  page?: boolean;
 }
 
 export function RestaurantCard({
   restaurant,
   hideChef = false,
   compact = false,
+  page = false,
 }: RestaurantCardProps) {
   const { name, image, rating, chef } = restaurant;
   const imageUrl = image ? strapiUrl(image.url) : null;
   const chefName = chef?.name ?? CHEF_NAME_OVERRIDES[name] ?? null;
 
+  const cardClass = [
+    styles.card,
+    compact ? styles.cardCompact : '',
+    page ? styles.cardPage : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const imageSizes = compact
+    ? '231px'
+    : page
+      ? '(min-width: 1024px) 379px, 335px'
+      : '(min-width: 1024px) 379px, 245px';
+
   const inner = (
-    <article
-      className={`${styles.card}${compact ? ` ${styles.cardCompact}` : ''}`}
-    >
+    <article className={cardClass}>
       <div className={styles.imageWrapper}>
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={image?.alternativeText ?? name}
             fill
-            sizes={compact ? '231px' : '(min-width: 1024px) 379px, 245px'}
+            sizes={imageSizes}
             className={styles.image}
           />
         ) : (
@@ -69,3 +83,4 @@ export function RestaurantCard({
     </Link>
   );
 }
+

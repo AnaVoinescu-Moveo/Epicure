@@ -1,0 +1,45 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  width: 342px;
+  height: 22px;
+}
+
+.filter {
+  border-bottom: 1.8px solid transparent;
+  padding: 0;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1.92px;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.filterActive {
+  font-weight: 400;
+  border-bottom-color: var(--color-accent);
+}
+
+.desktopOnly {
+  display: none;
+}
+
+/* ─── Desktop overrides ───────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .nav {
+    gap: 40px;
+    width: auto;
+    height: auto;
+  }
+
+  .filterActive {
+    border-bottom-color: transparent;
+  }
+
+  .desktopOnly {
+    display: inline;
+  }
+}

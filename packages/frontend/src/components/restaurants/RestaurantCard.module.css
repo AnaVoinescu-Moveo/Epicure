@@ -75,6 +75,30 @@
   display: none;
 }
 
+/* ─── Restaurants page variant ───────────────────────── */
+
+.cardPage {
+  width: 335px;
+  height: 288px;
+  scroll-snap-align: none;
+}
+
+.cardPage .imageWrapper {
+  height: 207px;
+}
+
+.cardPage .bottom {
+  gap: 6px;
+}
+
+.cardPage .name {
+  line-height: 1;
+}
+
+.cardPage .chef {
+  line-height: 30px;
+}
+
 /* ─── Desktop overrides ───────────────────────────────── */
 
 @media (min-width: 1024px) {
@@ -149,5 +173,31 @@
 
   .cardCompact .rating {
     display: none;
+  }
+
+  /* Page variant: reset mobile dimensions back to standard desktop card */
+  .cardPage {
+    width: 379px;
+    height: 405px;
+  }
+
+  .cardPage .imageWrapper {
+    height: 236px;
+  }
+
+  .cardPage .bottom {
+    gap: 8px;
+  }
+
+  .cardPage .name {
+    line-height: 47px;
+    font-size: 40px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .cardPage .chef {
+    font-size: 24px;
+    text-align: center;
   }
 }

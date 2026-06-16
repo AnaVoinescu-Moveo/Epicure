@@ -9,6 +9,7 @@
   --color-text: #1a1a1a;
   --color-text-muted: #6b7280;
   --color-border: #e5e5e5;
+  --color-filter-selected: #d0cfcf;
 
   /* Header */
   --header-height-mobile: 46px;

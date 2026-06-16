@@ -51,4 +51,15 @@ export const COPY = {
     sectionTitle: 'CHEF OF THE WEEK:',
     restaurantsTitle: (firstName: string) => `${firstName}'s restaurants`,
   },
+  restaurants: {
+    pageTitle: 'Restaurants',
+    filterAll: 'All',
+    filterNew: 'New',
+    filterMostPopular: 'Most Popular',
+    filterOpenNow: 'Open Now',
+    filterMapView: 'Map View',
+    filterBarPriceRange: 'Price Range',
+    filterBarDistance: 'Distance',
+    filterBarRating: 'Rating',
+  },
 } as const;
