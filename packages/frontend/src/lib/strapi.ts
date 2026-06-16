@@ -58,6 +58,8 @@ export interface Restaurant {
   isNew: boolean;
   openingTime: string | null;
   closingTime: string | null;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 export interface Dish {
