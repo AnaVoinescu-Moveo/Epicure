@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { COPY } from '@/constants/copy';
 import styles from './FilterNav.module.css';
 
-type FilterId = 'all' | 'new' | 'most-popular' | 'open-now' | 'map-view';
+export type FilterId = 'all' | 'new' | 'most-popular' | 'open-now' | 'map-view';
 
 interface FilterItem {
   id: FilterId;
@@ -20,9 +19,12 @@ const FILTERS: FilterItem[] = [
   { id: 'map-view', label: COPY.restaurants.filterMapView, desktopOnly: true },
 ];
 
-export function FilterNav() {
-  const [active, setActive] = useState<FilterId>('all');
+interface FilterNavProps {
+  activeFilter: FilterId;
+  onFilterChange: (id: FilterId) => void;
+}
 
+export function FilterNav({ activeFilter, onFilterChange }: FilterNavProps) {
   return (
     <nav className={styles.nav}>
       {FILTERS.map(({ id, label, desktopOnly }) => (
@@ -30,12 +32,12 @@ export function FilterNav() {
           key={id}
           className={[
             styles.filter,
-            active === id ? styles.filterActive : '',
+            activeFilter === id ? styles.filterActive : '',
             desktopOnly ? styles.desktopOnly : '',
           ]
             .filter(Boolean)
             .join(' ')}
-          onClick={() => setActive(id)}
+          onClick={() => onFilterChange(id)}
         >
           {label}
         </button>

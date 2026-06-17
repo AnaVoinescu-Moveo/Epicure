@@ -73,5 +73,6 @@ export const COPY = {
     filterBarRating: 'Rating',
     errorMessage: 'Something went wrong loading the restaurants.',
     errorRetry: 'Try again',
+    openNowEmpty: 'No restaurants are currently open. Please come back soon!',
   },
 } as const;
