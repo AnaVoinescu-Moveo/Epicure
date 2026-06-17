@@ -72,3 +72,47 @@ Store the active filter in the URL (`?filter=map-view`). On mobile, a server or 
 ### Implementation note
 
 The listener is attached in a `useEffect` inside `RestaurantsList` with `activeFilter` as a dependency. When the viewport drops below 1024px and `activeFilter === 'map-view'`, it calls `setActiveFilter('all')`. The effect cleans up the listener on every re-subscribe and on unmount.
+
+---
+
+## 3. Restaurants Page Fetch Error — return null vs error boundary
+
+**Context:** `RestaurantsPage` is an async server component that calls `getAllRestaurants()`. The original implementation wrapped the fetch in a try/catch and returned `null` on failure. A mentor review flagged this as a problem: `return null` renders a completely blank page with no feedback to the user — no message, no retry option, nothing. The user has no way to know if the page is broken, loading, or just empty.
+
+### The problem with `return null`
+
+When a fetch fails silently and the page returns `null`, the user sees a blank white screen. There is no way to distinguish this from a loading state or an actual empty result. The header and footer still render (they come from `layout.tsx`), but the page body is empty. This is a bad user experience and makes the failure invisible.
+
+### Options considered
+
+**Option A — Inline error/empty state**
+Keep the try/catch but instead of `return null`, render an error message and a retry button directly in the page component:
+
+```tsx
+} catch {
+  return <div>Something went wrong. Please try again later.</div>;
+}
+```
+
+This works but mixes data-fetching logic with error UI inside the same component. It also doesn't give users a way to retry without a full page reload.
+
+**Option B — Next.js `error.tsx` boundary (chosen)**
+Remove the try/catch entirely and let the error propagate. Next.js App Router automatically catches unhandled errors in async server components and renders the nearest `error.tsx` file in the same route segment. This file receives an `error` object and a `reset()` function that re-renders the segment — giving the user a proper retry mechanism.
+
+```
+app/
+  restaurants/
+    page.tsx       ← throws on fetch failure
+    error.tsx      ← Next.js renders this automatically
+```
+
+### Why we chose Option B
+
+- **Separation of concerns** — `page.tsx` only handles the happy path. Error UI lives in its own dedicated file (`error.tsx`), which is the convention Next.js was designed around.
+- **Retry without full reload** — the `reset()` prop passed to `error.tsx` re-renders only the failing segment, not the entire page. The user can retry without losing navigation context.
+- **Cleaner page component** — removing try/catch also allowed simplifying `let restaurants = []` (which inferred `any[]`) to `const restaurants = await getAllRestaurants()`, which TypeScript types correctly from the service function's return type.
+- **Scalable pattern** — if other routes need error handling later, they each get their own `error.tsx` following the same pattern, rather than each page having its own ad-hoc error logic.
+
+### Implementation note
+
+`error.tsx` must be a Client Component (`'use client'`) because it uses the `reset` callback interactively. The component is minimal: a message string and a retry button, both using copy from `copy.ts`.
