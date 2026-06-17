@@ -21,7 +21,9 @@ export function MealFilterSection({ dishes }: Props) {
         <MealTypeFilter active={activeMeal} onChange={setActiveMeal} />
       </div>
       {filteredDishes.length === 0 ? (
-        <p className={styles.emptyMessage}>{COPY.restaurantDetail.noDishes(activeMeal)}</p>
+        <p className={styles.emptyMessage}>
+          {COPY.restaurantDetail.noDishes(activeMeal)}
+        </p>
       ) : (
         <div className={styles.dishes}>
           {filteredDishes.map((dish) => (

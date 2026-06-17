@@ -31,7 +31,8 @@ export function RestaurantDishCard({ dish }: Props) {
         {description && <p className={styles.description}>{description}</p>}
         <div className={styles.priceRow}>
           <span className={styles.price}>
-            {COPY.signatureDishes.shekelSign}{price}
+            {COPY.signatureDishes.shekelSign}
+            {price}
           </span>
         </div>
       </div>

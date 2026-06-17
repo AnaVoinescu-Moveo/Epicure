@@ -41,7 +41,9 @@ export function RestaurantDetail({ restaurant }: Props) {
             height={20}
           />
           <span className={styles.statusText}>
-            {isOpen ? COPY.restaurantDetail.openNow : COPY.restaurantDetail.closedNow}
+            {isOpen
+              ? COPY.restaurantDetail.openNow
+              : COPY.restaurantDetail.closedNow}
           </span>
         </div>
         <MealFilterSection dishes={dishes ?? []} />
