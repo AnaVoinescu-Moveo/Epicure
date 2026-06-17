@@ -1,12 +1,13 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Restaurant } from '@/lib/strapi';
 import { isOpenNow } from '@/lib/time';
+import { haversineKm, getUserLocation, type UserCoords } from '@/lib/distance';
 import { COPY } from '@/constants/copy';
 import { RestaurantCard } from '@/components/restaurants/RestaurantCard';
-import { FilterBar } from './FilterBar';
+import { FilterBar, type PriceBounds } from './FilterBar';
 import { FilterNav, type FilterId } from './FilterNav';
 import styles from './RestaurantsList.module.css';
 
@@ -15,6 +16,10 @@ const RestaurantsMap = dynamic(
   { ssr: false, loading: () => <div className={styles.mapPlaceholder} /> },
 );
 
+type LocationStatus = 'idle' | 'loading' | 'granted';
+
+const FALLBACK_COORDS: UserCoords = { latitude: 32.0752, longitude: 34.7748 };
+
 interface RestaurantsListProps {
   restaurants: Restaurant[];
 }
@@ -22,6 +27,14 @@ interface RestaurantsListProps {
 export function RestaurantsList({ restaurants }: RestaurantsListProps) {
   const [activeFilter, setActiveFilter] = useState<FilterId>('all');
 
+  // Second-row filter state
+  const [priceRange, setPriceRange] = useState<PriceBounds | null>(null);
+  const [distanceKm, setDistanceKm] = useState<number | null>(null);
+  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+  const [userCoords, setUserCoords] = useState<UserCoords | null>(null);
+  const [locationStatus, setLocationStatus] = useState<LocationStatus>('idle');
+
+  // Reset map-view when resizing to mobile
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 1024px)');
     const handleChange = ({ matches }: MediaQueryListEvent) => {
@@ -33,20 +46,103 @@ export function RestaurantsList({ restaurants }: RestaurantsListProps) {
     return () => mq.removeEventListener('change', handleChange);
   }, [activeFilter]);
 
+  const priceBounds = useMemo((): PriceBounds => {
+    const prices = restaurants.flatMap(
+      (r) => r.dishes?.map((d) => d.price) ?? [],
+    );
+    if (prices.length === 0) return { min: 0, max: 100 };
+    return { min: Math.min(...prices), max: Math.max(...prices) };
+  }, [restaurants]);
+
+  const resetFilters = useCallback(() => {
+    setActiveFilter('all');
+    setPriceRange(null);
+    setDistanceKm(null);
+    setSelectedRatings([]);
+    setUserCoords(null);
+    setLocationStatus('idle');
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('restaurants:reset', resetFilters);
+    return () => window.removeEventListener('restaurants:reset', resetFilters);
+  }, [resetFilters]);
+
+  const requestLocation = useCallback(() => {
+    if (locationStatus === 'loading' || locationStatus === 'granted') return;
+    setLocationStatus('loading');
+    getUserLocation()
+      .then((coords) => {
+        setUserCoords(coords);
+        setLocationStatus('granted');
+      })
+      .catch(() => {
+        setUserCoords(FALLBACK_COORDS);
+        setLocationStatus('granted');
+      });
+  }, [locationStatus]);
+
   const filtered = useMemo(() => {
+    // First-row filter
+    let result: Restaurant[];
     switch (activeFilter) {
       case 'most-popular':
-        return restaurants.slice(0, 3);
+        result = restaurants.slice(0, 3);
+        break;
       case 'new':
-        return restaurants.filter((r) => r.isNew);
+        result = restaurants.filter((r) => r.isNew);
+        break;
       case 'open-now':
-        return restaurants.filter((r) =>
+        result = restaurants.filter((r) =>
           isOpenNow(r.openingTime, r.closingTime),
         );
+        break;
       default:
-        return restaurants;
+        result = restaurants;
     }
-  }, [restaurants, activeFilter]);
+
+    // Price range filter
+    if (priceRange !== null) {
+      result = result.filter(
+        (r) =>
+          r.dishes?.some(
+            (d) => d.price >= priceRange.min && d.price <= priceRange.max,
+          ) ?? false,
+      );
+    }
+
+    // Distance filter (only when user location is known)
+    if (distanceKm !== null && userCoords !== null) {
+      result = result.filter((r) => {
+        if (r.latitude == null || r.longitude == null) return false;
+        return (
+          haversineKm(
+            userCoords.latitude,
+            userCoords.longitude,
+            r.latitude,
+            r.longitude,
+          ) <= distanceKm
+        );
+      });
+    }
+
+    // Rating filter
+    if (selectedRatings.length > 0) {
+      result = result.filter(
+        (r) =>
+          r.rating != null && selectedRatings.includes(Math.round(r.rating)),
+      );
+    }
+
+    return result;
+  }, [
+    restaurants,
+    activeFilter,
+    priceRange,
+    distanceKm,
+    userCoords,
+    selectedRatings,
+  ]);
 
   return (
     <>
@@ -57,10 +153,20 @@ export function RestaurantsList({ restaurants }: RestaurantsListProps) {
         />
       </div>
       <div className={styles.filterBarWrapper}>
-        <FilterBar />
+        <FilterBar
+          priceBounds={priceBounds}
+          priceRange={priceRange}
+          onPriceRangeChange={setPriceRange}
+          distanceKm={distanceKm}
+          locationLoading={locationStatus === 'loading'}
+          onDistanceChange={setDistanceKm}
+          onRequestLocation={requestLocation}
+          selectedRatings={selectedRatings}
+          onRatingsChange={setSelectedRatings}
+        />
       </div>
       {activeFilter === 'map-view' ? (
-        <RestaurantsMap restaurants={restaurants} />
+        <RestaurantsMap restaurants={filtered} />
       ) : filtered.length === 0 && activeFilter === 'open-now' ? (
         <p className={styles.emptyState}>{COPY.restaurants.openNowEmpty}</p>
       ) : (

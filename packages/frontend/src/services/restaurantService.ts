@@ -19,7 +19,7 @@ export const getPopularRestaurants = unstable_cache(
 export const getAllRestaurants = unstable_cache(
   async (): Promise<Restaurant[]> => {
     const data = await strapiGet<StrapiListResponse<Restaurant>>(
-      '/restaurants?sort=rating:desc&pagination[limit]=100&populate[chef]=true&populate[image]=true',
+      '/restaurants?sort=rating:desc&pagination[limit]=100&populate[chef]=true&populate[image]=true&populate[dishes]=true',
     );
     return data.data ?? [];
   },

@@ -19,10 +19,15 @@
   }
 
   .filterItem {
+    position: relative;
+    height: 60px;
+  }
+
+  .button {
     display: flex;
     align-items: center;
     gap: 10px;
-    height: 60px;
+    height: 100%;
     padding: 18px 22px;
     font-weight: 200;
     font-size: 18px;
@@ -32,11 +37,19 @@
     white-space: nowrap;
   }
 
-  .filterItemSelected {
+  .buttonSelected {
     background: var(--color-filter-selected);
   }
 
   .arrow {
     flex-shrink: 0;
+  }
+
+  .dropdownWrapper {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
   }
 }

@@ -53,13 +53,12 @@ export interface Restaurant {
   image: StrapiImage | null;
   rating: number | null;
   chef: StrapiChef | null;
-  priceRange: 'low' | 'medium' | 'high' | null;
-  distance: number | null;
   isNew: boolean;
   openingTime: string | null;
   closingTime: string | null;
   latitude: number | null;
   longitude: number | null;
+  dishes?: Dish[];
 }
 
 export interface Dish {
