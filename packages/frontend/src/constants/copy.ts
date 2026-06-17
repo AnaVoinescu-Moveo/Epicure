@@ -71,5 +71,7 @@ export const COPY = {
     filterBarPriceRange: 'Price Range',
     filterBarDistance: 'Distance',
     filterBarRating: 'Rating',
+    errorMessage: 'Something went wrong loading the restaurants.',
+    errorRetry: 'Try again',
   },
 } as const;

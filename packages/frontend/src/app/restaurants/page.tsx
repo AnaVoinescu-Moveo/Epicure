@@ -11,14 +11,7 @@ export const metadata = {
 };
 
 export default async function RestaurantsPage() {
-  let restaurants = [];
-
-  try {
-    restaurants = await getAllRestaurants();
-  } catch (err) {
-    console.error('[RestaurantsPage] Failed to fetch restaurants:', err);
-    return null;
-  }
+  const restaurants = await getAllRestaurants();
 
   return (
     <main className={styles.page}>
