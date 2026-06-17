@@ -1,0 +1,42 @@
+.bar {
+  display: none;
+}
+
+/* ─── Desktop ─────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+    background: var(--color-section-bg);
+  }
+
+  .filters {
+    display: flex;
+  }
+
+  .filterItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 60px;
+    padding: 18px 22px;
+    font-weight: 200;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: 1.92px;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  .filterItemSelected {
+    background: var(--color-filter-selected);
+  }
+
+  .arrow {
+    flex-shrink: 0;
+  }
+}

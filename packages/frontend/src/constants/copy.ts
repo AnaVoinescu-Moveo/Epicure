@@ -61,4 +61,17 @@ export const COPY = {
     paragraph2:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a lacus vel justo fermentum bibendum non eu ipsum. Cras porta malesuada eros.',
   },
+  restaurants: {
+    pageTitle: 'Restaurants',
+    filterAll: 'All',
+    filterNew: 'New',
+    filterMostPopular: 'Most Popular',
+    filterOpenNow: 'Open Now',
+    filterMapView: 'Map View',
+    filterBarPriceRange: 'Price Range',
+    filterBarDistance: 'Distance',
+    filterBarRating: 'Rating',
+    errorMessage: 'Something went wrong loading the restaurants.',
+    errorRetry: 'Try again',
+  },
 } as const;
