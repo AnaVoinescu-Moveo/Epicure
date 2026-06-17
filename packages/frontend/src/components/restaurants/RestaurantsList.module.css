@@ -13,6 +13,16 @@
   display: none;
 }
 
+.emptyState {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  color: var(--color-text);
+  padding: 0 20px;
+}
+
 .mapPlaceholder {
   width: 100%;
   height: 600px;

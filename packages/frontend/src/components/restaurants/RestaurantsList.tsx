@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useState } from 'react';
 import type { Restaurant } from '@/lib/strapi';
 import { isOpenNow } from '@/lib/time';
+import { COPY } from '@/constants/copy';
 import { RestaurantCard } from '@/components/restaurants/RestaurantCard';
 import { FilterBar } from './FilterBar';
 import { FilterNav, type FilterId } from './FilterNav';
@@ -60,6 +61,8 @@ export function RestaurantsList({ restaurants }: RestaurantsListProps) {
       </div>
       {activeFilter === 'map-view' ? (
         <RestaurantsMap restaurants={restaurants} />
+      ) : filtered.length === 0 && activeFilter === 'open-now' ? (
+        <p className={styles.emptyState}>{COPY.restaurants.openNowEmpty}</p>
       ) : (
         <div className={styles.list}>
           {filtered.map((restaurant) => (
