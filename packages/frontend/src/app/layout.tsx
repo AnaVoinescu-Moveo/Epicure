@@ -1,6 +1,6 @@
 import './global.css';
 import { Header } from '../components/layout/Header';
-import { Footer } from '../components/home/Footer';
+import { Footer } from '../components/layout/Footer';
 import { COPY } from '../constants/copy';
 
 export const metadata = {
