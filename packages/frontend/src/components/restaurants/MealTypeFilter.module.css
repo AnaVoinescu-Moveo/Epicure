@@ -1,0 +1,36 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  width: 100%;
+}
+
+.item {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 0 1px;
+  font-size: 18px;
+  font-weight: 200;
+  letter-spacing: 1.92px;
+  text-transform: capitalize;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.itemActive {
+  font-weight: 400;
+  border-bottom-color: var(--color-accent);
+}
+
+@media (min-width: 1024px) {
+  .item {
+    font-size: 24px;
+  }
+
+  .itemActive {
+    font-weight: 200;
+    border-bottom-color: var(--color-accent);
+  }
+}

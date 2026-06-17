@@ -1,0 +1,126 @@
+.card {
+  width: 335px;
+  height: 375.84px;
+  background: var(--color-card);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 335px;
+  height: 207.84px;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-border);
+}
+
+.body {
+  flex: 1;
+  padding: 12px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: 2.67px;
+  margin: 0;
+  text-align: left;
+}
+
+.description {
+  width: 303px;
+  height: 60px;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  margin: 0;
+  text-align: left;
+  overflow: hidden;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+}
+
+.priceRow::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--color-price-line);
+  margin-left: 12px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 1.97px;
+  white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+  .card {
+    width: 272px;
+    height: 413px;
+  }
+
+  .imageWrapper {
+    width: 272px;
+    height: 180px;
+  }
+
+  .body {
+    padding: 12px 16px 23px;
+    align-items: center;
+  }
+
+  .name {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 2.67px;
+    text-align: center;
+  }
+
+  .description {
+    width: 222px;
+    height: 135.77px;
+    text-align: center;
+    display: block;
+    overflow: hidden;
+  }
+
+  .priceRow {
+    justify-content: center;
+  }
+
+  .priceRow::before {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--color-price-line);
+    margin-right: 12px;
+  }
+
+  .price {
+    text-align: center;
+  }
+}

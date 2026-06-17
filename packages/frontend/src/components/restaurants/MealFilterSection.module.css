@@ -1,0 +1,33 @@
+.filterWrapper {
+  margin-bottom: 24px;
+}
+
+.dishes {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.emptyMessage {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  padding: 24px 0;
+}
+
+@media (min-width: 1024px) {
+  .filterWrapper {
+    margin-bottom: 32px;
+  }
+
+  .dishes {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+
+  .emptyMessage {
+    font-size: 18px;
+  }
+}
