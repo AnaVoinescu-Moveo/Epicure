@@ -1,5 +1,6 @@
 import './global.css';
 import { Header } from '../components/layout/Header';
+import { Footer } from '../components/layout/Footer';
 import { COPY } from '../constants/copy';
 
 export const metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body>
         <Header />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
