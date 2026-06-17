@@ -6,6 +6,8 @@ import { ScrollToTop } from '@/components/restaurants/ScrollToTop';
 import { COPY } from '@/constants/copy';
 import styles from './RestaurantsPage.module.css';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: COPY.restaurants.pageTitle,
 };
