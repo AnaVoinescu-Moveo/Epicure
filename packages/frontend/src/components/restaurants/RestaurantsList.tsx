@@ -16,9 +16,7 @@ const RestaurantsMap = dynamic(
   { ssr: false, loading: () => <div className={styles.mapPlaceholder} /> },
 );
 
-type LocationStatus = 'idle' | 'loading' | 'granted';
-
-const FALLBACK_COORDS: UserCoords = { latitude: 32.0752, longitude: 34.7748 };
+type LocationStatus = 'idle' | 'loading' | 'granted' | 'denied';
 
 interface RestaurantsListProps {
   restaurants: Restaurant[];
@@ -76,11 +74,17 @@ export function RestaurantsList({ restaurants }: RestaurantsListProps) {
         setUserCoords(coords);
         setLocationStatus('granted');
       })
-      .catch(() => {
-        setUserCoords(FALLBACK_COORDS);
-        setLocationStatus('granted');
-      });
+      .catch(() => setLocationStatus('denied'));
   }, [locationStatus]);
+
+  const skipToAddress = useCallback(() => {
+    setLocationStatus('denied');
+  }, []);
+
+  const handleCoordsFromAddress = useCallback((coords: UserCoords) => {
+    setUserCoords(coords);
+    setLocationStatus('granted');
+  }, []);
 
   const filtered = useMemo(() => {
     // First-row filter
@@ -159,8 +163,12 @@ export function RestaurantsList({ restaurants }: RestaurantsListProps) {
           onPriceRangeChange={setPriceRange}
           distanceKm={distanceKm}
           locationLoading={locationStatus === 'loading'}
+          locationGranted={locationStatus === 'granted'}
+          locationDenied={locationStatus === 'denied'}
           onDistanceChange={setDistanceKm}
           onRequestLocation={requestLocation}
+          onSkipToAddress={skipToAddress}
+          onCoordsFromAddress={handleCoordsFromAddress}
           selectedRatings={selectedRatings}
           onRatingsChange={setSelectedRatings}
         />

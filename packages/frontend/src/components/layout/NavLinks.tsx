@@ -16,7 +16,7 @@ export function NavLinks() {
           href={href}
           className={`${styles.link} ${pathname === href ? styles.active : ''}`}
           onClick={() => {
-            if (pathname === href) {
+            if (pathname === href && href === '/restaurants') {
               window.dispatchEvent(new CustomEvent('restaurants:reset'));
             }
           }}

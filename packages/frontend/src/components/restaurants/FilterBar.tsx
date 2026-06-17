@@ -5,6 +5,7 @@ import { useCallback, useRef, useState } from 'react';
 import { COPY } from '@/constants/copy';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
+import type { UserCoords } from '@/lib/distance';
 import { PriceRangeDropdown } from './PriceRangeDropdown';
 import { DistanceDropdown } from './DistanceDropdown';
 import { RatingDropdown } from './RatingDropdown';
@@ -23,8 +24,12 @@ export interface FilterBarProps {
   onPriceRangeChange: (range: PriceBounds | null) => void;
   distanceKm: number | null;
   locationLoading: boolean;
+  locationGranted: boolean;
+  locationDenied: boolean;
   onDistanceChange: (km: number) => void;
   onRequestLocation: () => void;
+  onSkipToAddress: () => void;
+  onCoordsFromAddress: (coords: UserCoords) => void;
   selectedRatings: number[];
   onRatingsChange: (ratings: number[]) => void;
 }
@@ -35,8 +40,12 @@ export function FilterBar({
   onPriceRangeChange,
   distanceKm,
   locationLoading,
+  locationGranted,
+  locationDenied,
   onDistanceChange,
   onRequestLocation,
+  onSkipToAddress,
+  onCoordsFromAddress,
   selectedRatings,
   onRatingsChange,
 }: FilterBarProps) {
@@ -48,9 +57,6 @@ export function FilterBar({
   useEscapeKey(close, openDropdown !== null);
 
   const toggle = (id: FilterBarId) => {
-    if (id === 'distance' && openDropdown !== 'distance') {
-      onRequestLocation();
-    }
     setOpenDropdown((prev) => (prev === id ? null : id));
   };
 
@@ -109,7 +115,12 @@ export function FilterBar({
               <DistanceDropdown
                 value={distanceKm}
                 locationLoading={locationLoading}
+                locationGranted={locationGranted}
+                locationDenied={locationDenied}
                 onChange={onDistanceChange}
+                onRequestLocation={onRequestLocation}
+                onSkipToAddress={onSkipToAddress}
+                onCoordsFromAddress={onCoordsFromAddress}
               />
             </div>
           )}

@@ -77,8 +77,15 @@ export const COPY = {
     filterBarDistanceValue: (km: number) => `${km} km`,
     filterBarMyLocation: 'My Location',
     filterBarRatingTitle: 'Rating',
-    filterBarGpsError:
-      'Please enable GPS/location services to use distance filtering.',
+    filterBarLocating: 'Locating…',
+    filterBarEnterAddress: 'Enter address manually',
+    filterBarTryGps: 'Use my location instead',
+    filterBarDistanceAriaLabel: 'Maximum distance in km',
+    filterBarAddressPlaceholder: 'Enter an address in Tel Aviv',
+    filterBarAddressSubmit: 'Search',
+    filterBarAddressSearching: 'Searching address…',
+    filterBarAddressError:
+      'Address not found or not in Tel Aviv. Please try again.',
     errorMessage: 'Something went wrong loading the restaurants.',
     errorRetry: 'Try again',
     openNowEmpty: 'No restaurants are currently open. Please come back soon!',
