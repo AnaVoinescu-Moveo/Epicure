@@ -1,12 +1,16 @@
 import Link from 'next/link';
 import { FOOTER_LINKS } from '@/constants/nav';
+import { getFooter } from '@/services/footerService';
 import styles from './Footer.module.css';
 
-export function Footer() {
+export async function Footer() {
+  const data = await getFooter();
+  const footerLinks = data?.footerLinks?.length ? data.footerLinks : FOOTER_LINKS;
+
   return (
     <footer className={styles.footer}>
       <nav className={styles.inner}>
-        {FOOTER_LINKS.map(({ href, label }) => (
+        {footerLinks.map(({ href, label }) => (
           <Link key={href} href={href} className={styles.link}>
             {label}
           </Link>

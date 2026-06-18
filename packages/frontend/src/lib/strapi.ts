@@ -70,6 +70,19 @@ export interface Restaurant {
   dishes?: Dish[];
 }
 
+export interface StrapiNavLink {
+  label: string;
+  href: string;
+}
+
+export interface StrapiHeader {
+  navLinks: StrapiNavLink[];
+}
+
+export interface StrapiFooter {
+  footerLinks: StrapiNavLink[];
+}
+
 export interface Dish {
   id: number;
   documentId: string;

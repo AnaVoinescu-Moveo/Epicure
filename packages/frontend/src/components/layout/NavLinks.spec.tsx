@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { NavLinks } from './NavLinks';
+import { NAV_LINKS } from '../../constants/nav';
 
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -30,7 +31,7 @@ describe('NavLinks', () => {
   });
 
   it('renders Restaurants and Chefs links', () => {
-    render(<NavLinks />);
+    render(<NavLinks links={NAV_LINKS} />);
     expect(
       screen.getByRole('link', { name: 'Restaurants' }),
     ).toBeInTheDocument();
@@ -38,7 +39,7 @@ describe('NavLinks', () => {
   });
 
   it('links point to correct routes', () => {
-    render(<NavLinks />);
+    render(<NavLinks links={NAV_LINKS} />);
     expect(screen.getByRole('link', { name: 'Restaurants' })).toHaveAttribute(
       'href',
       '/restaurants',
@@ -51,21 +52,21 @@ describe('NavLinks', () => {
 
   it('applies active class to Restaurants link when on /restaurants', () => {
     mockUsePathname.mockReturnValue('/restaurants');
-    render(<NavLinks />);
+    render(<NavLinks links={NAV_LINKS} />);
     const link = screen.getByRole('link', { name: 'Restaurants' });
     expect(link.className).toContain('active');
   });
 
   it('applies active class to Chefs link when on /chefs', () => {
     mockUsePathname.mockReturnValue('/chefs');
-    render(<NavLinks />);
+    render(<NavLinks links={NAV_LINKS} />);
     const link = screen.getByRole('link', { name: 'Chefs' });
     expect(link.className).toContain('active');
   });
 
   it('does not apply active class when on a different route', () => {
     mockUsePathname.mockReturnValue('/');
-    render(<NavLinks />);
+    render(<NavLinks links={NAV_LINKS} />);
     expect(
       screen.getByRole('link', { name: 'Restaurants' }).className,
     ).not.toContain('active');
