@@ -5,7 +5,9 @@ import styles from './Footer.module.css';
 
 export async function Footer() {
   const data = await getFooter();
-  const footerLinks = data?.footerLinks?.length ? data.footerLinks : FOOTER_LINKS;
+  const footerLinks = data?.footerLinks?.length
+    ? data.footerLinks
+    : FOOTER_LINKS;
 
   return (
     <footer className={styles.footer}>

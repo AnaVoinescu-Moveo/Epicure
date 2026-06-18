@@ -16,11 +16,17 @@ export async function Header() {
   let navLinks = NAV_LINKS;
   let footerLinks = FOOTER_LINKS;
   try {
-    [restaurants, chefs] = await Promise.all([getAllRestaurants(), getAllChefs()]);
+    [restaurants, chefs] = await Promise.all([
+      getAllRestaurants(),
+      getAllChefs(),
+    ]);
   } catch {
     // Search renders with empty results if Strapi is unavailable
   }
-  const [headerData, footerData] = await Promise.all([getHeader(), getFooter()]);
+  const [headerData, footerData] = await Promise.all([
+    getHeader(),
+    getFooter(),
+  ]);
   if (headerData?.navLinks?.length) navLinks = headerData.navLinks;
   if (footerData?.footerLinks?.length) footerLinks = footerData.footerLinks;
 

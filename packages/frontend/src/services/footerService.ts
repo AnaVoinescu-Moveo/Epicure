@@ -1,5 +1,9 @@
 import { unstable_cache } from 'next/cache';
-import { strapiGet, type StrapiSingleResponse, type StrapiFooter } from '@/lib/strapi';
+import {
+  strapiGet,
+  type StrapiSingleResponse,
+  type StrapiFooter,
+} from '@/lib/strapi';
 
 export const getFooter = unstable_cache(
   async (): Promise<StrapiFooter | null> => {
