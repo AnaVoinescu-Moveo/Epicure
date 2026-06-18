@@ -15,7 +15,10 @@ interface ChefsFilterNavProps {
   onFilterChange: (filter: ChefFilter) => void;
 }
 
-export function ChefsFilterNav({ active, onFilterChange }: ChefsFilterNavProps) {
+export function ChefsFilterNav({
+  active,
+  onFilterChange,
+}: ChefsFilterNavProps) {
   return (
     <nav className={styles.nav} aria-label={COPY.chefs.filterAriaLabel}>
       {FILTERS.map(({ key, label }) => (
