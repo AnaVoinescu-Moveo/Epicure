@@ -2,6 +2,11 @@ export const COPY = {
   ui: {
     starsAriaLabel: (rating: number) => `${rating} out of 5 stars`,
   },
+  search: {
+    placeholder: 'Search for restaurant cuisine, chef',
+    ariaLabel: 'Search',
+    noResults: 'No results found, please try again.',
+  },
   site: {
     name: 'Epicure',
     titleTemplate: '%s | Epicure',
@@ -74,6 +79,13 @@ export const COPY = {
     errorMessage: 'Something went wrong loading the restaurants.',
     errorRetry: 'Try again',
     openNowEmpty: 'No restaurants are currently open. Please come back soon!',
+  },
+  cuisine: {
+    empty: 'No restaurants available for this cuisine at the moment.',
+  },
+  chefDetail: {
+    restaurantsTitle: (firstName: string) => `${firstName}'s restaurants`,
+    noRestaurants: 'No restaurants listed for this chef.',
   },
   restaurantDetail: {
     openNow: 'Open now',

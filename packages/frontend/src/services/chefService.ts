@@ -11,3 +11,29 @@ export const getChefOfTheWeek = unstable_cache(
   ['chef-of-the-week'],
   { revalidate: 60 },
 );
+
+export const getAllChefs = unstable_cache(
+  async (): Promise<Chef[]> => {
+    const data = await strapiGet<StrapiListResponse<Chef>>(
+      '/chefs?pagination[limit]=100&populate[image]=true&sort=name:asc',
+    );
+    return data.data ?? [];
+  },
+  ['all-chefs'],
+  { revalidate: 60 },
+);
+
+export const getChefByDocumentId = unstable_cache(
+  async (documentId: string): Promise<Chef | null> => {
+    try {
+      const data = await strapiGet<StrapiListResponse<Chef>>(
+        `/chefs?filters[documentId][$eq]=${documentId}&pagination[limit]=1&populate[image]=true&populate[restaurants][populate][image]=true`,
+      );
+      return data.data?.[0] ?? null;
+    } catch {
+      return null;
+    }
+  },
+  ['chef'],
+  { revalidate: 60 },
+);

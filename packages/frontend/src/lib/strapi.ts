@@ -50,6 +50,8 @@ export interface Chef {
   restaurants: Restaurant[];
 }
 
+export type CuisineSlug = 'mediterranean' | 'thai' | 'asian' | 'italian';
+
 export interface Restaurant {
   id: number;
   documentId: string;
@@ -64,6 +66,7 @@ export interface Restaurant {
   closingTime: string | null;
   latitude: number | null;
   longitude: number | null;
+  cuisine: CuisineSlug | null;
   dishes?: Dish[];
 }
 

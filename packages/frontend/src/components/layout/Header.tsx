@@ -4,8 +4,21 @@ import styles from './Header.module.css';
 import { MobileMenu } from './MobileMenu';
 import { NavLinks } from './NavLinks';
 import { HeaderSearch } from './HeaderSearch';
+import { getAllRestaurants } from '@/services/restaurantService';
+import { getAllChefs } from '@/services/chefService';
 
-export function Header() {
+export async function Header() {
+  let restaurants: Awaited<ReturnType<typeof getAllRestaurants>> = [];
+  let chefs: Awaited<ReturnType<typeof getAllChefs>> = [];
+  try {
+    [restaurants, chefs] = await Promise.all([
+      getAllRestaurants(),
+      getAllChefs(),
+    ]);
+  } catch {
+    // Search renders with empty results if Strapi is unavailable
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
@@ -33,7 +46,7 @@ export function Header() {
 
         {/* Right icons */}
         <div className={styles.rightIcons}>
-          <HeaderSearch />
+          <HeaderSearch restaurants={restaurants} chefs={chefs} />
           <button type="button" className={styles.iconBtn} aria-label="Profile">
             <Image
               src="/icons/profile.svg"

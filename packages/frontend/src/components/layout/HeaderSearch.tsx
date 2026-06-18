@@ -1,21 +1,31 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import styles from './Header.module.css';
 import { SearchOverlay } from '../search/SearchOverlay';
 import { SearchInput } from '../search/SearchInput';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
 import { useIsClickedOutside } from '../../hooks/useIsClickedOutside';
+import { buildSearchFn } from '@/lib/searchUtils';
+import type { Chef, Restaurant } from '@/lib/strapi';
 
-export function HeaderSearch() {
+interface HeaderSearchProps {
+  restaurants: Restaurant[];
+  chefs: Chef[];
+}
+
+export function HeaderSearch({ restaurants, chefs }: HeaderSearchProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
+  const onSearch = useMemo(
+    () => buildSearchFn(restaurants, chefs),
+    [restaurants, chefs],
+  );
   const closeSearch = useCallback(() => setIsSearchOpen(false), []);
 
-  // Track viewport to distinguish mobile overlay vs desktop inline input
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 1024px)');
     setIsDesktop(mq.matches);
@@ -34,6 +44,8 @@ export function HeaderSearch() {
           <SearchInput
             iconPosition="right"
             className={styles.desktopSearchInput}
+            onSearch={onSearch}
+            onSelect={closeSearch}
           />
         </div>
       ) : (
@@ -53,8 +65,13 @@ export function HeaderSearch() {
         </button>
       )}
 
-      {/* Mobile search overlay — position:fixed so DOM location doesn't matter */}
-      {isSearchOpen && !isDesktop && <SearchOverlay onClose={closeSearch} />}
+      {isSearchOpen && !isDesktop && (
+        <SearchOverlay
+          onClose={closeSearch}
+          onSearch={onSearch}
+          onSelect={closeSearch}
+        />
+      )}
     </>
   );
 }

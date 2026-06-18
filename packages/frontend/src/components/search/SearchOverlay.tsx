@@ -1,16 +1,22 @@
 'use client';
 
 import Image from 'next/image';
-import { SearchInput } from './SearchInput';
+import { SearchInput, type SearchResultGroup } from './SearchInput';
 import styles from './SearchOverlay.module.css';
 import { useScrollLock } from '../../hooks/useScrollLock';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
 
 interface SearchOverlayProps {
   onClose: () => void;
+  onSearch?: (query: string) => SearchResultGroup[];
+  onSelect?: () => void;
 }
 
-export function SearchOverlay({ onClose }: SearchOverlayProps) {
+export function SearchOverlay({
+  onClose,
+  onSearch,
+  onSelect,
+}: SearchOverlayProps) {
   useScrollLock(true);
   useEscapeKey(onClose, true);
 
@@ -21,7 +27,6 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
       aria-modal="true"
       aria-label="Search"
     >
-      {/* Top row: X button + Search title */}
       <div className={styles.topRow}>
         <button
           type="button"
@@ -34,9 +39,13 @@ export function SearchOverlay({ onClose }: SearchOverlayProps) {
         <span className={styles.title}>Search</span>
       </div>
 
-      {/* Search input */}
       <div className={styles.inputWrapper}>
-        <SearchInput iconPosition="left" />
+        <SearchInput
+          iconPosition="left"
+          autoFocus
+          onSearch={onSearch}
+          onSelect={onSelect}
+        />
       </div>
     </div>
   );

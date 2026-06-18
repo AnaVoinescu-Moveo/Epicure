@@ -49,6 +49,10 @@
     "longitude": {
       "type": "decimal"
     },
+    "cuisine": {
+      "type": "enumeration",
+      "enum": ["mediterranean", "thai", "asian", "italian"]
+    },
     "chef": {
       "type": "relation",
       "relation": "manyToOne",

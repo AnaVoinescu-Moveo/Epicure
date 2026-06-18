@@ -75,7 +75,7 @@
 
 .groupLabel {
   display: block;
-  padding: 4px 12px;
+  padding: 6px 12px 2px;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 200;
   font-size: 16px;
@@ -85,10 +85,10 @@
 }
 
 .dropdownItem {
-  padding: 4px 12px 4px 20px;
+  padding: 4px 12px;
   cursor: pointer;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 1.29px;
@@ -98,4 +98,14 @@
 .dropdownItem.active,
 .dropdownItem:hover {
   background-color: var(--color-card);
+}
+
+.noResults {
+  padding: 8px 12px;
+  margin: 0;
+  font-weight: 200;
+  font-size: 14px;
+  letter-spacing: 1.29px;
+  color: var(--color-text);
+  opacity: 0.6;
 }

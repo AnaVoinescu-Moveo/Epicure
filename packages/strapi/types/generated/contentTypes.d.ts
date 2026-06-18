@@ -529,6 +529,9 @@ export interface ApiRestaurantRestaurant extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    cuisine: Schema.Attribute.Enumeration<
+      ['mediterranean', 'thai', 'asian', 'italian']
+    >;
     dishes: Schema.Attribute.Relation<'oneToMany', 'api::dish.dish'>;
     distance: Schema.Attribute.Decimal;
     image: Schema.Attribute.Media<'images'>;
