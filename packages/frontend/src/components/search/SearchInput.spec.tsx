@@ -83,8 +83,8 @@ describe('SearchInput', () => {
     expect(screen.getByRole('listbox')).toBeInTheDocument();
     expect(screen.getByText('The Blue Door')).toBeInTheDocument();
     expect(screen.getByText('Gordon Ramsay')).toBeInTheDocument();
-    expect(screen.getByText('Restaurants')).toBeInTheDocument();
-    expect(screen.getByText('Chef')).toBeInTheDocument();
+    expect(screen.getByText('Restaurants:')).toBeInTheDocument();
+    expect(screen.getByText('Chef:')).toBeInTheDocument();
   });
 
   it('hides dropdown when input is cleared', () => {

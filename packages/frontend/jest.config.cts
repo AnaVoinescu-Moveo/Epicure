@@ -29,6 +29,7 @@ module.exports = async () => {
   // Map @/* alias so Jest can resolve src-relative imports.
   resolved.moduleNameMapper = {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^next/cache$': '<rootDir>/__mocks__/next/cache.ts',
     ...resolved.moduleNameMapper,
   };
   return resolved;
