@@ -33,6 +33,14 @@
       "relation": "oneToMany",
       "target": "api::restaurant.restaurant",
       "mappedBy": "chef"
+    },
+    "isNew": {
+      "type": "boolean",
+      "default": false
+    },
+    "isMostViewed": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

@@ -1,0 +1,29 @@
+/* ─── Mobile base ─────────────────────────────────────── */
+
+.page {
+  padding-top: 14px;
+  padding-left: 20px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 200;
+  letter-spacing: 1.92px;
+  line-height: 100%;
+  text-transform: uppercase;
+  margin: 0 0 24px;
+  color: var(--color-text);
+}
+
+/* ─── Desktop ─────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .page {
+    padding-top: 0;
+    padding-left: 0;
+  }
+
+  .title {
+    display: none;
+  }
+}

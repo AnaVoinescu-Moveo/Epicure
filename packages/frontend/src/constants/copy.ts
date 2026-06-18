@@ -61,6 +61,18 @@ export const COPY = {
     paragraph2:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a lacus vel justo fermentum bibendum non eu ipsum. Cras porta malesuada eros.',
   },
+  chefs: {
+    pageTitle: 'CHEFS',
+    filterAll: 'All',
+    filterNew: 'New',
+    filterMostViewed: 'Most Viewed',
+    filterAriaLabel: 'Filter chefs',
+    emptyAll: 'No chefs available at the moment.',
+    emptyNew: 'No new chefs at the moment.',
+    emptyMostViewed: 'No featured chefs at the moment.',
+    errorMessage: 'Something went wrong loading the chefs.',
+    errorRetry: 'Try again',
+  },
   restaurants: {
     pageTitle: 'Restaurants',
     filterAll: 'All',
