@@ -13,8 +13,8 @@ export async function Hero() {
       getAllRestaurants(),
       getAllChefs(),
     ]);
-  } catch {
-    // Search renders with empty results if Strapi is unavailable
+  } catch (err) {
+    console.error('[Hero] Failed to fetch search data:', err);
   }
 
   return (

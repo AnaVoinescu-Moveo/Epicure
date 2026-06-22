@@ -1,12 +1,7 @@
-import type { Chef, CuisineSlug, Restaurant } from './strapi';
+import { CUISINES, type Chef, type Restaurant } from './strapi';
 import type { SearchResultGroup } from '@/components/search/SearchInput';
 
-export const CUISINES: { slug: CuisineSlug; label: string }[] = [
-  { slug: 'mediterranean', label: 'Mediterranean' },
-  { slug: 'thai', label: 'Thai' },
-  { slug: 'asian', label: 'Asian' },
-  { slug: 'italian', label: 'Italian' },
-];
+export { CUISINES };
 
 export function buildSearchFn(restaurants: Restaurant[], chefs: Chef[]) {
   return (query: string): SearchResultGroup[] => {

@@ -50,7 +50,17 @@ export interface Chef {
   restaurants: Restaurant[];
 }
 
-export type CuisineSlug = 'mediterranean' | 'thai' | 'asian' | 'italian';
+// Mirrors the `cuisine` enum on the restaurant content type in
+// packages/strapi/src/api/restaurant/content-types/restaurant/schema.json —
+// keep both in sync when adding a cuisine.
+export const CUISINES = [
+  { slug: 'mediterranean', label: 'Mediterranean' },
+  { slug: 'thai', label: 'Thai' },
+  { slug: 'asian', label: 'Asian' },
+  { slug: 'italian', label: 'Italian' },
+] as const;
+
+export type CuisineSlug = (typeof CUISINES)[number]['slug'];
 
 export interface Restaurant {
   id: number;

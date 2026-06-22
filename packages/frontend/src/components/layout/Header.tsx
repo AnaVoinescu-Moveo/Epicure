@@ -15,8 +15,8 @@ export async function Header() {
       getAllRestaurants(),
       getAllChefs(),
     ]);
-  } catch {
-    // Search renders with empty results if Strapi is unavailable
+  } catch (err) {
+    console.error('[Header] Failed to fetch search data:', err);
   }
 
   return (
