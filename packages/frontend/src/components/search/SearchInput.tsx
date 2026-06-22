@@ -80,12 +80,7 @@ export function SearchInput({
     >
       {iconPosition === 'left' && (
         <span className={styles.icon}>
-          <Image
-            src={query === '' ? '/icons/_.svg' : '/icons/search.svg'}
-            alt=""
-            width={20}
-            height={20}
-          />
+          <Image src="/icons/search.png" alt="" width={20} height={20} />
         </span>
       )}
       <input
@@ -102,7 +97,7 @@ export function SearchInput({
       />
       {iconPosition === 'right' && (
         <span className={styles.icon}>
-          <Image src="/icons/search.svg" alt="" width={20} height={20} />
+          <Image src="/icons/search.png" alt="" width={20} height={20} />
         </span>
       )}
       {showNoResults && (

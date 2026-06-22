@@ -1,45 +1,80 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { COPY } from '@/constants/copy';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
+import type { UserCoords } from '@/lib/distance';
+import { PriceRangeDropdown } from './PriceRangeDropdown';
+import { DistanceDropdown } from './DistanceDropdown';
+import { RatingDropdown } from './RatingDropdown';
 import styles from './FilterBar.module.css';
 
 type FilterBarId = 'price-range' | 'distance' | 'rating';
 
-interface FilterBarItem {
-  id: FilterBarId;
-  label: string;
+export interface PriceBounds {
+  min: number;
+  max: number;
 }
 
-const FILTER_ITEMS: FilterBarItem[] = [
-  { id: 'price-range', label: COPY.restaurants.filterBarPriceRange },
-  { id: 'distance', label: COPY.restaurants.filterBarDistance },
-  { id: 'rating', label: COPY.restaurants.filterBarRating },
-];
+export interface FilterBarProps {
+  priceBounds: PriceBounds;
+  priceRange: PriceBounds | null;
+  onPriceRangeChange: (range: PriceBounds | null) => void;
+  distanceKm: number | null;
+  locationLoading: boolean;
+  locationGranted: boolean;
+  locationDenied: boolean;
+  onDistanceChange: (km: number) => void;
+  onRequestLocation: () => void;
+  onSkipToAddress: () => void;
+  onCoordsFromAddress: (coords: UserCoords) => void;
+  selectedRatings: number[];
+  onRatingsChange: (ratings: number[]) => void;
+}
 
-export function FilterBar() {
-  const [selected, setSelected] = useState<Set<FilterBarId>>(new Set());
+export function FilterBar({
+  priceBounds,
+  priceRange,
+  onPriceRangeChange,
+  distanceKm,
+  locationLoading,
+  locationGranted,
+  locationDenied,
+  onDistanceChange,
+  onRequestLocation,
+  onSkipToAddress,
+  onCoordsFromAddress,
+  selectedRatings,
+  onRatingsChange,
+}: FilterBarProps) {
+  const [openDropdown, setOpenDropdown] = useState<FilterBarId | null>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+
+  const close = useCallback(() => setOpenDropdown(null), []);
+  useClickOutside(barRef, close);
+  useEscapeKey(close, openDropdown !== null);
 
   const toggle = (id: FilterBarId) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    setOpenDropdown((prev) => (prev === id ? null : id));
   };
 
+  const isPriceActive =
+    priceRange !== null &&
+    (priceRange.min !== priceBounds.min || priceRange.max !== priceBounds.max);
+
   return (
-    <div className={styles.bar}>
+    <div className={styles.bar} ref={barRef}>
       <div className={styles.filters}>
-        {FILTER_ITEMS.map(({ id, label }) => (
+        <div className={styles.filterItem}>
           <button
-            key={id}
-            className={`${styles.filterItem}${selected.has(id) ? ` ${styles.filterItemSelected}` : ''}`}
-            onClick={() => toggle(id)}
+            className={`${styles.button}${isPriceActive || openDropdown === 'price-range' ? ` ${styles.buttonSelected}` : ''}`}
+            onClick={() => toggle('price-range')}
           >
-            <span className={styles.label}>{label}</span>
+            <span className={styles.label}>
+              {COPY.restaurants.filterBarPriceRange}
+            </span>
             <Image
               src="/icons/downArrow.svg"
               alt=""
@@ -48,7 +83,74 @@ export function FilterBar() {
               className={styles.arrow}
             />
           </button>
-        ))}
+          {openDropdown === 'price-range' && (
+            <div className={styles.dropdownWrapper}>
+              <PriceRangeDropdown
+                value={priceRange ?? priceBounds}
+                bounds={priceBounds}
+                onChange={onPriceRangeChange}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className={styles.filterItem}>
+          <button
+            className={`${styles.button}${distanceKm !== null || openDropdown === 'distance' ? ` ${styles.buttonSelected}` : ''}`}
+            onClick={() => toggle('distance')}
+          >
+            <span className={styles.label}>
+              {COPY.restaurants.filterBarDistance}
+            </span>
+            <Image
+              src="/icons/downArrow.svg"
+              alt=""
+              width={24}
+              height={24}
+              className={styles.arrow}
+            />
+          </button>
+          {openDropdown === 'distance' && (
+            <div className={styles.dropdownWrapper}>
+              <DistanceDropdown
+                value={distanceKm}
+                locationLoading={locationLoading}
+                locationGranted={locationGranted}
+                locationDenied={locationDenied}
+                onChange={onDistanceChange}
+                onRequestLocation={onRequestLocation}
+                onSkipToAddress={onSkipToAddress}
+                onCoordsFromAddress={onCoordsFromAddress}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className={styles.filterItem}>
+          <button
+            className={`${styles.button}${selectedRatings.length > 0 || openDropdown === 'rating' ? ` ${styles.buttonSelected}` : ''}`}
+            onClick={() => toggle('rating')}
+          >
+            <span className={styles.label}>
+              {COPY.restaurants.filterBarRating}
+            </span>
+            <Image
+              src="/icons/downArrow.svg"
+              alt=""
+              width={24}
+              height={24}
+              className={styles.arrow}
+            />
+          </button>
+          {openDropdown === 'rating' && (
+            <div className={styles.dropdownWrapper}>
+              <RatingDropdown
+                selected={selectedRatings}
+                onChange={onRatingsChange}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -47,6 +47,8 @@ export interface Chef {
   description: string | null;
   image: StrapiImage | null;
   isChefOfTheWeek: boolean;
+  isNew: boolean;
+  isMostViewed: boolean;
   restaurants: Restaurant[];
 }
 
@@ -69,8 +71,6 @@ export interface Restaurant {
   image: StrapiImage | null;
   rating: number | null;
   chef: StrapiChef | null;
-  priceRange: 'low' | 'medium' | 'high' | null;
-  distance: number | null;
   isNew: boolean;
   openingTime: string | null;
   closingTime: string | null;

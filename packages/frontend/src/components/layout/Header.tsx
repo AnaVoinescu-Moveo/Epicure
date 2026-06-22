@@ -49,7 +49,7 @@ export async function Header() {
           <HeaderSearch restaurants={restaurants} chefs={chefs} />
           <button type="button" className={styles.iconBtn} aria-label="Profile">
             <Image
-              src="/icons/profile.svg"
+              src="/icons/profile.png"
               alt=""
               width={20}
               height={20}
@@ -58,7 +58,7 @@ export async function Header() {
           </button>
           <button type="button" className={styles.iconBtn} aria-label="Cart">
             <Image
-              src="/icons/card.svg"
+              src="/icons/card.png"
               alt=""
               width={20}
               height={20}

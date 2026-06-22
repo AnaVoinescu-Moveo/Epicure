@@ -1,0 +1,57 @@
+.dropdown {
+  width: 353px;
+  background: var(--color-bg);
+  box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  padding: 12px 0 8px;
+}
+
+.title {
+  text-align: center;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 1.92px;
+  margin: 0 0 4px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 6px 22px;
+  font-weight: 200;
+}
+
+.checkbox {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--color-text);
+  border-radius: 2px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.checkboxChecked {
+  background: var(--color-text);
+}
+
+.checkboxChecked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: 2px solid var(--color-bg);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
