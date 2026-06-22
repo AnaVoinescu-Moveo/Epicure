@@ -5,10 +5,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSearchKeyboard } from '../../hooks/useSearchKeyboard';
 import { useClickOutside } from '../../hooks/useClickOutside';
+import { COPY } from '../../constants/copy';
 import styles from './SearchInput.module.css';
 
 export interface SearchResult {
-  type: 'restaurant' | 'chef' | 'dish';
+  type: 'restaurant' | 'chef' | 'dish' | 'cuisine';
   name: string;
   href: string;
 }
@@ -23,6 +24,7 @@ interface SearchInputProps {
   className?: string;
   autoFocus?: boolean;
   onSearch?: (query: string) => SearchResultGroup[];
+  onSelect?: () => void;
 }
 
 export function SearchInput({
@@ -30,6 +32,7 @@ export function SearchInput({
   className,
   autoFocus = false,
   onSearch,
+  onSelect,
 }: SearchInputProps) {
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -38,16 +41,27 @@ export function SearchInput({
 
   const flatItems = groups.flatMap((g) => g.items);
   const hasResults = flatItems.length > 0;
+  const showNoResults = !!query.trim() && onSearch && groups.length === 0;
 
   // Precompute href→flatIndex map so render stays pure (no mutable counter)
   const itemIndexMap = new Map(flatItems.map((item, i) => [item.href, i]));
 
+  const handleSelect = (href: string) => {
+    router.push(href);
+    setGroups([]);
+    setQuery('');
+    onSelect?.();
+  };
+
   const { activeIndex, setActiveIndex, handleKeyDown } = useSearchKeyboard(
     flatItems.length,
-    (index) => router.push(flatItems[index].href),
+    (index) => handleSelect(flatItems[index].href),
   );
 
-  useClickOutside(wrapperRef, () => setGroups([]));
+  useClickOutside(wrapperRef, () => {
+    setGroups([]);
+    setQuery('');
+  });
 
   const handleChange = (value: string) => {
     setQuery(value);
@@ -72,13 +86,13 @@ export function SearchInput({
       <input
         type="search"
         className={styles.input}
-        placeholder="Search for restaurant cuisine, chef"
+        placeholder={COPY.search.placeholder}
         value={query}
         onChange={(e) => handleChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        aria-label="Search"
+        aria-label={COPY.search.ariaLabel}
         aria-autocomplete="list"
-        aria-expanded={hasResults}
+        aria-expanded={hasResults || showNoResults}
         autoFocus={autoFocus}
       />
       {iconPosition === 'right' && (
@@ -86,12 +100,17 @@ export function SearchInput({
           <Image src="/icons/search.png" alt="" width={20} height={20} />
         </span>
       )}
+      {showNoResults && (
+        <div className={styles.dropdown} role="status">
+          <p className={styles.noResults}>{COPY.search.noResults}</p>
+        </div>
+      )}
       {hasResults && (
         <ul className={styles.dropdown} role="listbox">
           {groups.map((group) =>
             group.items.length > 0 ? (
               <li key={group.label} className={styles.group}>
-                <span className={styles.groupLabel}>{group.label}</span>
+                <span className={styles.groupLabel}>{group.label}:</span>
                 <ul>
                   {group.items.map((item) => {
                     const currentIndex = itemIndexMap.get(item.href) ?? -1;
@@ -106,7 +125,7 @@ export function SearchInput({
                         ]
                           .filter(Boolean)
                           .join(' ')}
-                        onClick={() => router.push(item.href)}
+                        onClick={() => handleSelect(item.href)}
                         onMouseEnter={() => setActiveIndex(currentIndex)}
                       >
                         {item.name}

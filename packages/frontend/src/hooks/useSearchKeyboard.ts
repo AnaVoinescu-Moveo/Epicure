@@ -14,8 +14,8 @@ export function useSearchKeyboard(
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setActiveIndex((i) => (i <= 0 ? itemCount - 1 : i - 1));
-    } else if (e.key === 'Enter' && activeIndex >= 0) {
-      onSelect(activeIndex);
+    } else if (e.key === 'Enter') {
+      onSelect(activeIndex >= 0 ? activeIndex : 0);
     }
   };
 

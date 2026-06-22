@@ -1,11 +1,22 @@
-'use client';
-
 import Image from 'next/image';
-import { SearchInput } from '../search/SearchInput';
-import { mockSearch } from '../../mocks/search';
+import { getAllRestaurants } from '@/services/restaurantService';
+import { getAllChefs } from '@/services/chefService';
+import type { Chef, Restaurant } from '@/lib/strapi';
+import { HeroSearch } from './HeroSearch';
 import styles from './Hero.module.css';
 
-export function Hero() {
+export async function Hero() {
+  let restaurants: Restaurant[] = [];
+  let chefs: Chef[] = [];
+  try {
+    [restaurants, chefs] = await Promise.all([
+      getAllRestaurants(),
+      getAllChefs(),
+    ]);
+  } catch (err) {
+    console.error('[Hero] Failed to fetch search data:', err);
+  }
+
   return (
     <section className={styles.hero}>
       <div className={styles.imageWrapper}>
@@ -23,12 +34,7 @@ export function Hero() {
           <br />
           chef restaurants in Tel Aviv
         </h1>
-        <SearchInput
-          iconPosition="left"
-          autoFocus={false}
-          className={styles.searchInput}
-          onSearch={mockSearch}
-        />
+        <HeroSearch restaurants={restaurants} chefs={chefs} />
       </div>
     </section>
   );

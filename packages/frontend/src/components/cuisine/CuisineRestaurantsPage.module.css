@@ -1,0 +1,53 @@
+/* ─── Mobile base ─────────────────────────────────────── */
+
+.page {
+  padding: 14px 0 48px 20px;
+}
+
+.title {
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1.92px;
+  text-transform: uppercase;
+  margin: 0 0 32px;
+  color: var(--color-text);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.empty {
+  margin-top: 40px;
+  font-weight: 200;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  color: var(--color-text);
+  opacity: 0.6;
+}
+
+/* ─── Desktop ─────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .page {
+    padding: 48px 0 80px 0;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 30px;
+    padding-left: 127px;
+    margin-bottom: 40px;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 379px);
+    gap: 24px;
+    padding: 0 127px;
+  }
+}

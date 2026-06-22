@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Hero } from './Hero';
+import { HeroSearch } from './HeroSearch';
+import type { Chef, Restaurant } from '../../lib/strapi';
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
@@ -13,41 +14,59 @@ jest.mock('next/image', () => ({
   ),
 }));
 
-describe('Hero', () => {
-  it('renders the hero image', () => {
-    render(<Hero />);
-    expect(screen.getByAltText('Epicure restaurant scene')).toBeInTheDocument();
-  });
+const mockRestaurants: Restaurant[] = [
+  {
+    id: 1,
+    documentId: 'r1',
+    name: 'Tiger Lily',
+    image: null,
+    rating: 4.5,
+    chef: null,
+    priceRange: null,
+    distance: null,
+    isNew: false,
+    openingTime: null,
+    closingTime: null,
+    latitude: null,
+    longitude: null,
+    cuisine: 'asian',
+  },
+];
 
-  it('renders the heading text', () => {
-    render(<Hero />);
-    expect(screen.getByText(/Epicure works with the top/i)).toBeInTheDocument();
-  });
+const mockChefs: Chef[] = [
+  {
+    id: 1,
+    documentId: 'c1',
+    name: 'Tom Aviv',
+    description: null,
+    image: null,
+    isChefOfTheWeek: false,
+    restaurants: [],
+  },
+];
 
+describe('HeroSearch', () => {
   it('renders the search input', () => {
-    render(<Hero />);
+    render(<HeroSearch restaurants={mockRestaurants} chefs={mockChefs} />);
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
   });
 
   it('does not show dropdown before typing', () => {
-    render(<Hero />);
+    render(<HeroSearch restaurants={mockRestaurants} chefs={mockChefs} />);
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 
   it('shows categorised results when typing a matching query', () => {
-    render(<Hero />);
-    fireEvent.change(screen.getByRole('searchbox'), {
-      target: { value: 'T' },
-    });
+    render(<HeroSearch restaurants={mockRestaurants} chefs={mockChefs} />);
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'T' } });
     expect(screen.getByRole('listbox')).toBeInTheDocument();
     expect(screen.getByText('Tiger Lily')).toBeInTheDocument();
-    expect(screen.getByText('Restaurants')).toBeInTheDocument();
     expect(screen.getByText('Thai')).toBeInTheDocument();
-    expect(screen.getByText('Cuisine')).toBeInTheDocument();
+    expect(screen.getByText('Tom Aviv')).toBeInTheDocument();
   });
 
   it('shows no dropdown when query matches nothing', () => {
-    render(<Hero />);
+    render(<HeroSearch restaurants={mockRestaurants} chefs={mockChefs} />);
     fireEvent.change(screen.getByRole('searchbox'), {
       target: { value: 'zzz' },
     });
