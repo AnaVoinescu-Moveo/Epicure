@@ -11,6 +11,7 @@
   --color-border: #e5e5e5;
   --color-filter-selected: #d0cfcf;
   --color-price-line: #979797;
+  --color-error: #c0392b;
 
   /* Header */
   --header-height-mobile: 46px;

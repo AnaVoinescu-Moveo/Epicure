@@ -56,7 +56,7 @@ export function HeaderSearch({ restaurants, chefs }: HeaderSearchProps) {
           onClick={() => setIsSearchOpen(true)}
         >
           <Image
-            src="/icons/search.svg"
+            src="/icons/search.png"
             alt=""
             width={20}
             height={20}

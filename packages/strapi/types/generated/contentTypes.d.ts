@@ -459,6 +459,8 @@ export interface ApiChefChef extends Struct.CollectionTypeSchema {
     image: Schema.Attribute.Media<'images'>;
     isChefOfTheWeek: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
+    isMostViewed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isNew: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::chef.chef'> &
       Schema.Attribute.Private;
