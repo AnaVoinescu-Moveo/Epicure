@@ -90,4 +90,15 @@ export const COPY = {
     errorRetry: 'Try again',
     openNowEmpty: 'No restaurants are currently open. Please come back soon!',
   },
+  restaurantDetail: {
+    openNow: 'Open now',
+    closedNow: 'Closed now',
+    breakfastTab: 'Breakfast',
+    lunchTab: 'Lunch',
+    dinnerTab: 'Dinner',
+    clockAlt: 'Clock icon',
+    noImage: 'Restaurant image',
+    noDishes: (meal: string) =>
+      `No dishes available for ${meal.charAt(0).toUpperCase()}${meal.slice(1)}`,
+  },
 } as const;

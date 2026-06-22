@@ -18,6 +18,10 @@ export async function strapiGet<T>(path: string): Promise<T> {
 // Strapi v5 uses flat document structure (no `attributes` wrapper).
 // TODO: move to @org/shared-types once it's added to frontend package.json dependencies.
 
+export interface StrapiSingleResponse<T> {
+  data: T;
+}
+
 export interface StrapiListResponse<T> {
   data: T[];
   meta: {
@@ -67,6 +71,7 @@ export interface Dish {
   name: string;
   description: string | null;
   price: number;
+  mealType: 'breakfast' | 'lunch' | 'dinner' | null;
   isSignature: boolean;
   isSpicy: boolean;
   isVegetarian: boolean;
