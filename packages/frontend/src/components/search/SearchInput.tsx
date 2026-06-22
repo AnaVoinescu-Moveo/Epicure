@@ -66,12 +66,7 @@ export function SearchInput({
     >
       {iconPosition === 'left' && (
         <span className={styles.icon}>
-          <Image
-            src="/icons/search.png"
-            alt=""
-            width={20}
-            height={20}
-          />
+          <Image src="/icons/search.png" alt="" width={20} height={20} />
         </span>
       )}
       <input
