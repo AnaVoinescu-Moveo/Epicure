@@ -29,7 +29,7 @@ export async function SignatureDishesSection() {
         <Link href="/restaurants" className={styles.cta}>
           <span className={styles.ctaText}>{COPY.signatureDishes.ctaText}</span>
           <Image
-            src="/icons/Arrow.svg"
+            src="/icons/Erow.svg"
             alt={COPY.signatureDishes.ctaArrowAlt}
             width={24}
             height={18}
