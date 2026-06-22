@@ -1,12 +1,13 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Restaurant } from '@/lib/strapi';
 import { isOpenNow } from '@/lib/time';
 import { haversineKm, getUserLocation, type UserCoords } from '@/lib/distance';
 import { COPY } from '@/constants/copy';
 import { RestaurantCard } from '@/components/restaurants/RestaurantCard';
+import { useRestaurantsFilter } from '@/context/RestaurantsFilterContext';
 import { FilterBar, type PriceBounds } from './FilterBar';
 import { FilterNav, type FilterId } from './FilterNav';
 import styles from './RestaurantsList.module.css';
@@ -23,6 +24,7 @@ interface RestaurantsListProps {
 }
 
 export function RestaurantsList({ restaurants }: RestaurantsListProps) {
+  const { resetSignal } = useRestaurantsFilter();
   const [activeFilter, setActiveFilter] = useState<FilterId>('all');
 
   // Second-row filter state
@@ -52,19 +54,20 @@ export function RestaurantsList({ restaurants }: RestaurantsListProps) {
     return { min: Math.min(...prices), max: Math.max(...prices) };
   }, [restaurants]);
 
-  const resetFilters = useCallback(() => {
+  // Skip the initial mount so filters aren't cleared on first render.
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     setActiveFilter('all');
     setPriceRange(null);
     setDistanceKm(null);
     setSelectedRatings([]);
     setUserCoords(null);
     setLocationStatus('idle');
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('restaurants:reset', resetFilters);
-    return () => window.removeEventListener('restaurants:reset', resetFilters);
-  }, [resetFilters]);
+  }, [resetSignal]);
 
   const requestLocation = useCallback(() => {
     if (locationStatus === 'loading' || locationStatus === 'granted') return;
