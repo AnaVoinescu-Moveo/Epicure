@@ -47,6 +47,8 @@ export interface Chef {
   description: string | null;
   image: StrapiImage | null;
   isChefOfTheWeek: boolean;
+  isNew: boolean;
+  isMostViewed: boolean;
   restaurants: Restaurant[];
 }
 
