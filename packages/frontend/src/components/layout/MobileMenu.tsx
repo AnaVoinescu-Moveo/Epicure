@@ -8,10 +8,12 @@ import styles from './MobileMenu.module.css';
 import { NAV_LINKS } from '../../constants/nav';
 import { useScrollLock } from '../../hooks/useScrollLock';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
+import { stripLocale } from '../../lib/locale';
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const localePathname = stripLocale(pathname);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useScrollLock(isOpen);
@@ -87,7 +89,7 @@ export function MobileMenu() {
                 onClick={() => setIsOpen(false)}
               >
                 <Image
-                  src="/icons/x.svg"
+                  src="/icons/x.png"
                   alt=""
                   width={15}
                   height={15}
@@ -105,7 +107,7 @@ export function MobileMenu() {
                 <Link
                   key={href}
                   href={href}
-                  className={`${styles.menuLink} ${pathname === href ? styles.active : ''}`}
+                  className={`${styles.menuLink} ${localePathname === href ? styles.active : ''}`}
                   onClick={() => setIsOpen(false)}
                 >
                   {label}
