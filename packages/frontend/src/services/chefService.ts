@@ -3,10 +3,14 @@ import { strapiGet, type Chef, type StrapiListResponse } from '@/lib/strapi';
 
 export const getAllChefs = unstable_cache(
   async (): Promise<Chef[]> => {
-    const data = await strapiGet<StrapiListResponse<Chef>>(
-      '/chefs?pagination[limit]=100&populate[image]=true&sort=name:asc',
-    );
-    return data.data ?? [];
+    try {
+      const data = await strapiGet<StrapiListResponse<Chef>>(
+        '/chefs?pagination[limit]=100&populate[image]=true&sort=name:asc',
+      );
+      return data.data ?? [];
+    } catch {
+      return [];
+    }
   },
   ['all-chefs'],
   { revalidate: 60 },
