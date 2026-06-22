@@ -6,10 +6,15 @@ import { NavLinks } from './NavLinks';
 import { HeaderSearch } from './HeaderSearch';
 import { getAllRestaurants } from '@/services/restaurantService';
 import { getAllChefs } from '@/services/chefService';
+import { getHeader } from '@/services/headerService';
+import { getFooter } from '@/services/footerService';
+import { NAV_LINKS, FOOTER_LINKS } from '@/constants/nav';
 
 export async function Header() {
   let restaurants: Awaited<ReturnType<typeof getAllRestaurants>> = [];
   let chefs: Awaited<ReturnType<typeof getAllChefs>> = [];
+  let navLinks = NAV_LINKS;
+  let footerLinks = FOOTER_LINKS;
   try {
     [restaurants, chefs] = await Promise.all([
       getAllRestaurants(),
@@ -18,13 +23,19 @@ export async function Header() {
   } catch (err) {
     console.error('[Header] Failed to fetch search data:', err);
   }
+  const [headerData, footerData] = await Promise.all([
+    getHeader(),
+    getFooter(),
+  ]);
+  if (headerData?.navLinks?.length) navLinks = headerData.navLinks;
+  if (footerData?.footerLinks?.length) footerLinks = footerData.footerLinks;
 
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
         {/* Mobile only: hamburger + slide-in menu */}
         <div className={styles.mobileLeft}>
-          <MobileMenu />
+          <MobileMenu navLinks={navLinks} footerLinks={footerLinks} />
         </div>
 
         {/* Logo */}
@@ -41,7 +52,7 @@ export async function Header() {
 
         {/* Desktop nav */}
         <div className={styles.desktopNav}>
-          <NavLinks />
+          <NavLinks links={navLinks} />
         </div>
 
         {/* Right icons */}

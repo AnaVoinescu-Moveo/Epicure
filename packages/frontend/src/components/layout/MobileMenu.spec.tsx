@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { MobileMenu } from './MobileMenu';
+import { NAV_LINKS, FOOTER_LINKS } from '../../constants/nav';
 
 jest.mock('next/navigation', () => ({
   usePathname: () => '/',
@@ -32,21 +33,21 @@ jest.mock('next/link', () => ({
 
 describe('MobileMenu', () => {
   it('renders the hamburger button', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     expect(
       screen.getByRole('button', { name: /open navigation menu/i }),
     ).toBeInTheDocument();
   });
 
   it('menu panel is not visible initially', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     expect(
       screen.queryByRole('dialog', { name: /navigation menu/i }),
     ).not.toBeInTheDocument();
   });
 
   it('opens menu when hamburger is clicked', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     fireEvent.click(
       screen.getByRole('button', { name: /open navigation menu/i }),
     );
@@ -56,7 +57,7 @@ describe('MobileMenu', () => {
   });
 
   it('closes menu when X button is clicked', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     fireEvent.click(
       screen.getByRole('button', { name: /open navigation menu/i }),
     );
@@ -69,7 +70,7 @@ describe('MobileMenu', () => {
   });
 
   it('closes menu when Escape key is pressed', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     fireEvent.click(
       screen.getByRole('button', { name: /open navigation menu/i }),
     );
@@ -82,7 +83,7 @@ describe('MobileMenu', () => {
   });
 
   it('locks body scroll when menu is open', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     fireEvent.click(
       screen.getByRole('button', { name: /open navigation menu/i }),
     );
@@ -90,7 +91,7 @@ describe('MobileMenu', () => {
   });
 
   it('restores body scroll when menu is closed', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     fireEvent.click(
       screen.getByRole('button', { name: /open navigation menu/i }),
     );
@@ -101,7 +102,7 @@ describe('MobileMenu', () => {
   });
 
   it('dialog has accessible name', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     fireEvent.click(
       screen.getByRole('button', { name: /open navigation menu/i }),
     );
@@ -111,7 +112,7 @@ describe('MobileMenu', () => {
   });
 
   it('shows Restaurants and Chefs nav links', () => {
-    render(<MobileMenu />);
+    render(<MobileMenu navLinks={NAV_LINKS} footerLinks={FOOTER_LINKS} />);
     fireEvent.click(
       screen.getByRole('button', { name: /open navigation menu/i }),
     );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { NavLinks } from './NavLinks';
+import { NAV_LINKS } from '../../constants/nav';
 import {
   RestaurantsFilterProvider,
   useRestaurantsFilter,
@@ -33,7 +34,7 @@ jest.mock('next/navigation', () => ({
 function renderNavLinks() {
   return render(
     <RestaurantsFilterProvider>
-      <NavLinks />
+      <NavLinks links={NAV_LINKS} />
     </RestaurantsFilterProvider>,
   );
 }
@@ -113,7 +114,7 @@ describe('NavLinks', () => {
 
     render(
       <RestaurantsFilterProvider>
-        <NavLinks />
+        <NavLinks links={NAV_LINKS} />
         <ResetSignalProbe />
       </RestaurantsFilterProvider>,
     );
@@ -134,7 +135,7 @@ describe('NavLinks', () => {
 
     render(
       <RestaurantsFilterProvider>
-        <NavLinks />
+        <NavLinks links={NAV_LINKS} />
         <ResetSignalProbe />
       </RestaurantsFilterProvider>,
     );

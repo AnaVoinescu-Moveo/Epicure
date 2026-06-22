@@ -59,5 +59,6 @@ test-output
 .env.local
 .env.development.local
 .env.test.local
-.env.production.localpnpm-lock.yaml
+.env.production.local
+pnpm-lock.yaml
 pnpm-workspace.yaml

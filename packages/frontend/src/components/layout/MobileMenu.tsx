@@ -5,12 +5,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './MobileMenu.module.css';
-import { NAV_LINKS } from '../../constants/nav';
+import type { NavLink } from '../../constants/nav';
 import { useScrollLock } from '../../hooks/useScrollLock';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
 import { stripLocale } from '../../lib/locale';
 
-export function MobileMenu() {
+interface MobileMenuProps {
+  navLinks: NavLink[];
+  footerLinks: NavLink[];
+}
+
+export function MobileMenu({ navLinks, footerLinks }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const localePathname = stripLocale(pathname);
@@ -103,7 +108,7 @@ export function MobileMenu() {
 
             {/* Section 2: nav + footer links */}
             <nav className={styles.menuNav}>
-              {NAV_LINKS.map(({ href, label }) => (
+              {navLinks.map(({ href, label }) => (
                 <Link
                   key={href}
                   href={href}
@@ -116,27 +121,16 @@ export function MobileMenu() {
 
               <div className={styles.divider} />
 
-              <Link
-                href="/contact"
-                className={styles.menuLink}
-                onClick={() => setIsOpen(false)}
-              >
-                Contact Us
-              </Link>
-              <Link
-                href="/terms"
-                className={styles.menuLink}
-                onClick={() => setIsOpen(false)}
-              >
-                Terms of Use
-              </Link>
-              <Link
-                href="/privacy"
-                className={styles.menuLink}
-                onClick={() => setIsOpen(false)}
-              >
-                Privacy Policy
-              </Link>
+              {footerLinks.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={styles.menuLink}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {label}
+                </Link>
+              ))}
             </nav>
           </div>
         </>
