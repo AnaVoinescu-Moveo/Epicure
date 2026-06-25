@@ -27,7 +27,8 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
 
   if (!selectedDish) return null;
 
-  const { name, description, image } = selectedDish;
+  const { name, description, image, price, isSpicy, isVegetarian, isVegan } =
+    selectedDish;
   const imageUrl = image ? strapiUrl(image.url) : null;
 
   const toggleChange = (option: string) => {
@@ -41,7 +42,17 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
 
   return (
     <div className={styles.page} role="dialog" aria-modal="true">
-      <div className={styles.scroll}>
+      <div className={styles.desktopModal}>
+        <button
+          type="button"
+          className={styles.desktopCloseBtn}
+          aria-label={COPY.dishDetail.closeAriaLabel}
+          onClick={closeDish}
+        >
+          <Image src="/icons/whiteX.svg" alt="" width={18} height={18} />
+        </button>
+
+        <div className={styles.scroll}>
         <div className={styles.header}>
           <button
             type="button"
@@ -69,6 +80,44 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
         <div className={styles.content}>
           <h2 className={styles.title}>{name}</h2>
           {description && <p className={styles.description}>{description}</p>}
+
+          {(isSpicy || isVegetarian || isVegan) && (
+            <div className={styles.attributeIcons}>
+              {isSpicy && (
+                <Image
+                  src="/icons/Spicy.svg"
+                  alt={COPY.signatureDishes.spicyAlt}
+                  width={39}
+                  height={30}
+                />
+              )}
+              {isVegetarian && (
+                <Image
+                  src="/icons/Vegetarian.svg"
+                  alt={COPY.signatureDishes.vegetarianAlt}
+                  width={39}
+                  height={30}
+                />
+              )}
+              {isVegan && (
+                <Image
+                  src="/icons/Vegan.svg"
+                  alt={COPY.signatureDishes.veganAlt}
+                  width={39}
+                  height={30}
+                />
+              )}
+            </div>
+          )}
+
+          <div className={styles.priceRow}>
+            <span className={styles.priceLine} />
+            <span className={styles.price}>
+              {COPY.dishDetail.shekelSign}
+              {price}
+            </span>
+            <span className={styles.priceLine} />
+          </div>
 
           <div className={styles.section}>
             <div className={styles.sectionHeader}>
@@ -179,9 +228,11 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
           </button>
         </div>
 
-        <div className={styles.fullWidthDivider} />
-
-        {footer}
+        <div className={styles.mobileFooterSlot}>
+          <div className={styles.fullWidthDivider} />
+          {footer}
+        </div>
+        </div>
       </div>
     </div>
   );

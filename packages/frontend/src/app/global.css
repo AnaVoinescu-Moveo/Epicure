@@ -16,6 +16,9 @@ html {
 }
 
 body {
+  /* Lets DishDetailOverlay's desktop backdrop (position: absolute) span
+     the full page height instead of just the viewport or its own content. */
+  position: relative;
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
