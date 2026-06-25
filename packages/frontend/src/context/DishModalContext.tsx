@@ -11,11 +11,7 @@ interface DishModalContextValue {
 
 const DishModalContext = createContext<DishModalContextValue | null>(null);
 
-export function DishModalProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function DishModalProvider({ children }: { children: React.ReactNode }) {
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const openDish = useCallback((dish: Dish) => setSelectedDish(dish), []);
   const closeDish = useCallback(() => setSelectedDish(null), []);
