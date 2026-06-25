@@ -114,6 +114,18 @@ export const COPY = {
     restaurantsTitle: (firstName: string) => `${firstName}'s restaurants`,
     noRestaurants: 'No restaurants listed for this chef.',
   },
+  dishDetail: {
+    closeAriaLabel: 'Close dish details',
+    chooseASideTitle: 'Choose a side',
+    sideOptions: ['White bread', 'Sticky rice'],
+    changesTitle: 'Changes',
+    changeOptions: ['Without peanuts', 'Less spicy'],
+    quantityTitle: 'Quantity',
+    decreaseAriaLabel: 'Decrease quantity',
+    increaseAriaLabel: 'Increase quantity',
+    addToBagAlt: 'Add to bag',
+    shekelSign: '₪',
+  },
   restaurantDetail: {
     openNow: 'Open now',
     closedNow: 'Closed now',

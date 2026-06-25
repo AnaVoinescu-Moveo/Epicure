@@ -1,6 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import { strapiUrl, type Dish } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
+import { useDishModal } from '@/context/DishModalContext';
 import styles from './RestaurantDishCard.module.css';
 
 interface Props {
@@ -8,11 +11,20 @@ interface Props {
 }
 
 export function RestaurantDishCard({ dish }: Props) {
+  const { openDish } = useDishModal();
   const { name, description, price, image } = dish;
   const imageUrl = image ? strapiUrl(image.url) : null;
 
   return (
-    <article className={styles.card}>
+    <article
+      className={styles.card}
+      role="button"
+      tabIndex={0}
+      onClick={() => openDish(dish)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') openDish(dish);
+      }}
+    >
       <div className={styles.imageWrapper}>
         {imageUrl ? (
           <Image
