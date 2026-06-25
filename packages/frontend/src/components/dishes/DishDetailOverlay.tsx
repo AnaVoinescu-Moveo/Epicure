@@ -53,185 +53,185 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
         </button>
 
         <div className={styles.scroll}>
-        <div className={styles.header}>
-          <button
-            type="button"
-            className={styles.closeBtn}
-            aria-label={COPY.dishDetail.closeAriaLabel}
-            onClick={closeDish}
-          >
-            <Image src="/icons/x.png" alt="" width={20} height={20} />
-          </button>
-        </div>
-
-        <div className={styles.imageWrapper}>
-          {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt={image?.alternativeText ?? name}
-              fill
-              className={styles.image}
-            />
-          ) : (
-            <div className={styles.imagePlaceholder} />
-          )}
-        </div>
-
-        <div className={styles.content}>
-          <h2 className={styles.title}>{name}</h2>
-          {description && <p className={styles.description}>{description}</p>}
-
-          {(isSpicy || isVegetarian || isVegan) && (
-            <div className={styles.attributeIcons}>
-              {isSpicy && (
-                <Image
-                  src="/icons/Spicy.svg"
-                  alt={COPY.signatureDishes.spicyAlt}
-                  width={39}
-                  height={30}
-                />
-              )}
-              {isVegetarian && (
-                <Image
-                  src="/icons/Vegetarian.svg"
-                  alt={COPY.signatureDishes.vegetarianAlt}
-                  width={39}
-                  height={30}
-                />
-              )}
-              {isVegan && (
-                <Image
-                  src="/icons/Vegan.svg"
-                  alt={COPY.signatureDishes.veganAlt}
-                  width={39}
-                  height={30}
-                />
-              )}
-            </div>
-          )}
-
-          <div className={styles.priceRow}>
-            <span className={styles.priceLine} />
-            <span className={styles.price}>
-              {COPY.dishDetail.shekelSign}
-              {price}
-            </span>
-            <span className={styles.priceLine} />
+          <div className={styles.header}>
+            <button
+              type="button"
+              className={styles.closeBtn}
+              aria-label={COPY.dishDetail.closeAriaLabel}
+              onClick={closeDish}
+            >
+              <Image src="/icons/x.png" alt="" width={20} height={20} />
+            </button>
           </div>
 
-          <div className={styles.section}>
-            <div className={styles.sectionHeader}>
-              <h3 className={styles.sectionTitle}>
-                {COPY.dishDetail.chooseASideTitle}
-              </h3>
-              <div className={styles.divider} />
+          <div className={styles.imageWrapper}>
+            {imageUrl ? (
+              <Image
+                src={imageUrl}
+                alt={image?.alternativeText ?? name}
+                fill
+                className={styles.image}
+              />
+            ) : (
+              <div className={styles.imagePlaceholder} />
+            )}
+          </div>
+
+          <div className={styles.content}>
+            <h2 className={styles.title}>{name}</h2>
+            {description && <p className={styles.description}>{description}</p>}
+
+            {(isSpicy || isVegetarian || isVegan) && (
+              <div className={styles.attributeIcons}>
+                {isSpicy && (
+                  <Image
+                    src="/icons/Spicy.svg"
+                    alt={COPY.signatureDishes.spicyAlt}
+                    width={39}
+                    height={30}
+                  />
+                )}
+                {isVegetarian && (
+                  <Image
+                    src="/icons/Vegetarian.svg"
+                    alt={COPY.signatureDishes.vegetarianAlt}
+                    width={39}
+                    height={30}
+                  />
+                )}
+                {isVegan && (
+                  <Image
+                    src="/icons/Vegan.svg"
+                    alt={COPY.signatureDishes.veganAlt}
+                    width={39}
+                    height={30}
+                  />
+                )}
+              </div>
+            )}
+
+            <div className={styles.priceRow}>
+              <span className={styles.priceLine} />
+              <span className={styles.price}>
+                {COPY.dishDetail.shekelSign}
+                {price}
+              </span>
+              <span className={styles.priceLine} />
             </div>
-            <div className={styles.optionsList}>
-              {COPY.dishDetail.sideOptions.map((option) => (
+
+            <div className={styles.section}>
+              <div className={styles.sectionHeader}>
+                <h3 className={styles.sectionTitle}>
+                  {COPY.dishDetail.chooseASideTitle}
+                </h3>
+                <div className={styles.divider} />
+              </div>
+              <div className={styles.optionsList}>
+                {COPY.dishDetail.sideOptions.map((option) => (
+                  <button
+                    type="button"
+                    key={option}
+                    className={styles.optionRow}
+                    onClick={() => setSelectedSide(option)}
+                  >
+                    <Image
+                      src={
+                        selectedSide === option
+                          ? '/images/full_circle.png'
+                          : '/images/circle.png'
+                      }
+                      alt=""
+                      width={18}
+                      height={18}
+                    />
+                    <span className={styles.optionText}>{option}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.section}>
+              <div className={styles.sectionHeader}>
+                <h3 className={styles.sectionTitle}>
+                  {COPY.dishDetail.changesTitle}
+                </h3>
+                <div className={styles.divider} />
+              </div>
+              <div className={styles.optionsList}>
+                {COPY.dishDetail.changeOptions.map((option) => (
+                  <button
+                    type="button"
+                    key={option}
+                    className={styles.optionRow}
+                    onClick={() => toggleChange(option)}
+                  >
+                    <Image
+                      src={
+                        selectedChanges.has(option)
+                          ? '/images/full_square.png'
+                          : '/images/square.png'
+                      }
+                      alt=""
+                      width={18}
+                      height={18}
+                    />
+                    <span className={styles.optionText}>{option}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.section}>
+              <h3 className={styles.sectionTitle}>
+                {COPY.dishDetail.quantityTitle}
+              </h3>
+              <div className={styles.quantityRow}>
                 <button
                   type="button"
-                  key={option}
-                  className={styles.optionRow}
-                  onClick={() => setSelectedSide(option)}
+                  aria-label={COPY.dishDetail.decreaseAriaLabel}
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                 >
                   <Image
-                    src={
-                      selectedSide === option
-                        ? '/images/full_circle.png'
-                        : '/images/circle.png'
-                    }
+                    src="/icons/minus.svg"
                     alt=""
-                    width={18}
-                    height={18}
+                    width={17.5}
+                    height={17.5}
                   />
-                  <span className={styles.optionText}>{option}</span>
                 </button>
-              ))}
-            </div>
-          </div>
-
-          <div className={styles.section}>
-            <div className={styles.sectionHeader}>
-              <h3 className={styles.sectionTitle}>
-                {COPY.dishDetail.changesTitle}
-              </h3>
-              <div className={styles.divider} />
-            </div>
-            <div className={styles.optionsList}>
-              {COPY.dishDetail.changeOptions.map((option) => (
+                <span className={styles.quantityValue}>{quantity}</span>
                 <button
                   type="button"
-                  key={option}
-                  className={styles.optionRow}
-                  onClick={() => toggleChange(option)}
+                  aria-label={COPY.dishDetail.increaseAriaLabel}
+                  onClick={() => setQuantity((q) => q + 1)}
                 >
                   <Image
-                    src={
-                      selectedChanges.has(option)
-                        ? '/images/full_square.png'
-                        : '/images/square.png'
-                    }
+                    src="/icons/plus.svg"
                     alt=""
-                    width={18}
-                    height={18}
+                    width={17.5}
+                    height={17.5}
                   />
-                  <span className={styles.optionText}>{option}</span>
                 </button>
-              ))}
+              </div>
             </div>
+
+            <button
+              type="button"
+              className={styles.addToBagBtn}
+              onClick={closeDish}
+            >
+              <Image
+                src="/images/AddToBag.png"
+                alt={COPY.dishDetail.addToBagAlt}
+                width={206}
+                height={48}
+              />
+            </button>
           </div>
 
-          <div className={styles.section}>
-            <h3 className={styles.sectionTitle}>
-              {COPY.dishDetail.quantityTitle}
-            </h3>
-            <div className={styles.quantityRow}>
-              <button
-                type="button"
-                aria-label={COPY.dishDetail.decreaseAriaLabel}
-                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              >
-                <Image
-                  src="/icons/minus.svg"
-                  alt=""
-                  width={17.5}
-                  height={17.5}
-                />
-              </button>
-              <span className={styles.quantityValue}>{quantity}</span>
-              <button
-                type="button"
-                aria-label={COPY.dishDetail.increaseAriaLabel}
-                onClick={() => setQuantity((q) => q + 1)}
-              >
-                <Image
-                  src="/icons/plus.svg"
-                  alt=""
-                  width={17.5}
-                  height={17.5}
-                />
-              </button>
-            </div>
+          <div className={styles.mobileFooterSlot}>
+            <div className={styles.fullWidthDivider} />
+            {footer}
           </div>
-
-          <button
-            type="button"
-            className={styles.addToBagBtn}
-            onClick={closeDish}
-          >
-            <Image
-              src="/images/AddToBag.png"
-              alt={COPY.dishDetail.addToBagAlt}
-              width={206}
-              height={48}
-            />
-          </button>
-        </div>
-
-        <div className={styles.mobileFooterSlot}>
-          <div className={styles.fullWidthDivider} />
-          {footer}
-        </div>
         </div>
       </div>
     </div>
