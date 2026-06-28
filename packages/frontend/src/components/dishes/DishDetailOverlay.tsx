@@ -1,10 +1,13 @@
 'use client';
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
 import { useDishModal } from '@/context/DishModalContext';
+import { useScrollLock } from '@/hooks/useScrollLock';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 import styles from './DishDetailOverlay.module.css';
 
 interface DishDetailOverlayProps {
@@ -18,12 +21,17 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
     new Set(),
   );
   const [quantity, setQuantity] = useState(1);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSelectedSide(null);
     setSelectedChanges(new Set());
     setQuantity(1);
   }, [selectedDish?.documentId]);
+
+  useScrollLock(!!selectedDish);
+  useEscapeKey(closeDish, !!selectedDish);
+  useFocusTrap(pageRef, !!selectedDish);
 
   if (!selectedDish) return null;
 
@@ -40,7 +48,7 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
   };
 
   return (
-    <div className={styles.page} role="dialog" aria-modal="true">
+    <div className={styles.page} role="dialog" aria-modal="true" ref={pageRef}>
       <div className={styles.scroll}>
         <div className={styles.header}>
           <button
