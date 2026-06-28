@@ -27,7 +27,14 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
     setSelectedSide(null);
     setSelectedChanges(new Set());
     setQuantity(1);
-    window.scrollTo({ top: 0 });
+    // Only the desktop layout needs this: that overlay is position: absolute
+    // anchored at the document's top, so the page must scroll up to reveal
+    // it. On mobile the overlay is position: fixed (covers the viewport),
+    // so scrolling the real page underneath just strands the user at the
+    // top once they close it, for no visible benefit while it's open.
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      window.scrollTo({ top: 0 });
+    }
     scrollRef.current?.scrollTo({ top: 0 });
   }, [selectedDish?.documentId]);
 

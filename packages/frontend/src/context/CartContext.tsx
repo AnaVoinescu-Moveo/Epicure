@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import type { Dish } from '@/lib/strapi';
@@ -46,26 +47,31 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [comment, setComment] = useState('');
+  const itemsRef = useRef(items);
+  itemsRef.current = items;
 
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
 
   const addItem = useCallback(
     (dish: Dish, side: string | null, changes: string[], quantity: number) => {
-      const currentRestaurantId = items[0]?.dish.restaurant?.documentId;
+      const currentItems = itemsRef.current;
+      const currentRestaurantId = currentItems[0]?.dish.restaurant?.documentId;
       const newRestaurantId = dish.restaurant?.documentId;
       const isDifferentRestaurant =
-        items.length > 0 && currentRestaurantId !== newRestaurantId;
+        currentItems.length > 0 && currentRestaurantId !== newRestaurantId;
 
       if (isDifferentRestaurant) {
         const confirmed = window.confirm(
           `Adding this dish will clear your current order from ${
-            items[0].dish.restaurant?.name ?? 'this restaurant'
+            currentItems[0].dish.restaurant?.name ?? 'this restaurant'
           }. Continue?`,
         );
         if (!confirmed) return;
         setComment('');
-        setItems([{ id: lineId(dish, side, changes), dish, side, changes, quantity }]);
+        setItems([
+          { id: lineId(dish, side, changes), dish, side, changes, quantity },
+        ]);
         setIsOpen(true);
         return;
       }
@@ -84,7 +90,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       });
       setIsOpen(true);
     },
-    [items],
+    [],
   );
 
   const totalCount = useMemo(

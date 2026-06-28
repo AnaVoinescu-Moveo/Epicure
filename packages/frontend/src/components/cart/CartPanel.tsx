@@ -129,9 +129,7 @@ export function CartPanel() {
                       {item.quantity}
                     </div>
                     <div className={styles.desktopNamePrice}>
-                      <p className={styles.desktopDishName}>
-                        {item.dish.name}
-                      </p>
+                      <p className={styles.desktopDishName}>{item.dish.name}</p>
                       <p className={styles.desktopUnitPrice}>
                         {COPY.cart.unitPrice(item.dish.price)}
                       </p>
