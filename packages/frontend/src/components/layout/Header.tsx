@@ -4,6 +4,7 @@ import styles from './Header.module.css';
 import { MobileMenu } from './MobileMenu';
 import { NavLinks } from './NavLinks';
 import { HeaderSearch } from './HeaderSearch';
+import { HeaderIcons } from './HeaderIcons';
 import { getAllRestaurants } from '@/services/restaurantService';
 import { getAllChefs } from '@/services/chefService';
 import { getHeader } from '@/services/headerService';
@@ -67,15 +68,7 @@ export async function Header() {
               className={`${styles.iconSm} ${styles.profileIcon}`}
             />
           </button>
-          <button type="button" className={styles.iconBtn} aria-label="Cart">
-            <Image
-              src="/icons/card.png"
-              alt=""
-              width={20}
-              height={20}
-              className={`${styles.iconSm} ${styles.cartIcon}`}
-            />
-          </button>
+          <HeaderIcons />
         </div>
       </div>
     </header>

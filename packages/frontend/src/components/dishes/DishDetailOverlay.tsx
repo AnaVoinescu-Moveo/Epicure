@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
 import { useDishModal } from '@/context/DishModalContext';
+import { useCart } from '@/context/CartContext';
 import styles from './DishDetailOverlay.module.css';
 
 interface DishDetailOverlayProps {
@@ -13,6 +14,7 @@ interface DishDetailOverlayProps {
 
 export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
   const { selectedDish, closeDish } = useDishModal();
+  const { addItem } = useCart();
   const [selectedSide, setSelectedSide] = useState<string | null>(null);
   const [selectedChanges, setSelectedChanges] = useState<Set<string>>(
     new Set(),
@@ -217,7 +219,15 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
             <button
               type="button"
               className={styles.addToBagBtn}
-              onClick={closeDish}
+              onClick={() => {
+                addItem(
+                  selectedDish,
+                  selectedSide,
+                  Array.from(selectedChanges),
+                  quantity,
+                );
+                closeDish();
+              }}
             >
               <Image
                 src="/images/AddToBag.png"

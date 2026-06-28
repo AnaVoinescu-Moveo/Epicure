@@ -114,6 +114,15 @@ export const COPY = {
     restaurantsTitle: (firstName: string) => `${firstName}'s restaurants`,
     noRestaurants: 'No restaurants listed for this chef.',
   },
+  cart: {
+    title: 'My order',
+    closeAriaLabel: 'Close cart',
+    totalLabel: 'Total',
+    checkoutAlt: 'Checkout',
+    cartAriaLabel: (count: number) => `Cart, ${count} items`,
+    emptyLine1: 'Your bag is',
+    emptyLine2: 'empty',
+  },
   dishDetail: {
     closeAriaLabel: 'Close dish details',
     chooseASideTitle: 'Choose a side',

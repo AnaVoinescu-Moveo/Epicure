@@ -89,13 +89,13 @@
 }
 
 .attributeIcons {
-  display: flex;
+  display: none;
   gap: 8px;
   margin-top: 14px;
 }
 
 .priceRow {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 12px;
   margin-top: 14px;
@@ -306,10 +306,12 @@
   }
 
   .attributeIcons {
+    display: flex;
     justify-content: center;
   }
 
   .priceRow {
+    display: flex;
     justify-content: center;
     margin-top: 29px;
   }
