@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
@@ -20,11 +20,15 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
     new Set(),
   );
   const [quantity, setQuantity] = useState(1);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!selectedDish) return;
     setSelectedSide(null);
     setSelectedChanges(new Set());
     setQuantity(1);
+    window.scrollTo({ top: 0 });
+    scrollRef.current?.scrollTo({ top: 0 });
   }, [selectedDish?.documentId]);
 
   if (!selectedDish) return null;
@@ -54,7 +58,7 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
           <Image src="/icons/whiteX.svg" alt="" width={18} height={18} />
         </button>
 
-        <div className={styles.scroll}>
+        <div className={styles.scroll} ref={scrollRef}>
           <div className={styles.header}>
             <button
               type="button"

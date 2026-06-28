@@ -54,6 +54,11 @@
   text-transform: uppercase;
 }
 
+.desktopEmptyMessage,
+.desktopEmptyFooter {
+  display: none;
+}
+
 /* ── Title ──────────────────────────────────────────────── */
 
 .title {
@@ -67,20 +72,16 @@
   text-transform: uppercase;
 }
 
+.desktopTitle {
+  display: none;
+}
+
 /* ── Scrollable dish list ───────────────────────────────── */
 
 .scrollArea {
   flex: 1;
   overflow-y: auto;
   margin-top: 8px;
-}
-
-.restaurantGroup {
-  margin-top: 20px;
-}
-
-.restaurantGroup:first-child {
-  margin-top: 0;
 }
 
 .restaurantName {
@@ -168,6 +169,12 @@
   text-align: center;
 }
 
+.desktopDishInfo,
+.desktopTotalPrice,
+.commentSection {
+  display: none;
+}
+
 /* ── Fixed footer: total + checkout ────────────────────────── */
 
 .footer {
@@ -202,4 +209,257 @@
 .checkoutBtn img {
   width: 100%;
   height: 100%;
+}
+
+.desktopFooter {
+  display: none;
+}
+
+/* ── Desktop ────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .backdrop {
+    top: var(--header-height-desktop);
+  }
+
+  /* Empty state */
+
+  .emptyPanel {
+    top: var(--header-height-desktop);
+    left: auto;
+    right: 0;
+    width: 497px;
+    max-width: none;
+    height: 586px;
+    padding: 0;
+  }
+
+  .emptyIcon {
+    margin: 243px auto 0;
+  }
+
+  .emptyMessage {
+    display: none;
+  }
+
+  .desktopEmptyMessage {
+    display: block;
+    margin: 16px 0 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 200;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 1.97px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .desktopEmptyFooter {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    padding-bottom: 44px;
+  }
+
+  /* Full panel */
+
+  .panel {
+    top: var(--header-height-desktop);
+    left: auto;
+    right: 0;
+    width: 497px;
+    height: 778px;
+  }
+
+  .title {
+    display: none;
+  }
+
+  .desktopTitle {
+    display: block;
+    margin: 27px 0 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 35px;
+    letter-spacing: 1.25px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .restaurantName {
+    margin: 0 0 30px;
+  }
+
+  .dishCard {
+    width: calc(100% - 48px);
+    height: 96px;
+    margin: 0 24px 12px;
+  }
+
+  .dishInfo {
+    display: none;
+  }
+
+  .desktopDishInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 12px 12px 12px 24px;
+    background-color: var(--color-card);
+  }
+
+  .desktopTopRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .desktopQuantityBox {
+    flex-shrink: 0;
+    width: 31px;
+    height: 31px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.57px solid #979797;
+    border-radius: 3.43px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 18.12px;
+    line-height: 18.12px;
+    letter-spacing: 1.98px;
+    color: #de9200;
+  }
+
+  .desktopNamePrice {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .desktopDishName {
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: 1.97px;
+    text-align: center;
+  }
+
+  .desktopUnitPrice {
+    margin: 8px 0 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 13px;
+    letter-spacing: 1.42px;
+    color: #de9200;
+  }
+
+  .desktopOptionsRow {
+    margin: 8px 0 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 200;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 1.23px;
+  }
+
+  .desktopTotalPrice {
+    display: block;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 1.97px;
+  }
+
+  /* Comment section */
+
+  .commentSection {
+    display: block;
+    margin-top: 27px;
+  }
+
+  .commentDivider {
+    width: 136px;
+    height: 0;
+    margin: 0 auto;
+    border: 0.5px solid #979797;
+    border-radius: 2px;
+  }
+
+  .commentTitle {
+    margin: 23px 0 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: 1.97px;
+    text-align: center;
+  }
+
+  .commentTextarea {
+    display: block;
+    width: calc(100% - 48px);
+    height: 122px;
+    margin: 30px 24px 0;
+    padding: 12px;
+    border: 0.6px solid #979797;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 200;
+    font-size: 12px;
+    letter-spacing: 1.29px;
+    resize: none;
+  }
+
+  .commentTextarea::placeholder {
+    color: #979797;
+  }
+
+  /* Footer */
+
+  .footer {
+    display: none;
+  }
+
+  .desktopFooter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    margin-top: 35px;
+    padding-bottom: 24px;
+  }
+
+  .desktopCheckoutBtn,
+  .orderHistoryBtn {
+    width: 206px;
+    height: 48px;
+    padding: 5px 24px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 1.97px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .desktopCheckoutBtn {
+    background-color: #000000;
+    border: 1px solid #000000;
+    color: var(--color-white);
+  }
+
+  .orderHistoryBtn {
+    background-color: var(--color-white);
+    border: 1px solid #000000;
+    color: #000000;
+  }
 }
