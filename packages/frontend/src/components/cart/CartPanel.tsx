@@ -80,65 +80,69 @@ export function CartPanel() {
         aria-modal="true"
         aria-label={COPY.cart.title}
       >
-      <h2 className={styles.title}>{COPY.cart.title}</h2>
+        <h2 className={styles.title}>{COPY.cart.title}</h2>
 
-      <div className={styles.scrollArea}>
-        {groups.map((group) => (
-          <div key={group.key} className={styles.restaurantGroup}>
-            <p className={styles.restaurantName}>{group.name}</p>
-            {group.items.map((item) => {
-              const description = lineDescription(item);
-              const imageUrl = item.dish.image
-                ? strapiUrl(item.dish.image.url)
-                : null;
-              return (
-                <div key={item.id} className={styles.dishCard}>
-                  <div className={styles.imageWrapper}>
-                    {imageUrl ? (
-                      <Image
-                        src={imageUrl}
-                        alt={item.dish.image?.alternativeText ?? item.dish.name}
-                        fill
-                        className={styles.image}
-                      />
-                    ) : (
-                      <div className={styles.imagePlaceholder} />
-                    )}
+        <div className={styles.scrollArea}>
+          {groups.map((group) => (
+            <div key={group.key} className={styles.restaurantGroup}>
+              <p className={styles.restaurantName}>{group.name}</p>
+              {group.items.map((item) => {
+                const description = lineDescription(item);
+                const imageUrl = item.dish.image
+                  ? strapiUrl(item.dish.image.url)
+                  : null;
+                return (
+                  <div key={item.id} className={styles.dishCard}>
+                    <div className={styles.imageWrapper}>
+                      {imageUrl ? (
+                        <Image
+                          src={imageUrl}
+                          alt={
+                            item.dish.image?.alternativeText ?? item.dish.name
+                          }
+                          fill
+                          className={styles.image}
+                        />
+                      ) : (
+                        <div className={styles.imagePlaceholder} />
+                      )}
+                    </div>
+                    <div className={styles.dishInfo}>
+                      <p className={styles.titleRow}>
+                        <span className={styles.qtyX}>{item.quantity} x</span>{' '}
+                        <span className={styles.dishName}>
+                          {item.dish.name}
+                        </span>
+                      </p>
+                      {description && (
+                        <p className={styles.optionsRow}>{description}</p>
+                      )}
+                      <p className={styles.price}>
+                        {COPY.dishDetail.shekelSign}
+                        {item.dish.price * item.quantity}
+                      </p>
+                    </div>
                   </div>
-                  <div className={styles.dishInfo}>
-                    <p className={styles.titleRow}>
-                      <span className={styles.qtyX}>{item.quantity} x</span>{' '}
-                      <span className={styles.dishName}>{item.dish.name}</span>
-                    </p>
-                    {description && (
-                      <p className={styles.optionsRow}>{description}</p>
-                    )}
-                    <p className={styles.price}>
-                      {COPY.dishDetail.shekelSign}
-                      {item.dish.price * item.quantity}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ))}
-      </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
 
-      <div className={styles.footer}>
-        <p className={styles.totalRow}>
-          {COPY.cart.totalLabel} - {COPY.dishDetail.shekelSign}
-          {totalPrice}
-        </p>
-        <button type="button" className={styles.checkoutBtn}>
-          <Image
-            src="/images/checkout.png"
-            alt={COPY.cart.checkoutAlt}
-            width={206}
-            height={48}
-          />
-        </button>
-      </div>
+        <div className={styles.footer}>
+          <p className={styles.totalRow}>
+            {COPY.cart.totalLabel} - {COPY.dishDetail.shekelSign}
+            {totalPrice}
+          </p>
+          <button type="button" className={styles.checkoutBtn}>
+            <Image
+              src="/images/checkout.png"
+              alt={COPY.cart.checkoutAlt}
+              width={206}
+              height={48}
+            />
+          </button>
+        </div>
       </div>
     </>
   );
