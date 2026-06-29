@@ -1,7 +1,9 @@
-import Link from 'next/link';
+'use client';
+
 import Image from 'next/image';
 import { strapiUrl, type Dish } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
+import { useDishModal } from '@/context/DishModalContext';
 import styles from './DishCard.module.css';
 
 interface DishCardProps {
@@ -9,12 +11,17 @@ interface DishCardProps {
 }
 
 export function DishCard({ dish }: DishCardProps) {
+  const { openDish } = useDishModal();
   const { name, description, price, isSpicy, isVegetarian, isVegan, image } =
     dish;
   const imageUrl = image ? strapiUrl(image.url) : null;
 
   return (
-    <Link href={`/dishes/${dish.documentId}`} className={styles.link}>
+    <button
+      type="button"
+      onClick={() => openDish(dish)}
+      className={styles.link}
+    >
       <article className={styles.card}>
         <div className={styles.imageWrapper}>
           {imageUrl ? (
@@ -67,6 +74,6 @@ export function DishCard({ dish }: DishCardProps) {
           </div>
         </div>
       </article>
-    </Link>
+    </button>
   );
 }
