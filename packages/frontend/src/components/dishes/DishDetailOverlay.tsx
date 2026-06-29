@@ -6,6 +6,9 @@ import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
 import { useDishModal } from '@/context/DishModalContext';
 import { useCart } from '@/context/CartContext';
+import { useScrollLock } from '@/hooks/useScrollLock';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 import styles from './DishDetailOverlay.module.css';
 
 interface DishDetailOverlayProps {
@@ -21,15 +24,27 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
   );
   const [quantity, setQuantity] = useState(1);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!selectedDish) return;
     setSelectedSide(null);
     setSelectedChanges(new Set());
     setQuantity(1);
-    window.scrollTo({ top: 0 });
+    // Only the desktop layout needs this: that overlay is position: absolute
+    // anchored at the document's top, so the page must scroll up to reveal
+    // it. On mobile the overlay is position: fixed (covers the viewport),
+    // so scrolling the real page underneath just strands the user at the
+    // top once they close it, for no visible benefit while it's open.
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      window.scrollTo({ top: 0 });
+    }
     scrollRef.current?.scrollTo({ top: 0 });
   }, [selectedDish?.documentId]);
+
+  useScrollLock(!!selectedDish);
+  useEscapeKey(closeDish, !!selectedDish);
+  useFocusTrap(pageRef, !!selectedDish);
 
   if (!selectedDish) return null;
 
@@ -47,7 +62,7 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
   };
 
   return (
-    <div className={styles.page} role="dialog" aria-modal="true">
+    <div className={styles.page} role="dialog" aria-modal="true" ref={pageRef}>
       <div className={styles.desktopModal}>
         <button
           type="button"

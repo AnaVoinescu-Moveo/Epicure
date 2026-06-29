@@ -1,11 +1,13 @@
 'use client';
 
+import { useRef } from 'react';
 import Image from 'next/image';
 import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
 import { useCart, type CartItem } from '@/context/CartContext';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 import styles from './CartPanel.module.css';
 
 function lineDescription(item: CartItem) {
@@ -26,9 +28,11 @@ function OrderHistoryButton() {
 export function CartPanel() {
   const { items, isOpen, closeCart, totalPrice, comment, setComment } =
     useCart();
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useScrollLock(isOpen);
   useEscapeKey(closeCart, isOpen);
+  useFocusTrap(panelRef, isOpen);
 
   if (!isOpen) return null;
 
@@ -41,6 +45,7 @@ export function CartPanel() {
           aria-hidden="true"
         />
         <div
+          ref={panelRef}
           className={styles.emptyPanel}
           role="dialog"
           aria-modal="true"
@@ -77,6 +82,7 @@ export function CartPanel() {
     <>
       <div className={styles.backdrop} onClick={closeCart} aria-hidden="true" />
       <div
+        ref={panelRef}
         className={styles.panel}
         role="dialog"
         aria-modal="true"
@@ -129,9 +135,7 @@ export function CartPanel() {
                       {item.quantity}
                     </div>
                     <div className={styles.desktopNamePrice}>
-                      <p className={styles.desktopDishName}>
-                        {item.dish.name}
-                      </p>
+                      <p className={styles.desktopDishName}>{item.dish.name}</p>
                       <p className={styles.desktopUnitPrice}>
                         {COPY.cart.unitPrice(item.dish.price)}
                       </p>

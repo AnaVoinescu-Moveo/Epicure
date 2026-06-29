@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,6 +8,7 @@ import styles from './MobileMenu.module.css';
 import type { NavLink } from '../../constants/nav';
 import { useScrollLock } from '../../hooks/useScrollLock';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { stripLocale } from '../../lib/locale';
 
 interface MobileMenuProps {
@@ -23,33 +24,7 @@ export function MobileMenu({ navLinks, footerLinks }: MobileMenuProps) {
 
   useScrollLock(isOpen);
   useEscapeKey(() => setIsOpen(false), isOpen);
-
-  // Focus close button when menu opens
-  useEffect(() => {
-    if (isOpen) panelRef.current?.querySelector<HTMLElement>('button')?.focus();
-  }, [isOpen]);
-
-  // Focus trap: keep Tab inside the panel
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleTab = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
-      const focusable =
-        panelRef.current?.querySelectorAll<HTMLElement>('button, a[href]');
-      if (!focusable?.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    };
-    document.addEventListener('keydown', handleTab);
-    return () => document.removeEventListener('keydown', handleTab);
-  }, [isOpen]);
+  useFocusTrap(panelRef, isOpen);
 
   return (
     <>
