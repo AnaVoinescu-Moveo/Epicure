@@ -1,13 +1,16 @@
 'use client';
 
 import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
 import { useCart, type CartItem } from '@/context/CartContext';
+import { useAuthModal } from '@/context/AuthModalContext';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { useIsDesktop } from '@/hooks/useIsDesktop';
 import styles from './CartPanel.module.css';
 
 function lineDescription(item: CartItem) {
@@ -17,22 +20,55 @@ function lineDescription(item: CartItem) {
   return parts.join(' | ');
 }
 
-function OrderHistoryButton() {
+function OrderHistoryButton({ onClick }: { onClick: () => void }) {
   return (
-    <button type="button" className={styles.orderHistoryBtn}>
+    <button
+      type="button"
+      className={styles.orderHistoryBtn}
+      onClick={onClick}
+    >
       {COPY.cart.orderHistoryLabel}
     </button>
   );
 }
 
 export function CartPanel() {
-  const { items, isOpen, closeCart, totalPrice, comment, setComment } =
-    useCart();
+  const {
+    items,
+    isOpen,
+    closeCart,
+    removeItem,
+    totalPrice,
+    comment,
+    setComment,
+  } = useCart();
+  const { isAuthenticated, openAuth } = useAuthModal();
+  const router = useRouter();
   const panelRef = useRef<HTMLDivElement>(null);
+  const isDesktop = useIsDesktop();
 
-  useScrollLock(isOpen);
+  // Desktop renders the cart as a fixed-width side panel that leaves the
+  // rest of the page visible, so the background should stay scrollable.
+  // Mobile's panel spans the full width, closer to a true modal, so we
+  // still lock the body there.
+  useScrollLock(isOpen && !isDesktop);
   useEscapeKey(closeCart, isOpen);
   useFocusTrap(panelRef, isOpen);
+
+  const goToOrderHistory = () => {
+    closeCart();
+    router.push('/orders');
+  };
+
+  const handleCheckout = () => {
+    if (!isAuthenticated) {
+      closeCart();
+      openAuth('login');
+      return;
+    }
+    closeCart();
+    router.push('/checkout');
+  };
 
   if (!isOpen) return null;
 
@@ -69,7 +105,7 @@ export function CartPanel() {
             {COPY.cart.desktopEmptyLine2}
           </p>
           <div className={styles.desktopEmptyFooter}>
-            <OrderHistoryButton />
+            <OrderHistoryButton onClick={goToOrderHistory} />
           </div>
         </div>
       </>
@@ -100,6 +136,14 @@ export function CartPanel() {
               : null;
             return (
               <div key={item.id} className={styles.dishCard}>
+                <button
+                  type="button"
+                  className={styles.deleteBtn}
+                  aria-label={COPY.cart.deleteItemAriaLabel(item.dish.name)}
+                  onClick={() => removeItem(item.id)}
+                >
+                  <Image src="/icons/trash.svg" alt="" width={16} height={16} />
+                </button>
                 <div className={styles.imageWrapper}>
                   {imageUrl ? (
                     <Image
@@ -169,7 +213,11 @@ export function CartPanel() {
             {COPY.cart.totalLabel} - {COPY.dishDetail.shekelSign}
             {totalPrice}
           </p>
-          <button type="button" className={styles.checkoutBtn}>
+          <button
+            type="button"
+            className={styles.checkoutBtn}
+            onClick={handleCheckout}
+          >
             <Image
               src="/images/checkout.png"
               alt={COPY.cart.checkoutAlt}
@@ -180,10 +228,14 @@ export function CartPanel() {
         </div>
 
         <div className={styles.desktopFooter}>
-          <button type="button" className={styles.desktopCheckoutBtn}>
+          <button
+            type="button"
+            className={styles.desktopCheckoutBtn}
+            onClick={handleCheckout}
+          >
             {COPY.cart.checkoutLabel(totalPrice)}
           </button>
-          <OrderHistoryButton />
+          <OrderHistoryButton onClick={goToOrderHistory} />
         </div>
       </div>
     </>

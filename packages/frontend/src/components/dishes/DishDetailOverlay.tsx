@@ -11,6 +11,7 @@ import { useSearch } from '@/context/SearchContext';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { useIsDesktop } from '@/hooks/useIsDesktop';
 import styles from './DishDetailOverlay.module.css';
 
 interface DishDetailOverlayProps {
@@ -27,6 +28,7 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
     new Set(),
   );
   const [quantity, setQuantity] = useState(1);
+  const isDesktop = useIsDesktop();
   const scrollRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +48,12 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
     scrollRef.current?.scrollTo({ top: 0 });
   }, [selectedDish?.documentId]);
 
-  useScrollLock(!!selectedDish);
+  // Desktop renders the modal `position: absolute` over the page flow and
+  // relies on scrolling the page itself to reach content below the
+  // viewport (see the scrollTo comment above) — locking body scroll there
+  // would make that content unreachable. Mobile is `position: fixed` with
+  // its own internal scroll container, so locking the body is safe there.
+  useScrollLock(!!selectedDish && !isDesktop);
   useEscapeKey(closeDish, !!selectedDish);
   useFocusTrap(pageRef, !!selectedDish);
 
