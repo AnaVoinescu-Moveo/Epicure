@@ -6,7 +6,16 @@ import { COPY } from '@/constants/copy';
 import { useAuthModal } from '@/context/AuthModalContext';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
+import { apiPost, ApiError } from '@/lib/api';
 import styles from './SignInModal.module.css';
+
+interface LoginResponse {
+  access_token: string;
+}
+
+interface RegisterResponse {
+  access_token: string;
+}
 
 function EyeIcon({ open }: { open: boolean }) {
   return (
@@ -29,15 +38,31 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export function SignInModal() {
-  const { isOpen, mode, setMode, closeAuth } = useAuthModal();
+function isValidPassword(password: string) {
+  return (
+    password.length >= 8 &&
+    password.length <= 64 &&
+    /[A-Z]/.test(password) &&
+    /[^A-Za-z0-9]/.test(password)
+  );
+}
 
+function splitName(name: string) {
+  const [firstName, ...rest] = name.trim().split(/\s+/);
+  return { firstName, lastName: rest.join(' ') };
+}
+
+export function SignInModal() {
+  const { isOpen, mode, setMode, closeAuth, login } = useAuthModal();
+
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useScrollLock(isOpen);
   useEscapeKey(closeAuth, isOpen);
@@ -45,6 +70,7 @@ export function SignInModal() {
   if (!isOpen) return null;
 
   const resetForm = () => {
+    setName('');
     setEmail('');
     setPassword('');
     setConfirmPassword('');
@@ -63,38 +89,73 @@ export function SignInModal() {
     setMode(next);
   };
 
-  const handleLogin = () => {
-    if (!email || !password) return;
+  const handleLogin = async () => {
+    if (!email || !password || isSubmitting) return;
     if (!isValidEmail(email)) {
       setError(COPY.auth.loginError);
       return;
     }
-    // Backend isn't wired up yet — this will call the real /auth/login
-    // endpoint once that step happens. For now there's nothing to submit.
+    setIsSubmitting(true);
     setError(null);
+    try {
+      const { access_token } = await apiPost<LoginResponse>('/auth/login', {
+        email,
+        password,
+      });
+      login(access_token);
+      handleClose();
+    } catch {
+      setError(COPY.auth.loginError);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleSignUp = () => {
-    if (!isValidEmail(email)) {
-      setError(COPY.auth.signUpError);
+  const handleSignUp = async () => {
+    if (isSubmitting) return;
+    if (!name.trim()) {
+      setError(COPY.auth.nameRequiredError);
       return;
     }
-    if (password.length < 8 || password.length > 64) {
-      setError(COPY.auth.signUpError);
+    if (!isValidEmail(email)) {
+      setError(COPY.auth.invalidEmailError);
+      return;
+    }
+    if (!isValidPassword(password)) {
+      setError(COPY.auth.passwordRequirementsError);
       return;
     }
     if (password !== confirmPassword) {
-      setError(COPY.auth.signUpError);
+      setError(COPY.auth.passwordMismatchError);
       return;
     }
+    setIsSubmitting(true);
     setError(null);
-    // Backend isn't wired up yet — this will call the real /auth/register
-    // endpoint once that step happens.
+    try {
+      const { firstName, lastName } = splitName(name);
+      const { access_token } = await apiPost<RegisterResponse>(
+        '/auth/register',
+        { email, password, firstName, lastName },
+      );
+      login(access_token);
+      handleClose();
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 409) {
+        setError(COPY.auth.emailInUseError);
+      } else {
+        setError(COPY.auth.signUpError);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const canSubmitLogin = email.length > 0 && password.length > 0;
   const canSubmitSignUp =
-    email.length > 0 && password.length > 0 && confirmPassword.length > 0;
+    name.length > 0 &&
+    email.length > 0 &&
+    password.length > 0 &&
+    confirmPassword.length > 0;
 
   return (
     <>
@@ -156,7 +217,7 @@ export function SignInModal() {
             <button
               type="button"
               className={styles.loginBtn}
-              disabled={!canSubmitLogin}
+              disabled={!canSubmitLogin || isSubmitting}
               onClick={handleLogin}
             >
               {COPY.auth.loginButton}
@@ -184,6 +245,13 @@ export function SignInModal() {
           <div className={styles.content}>
             <h2 className={styles.title}>{COPY.auth.signUpTitle}</h2>
 
+            <input
+              type="text"
+              className={styles.input}
+              placeholder={COPY.auth.namePlaceholder}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
             <input
               type="email"
               className={styles.input}
@@ -239,7 +307,7 @@ export function SignInModal() {
             <button
               type="button"
               className={styles.loginBtn}
-              disabled={!canSubmitSignUp}
+              disabled={!canSubmitSignUp || isSubmitting}
               onClick={handleSignUp}
             >
               {COPY.auth.signUpButton}

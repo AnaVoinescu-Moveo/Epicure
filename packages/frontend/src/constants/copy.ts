@@ -119,6 +119,7 @@ export const COPY = {
     signInTitle: 'Sign in',
     signInSubtitle: 'To continue the order, please sign in',
     signUpTitle: 'Sign up',
+    namePlaceholder: 'Name',
     emailPlaceholder: 'Email address',
     passwordPlaceholder: 'Password',
     confirmPasswordPlaceholder: 'Confirm password',
@@ -130,6 +131,15 @@ export const COPY = {
     hidePasswordAriaLabel: 'Hide password',
     loginError: 'Email or password is incorrect. Please try again.',
     signUpError: 'Please check your details and try again.',
+    nameRequiredError: 'Please enter your name.',
+    invalidEmailError: 'Please enter a valid email address.',
+    passwordRequirementsError:
+      'Password must be 8-64 characters, with at least one uppercase letter and one special character.',
+    passwordMismatchError: 'Passwords do not match.',
+    emailInUseError: 'An account with this email already exists.',
+    genericError: 'Something went wrong. Please try again.',
+    helloName: (name: string) => `Hello, ${name}!`,
+    signOutLabel: 'Log out',
   },
   cart: {
     title: 'My order',

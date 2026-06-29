@@ -55,7 +55,7 @@ describe('AuthService', () => {
       lastName: 'User',
     };
 
-    it('returns UserResponseDto without password on success', async () => {
+    it('returns the created user and an access_token, without exposing the password', async () => {
       usersService.findByEmail.mockResolvedValue(null);
       usersService.create.mockResolvedValue(mockUser as never);
       (bcrypt.hash as jest.Mock).mockResolvedValue('hashed');
@@ -63,13 +63,21 @@ describe('AuthService', () => {
       const result = await authService.register(payload);
 
       expect(result).toEqual({
-        id: mockUser.id,
+        user: {
+          id: mockUser.id,
+          email: mockUser.email,
+          firstName: mockUser.firstName,
+          lastName: mockUser.lastName,
+          createdAt: mockUser.createdAt,
+        },
+        access_token: 'mock-token',
+      });
+      expect(result.user).not.toHaveProperty('password');
+      expect(jwtService.sign).toHaveBeenCalledWith({
+        sub: mockUser.id,
         email: mockUser.email,
         firstName: mockUser.firstName,
-        lastName: mockUser.lastName,
-        createdAt: mockUser.createdAt,
       });
-      expect(result).not.toHaveProperty('password');
     });
 
     it('throws ConflictException when email is already in use', async () => {
@@ -108,6 +116,7 @@ describe('AuthService', () => {
       expect(jwtService.sign).toHaveBeenCalledWith({
         sub: mockUser.id,
         email: mockUser.email,
+        firstName: mockUser.firstName,
       });
     });
 
