@@ -22,11 +22,7 @@ function lineDescription(item: CartItem) {
 
 function OrderHistoryButton({ onClick }: { onClick: () => void }) {
   return (
-    <button
-      type="button"
-      className={styles.orderHistoryBtn}
-      onClick={onClick}
-    >
+    <button type="button" className={styles.orderHistoryBtn} onClick={onClick}>
       {COPY.cart.orderHistoryLabel}
     </button>
   );
