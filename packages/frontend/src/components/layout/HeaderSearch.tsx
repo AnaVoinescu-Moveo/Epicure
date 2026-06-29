@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import styles from './Header.module.css';
 import { SearchOverlay } from '../search/SearchOverlay';
@@ -8,6 +8,9 @@ import { SearchInput } from '../search/SearchInput';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
 import { useIsClickedOutside } from '../../hooks/useIsClickedOutside';
 import { buildSearchFn } from '@/lib/searchUtils';
+import { useSearch } from '@/context/SearchContext';
+import { useCart } from '@/context/CartContext';
+import { useAuthModal } from '@/context/AuthModalContext';
 import type { Chef, Restaurant } from '@/lib/strapi';
 
 interface HeaderSearchProps {
@@ -16,7 +19,9 @@ interface HeaderSearchProps {
 }
 
 export function HeaderSearch({ restaurants, chefs }: HeaderSearchProps) {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { isOpen: isSearchOpen, openSearch, closeSearch } = useSearch();
+  const { closeCart } = useCart();
+  const { closeAuth } = useAuthModal();
   const [isDesktop, setIsDesktop] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +29,12 @@ export function HeaderSearch({ restaurants, chefs }: HeaderSearchProps) {
     () => buildSearchFn(restaurants, chefs),
     [restaurants, chefs],
   );
-  const closeSearch = useCallback(() => setIsSearchOpen(false), []);
+
+  const handleOpenSearch = () => {
+    closeCart();
+    closeAuth();
+    openSearch();
+  };
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 1024px)');
@@ -53,7 +63,7 @@ export function HeaderSearch({ restaurants, chefs }: HeaderSearchProps) {
           type="button"
           className={styles.iconBtn}
           aria-label="Search"
-          onClick={() => setIsSearchOpen(true)}
+          onClick={handleOpenSearch}
         >
           <Image
             src="/icons/search.png"
