@@ -29,6 +29,8 @@ interface CartContextValue {
     changes: string[],
     quantity: number,
   ) => void;
+  removeItem: (id: string) => void;
+  clearCart: () => void;
   totalCount: number;
   totalPrice: number;
   comment: string;
@@ -93,6 +95,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [],
   );
 
+  const removeItem = useCallback((id: string) => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
+  }, []);
+
+  const clearCart = useCallback(() => {
+    setItems([]);
+    setComment('');
+  }, []);
+
   const totalCount = useMemo(
     () => items.reduce((sum, item) => sum + item.quantity, 0),
     [items],
@@ -110,6 +121,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         openCart,
         closeCart,
         addItem,
+        removeItem,
+        clearCart,
         totalCount,
         totalPrice,
         comment,

@@ -158,6 +158,7 @@ export const COPY = {
     commentPlaceholder:
       'Special requests, allergies, dietary restrictions, etc.',
     unitPrice: (price: number) => `₪${price.toFixed(2)}`,
+    deleteItemAriaLabel: (dishName: string) => `Remove ${dishName} from cart`,
   },
   dishDetail: {
     closeAriaLabel: 'Close dish details',

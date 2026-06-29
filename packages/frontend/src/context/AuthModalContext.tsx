@@ -10,7 +10,7 @@ import {
 
 export type AuthMode = 'login' | 'signup';
 
-const TOKEN_STORAGE_KEY = 'epicure_token';
+export const TOKEN_STORAGE_KEY = 'epicure_token';
 
 interface AuthModalContextValue {
   isOpen: boolean;
