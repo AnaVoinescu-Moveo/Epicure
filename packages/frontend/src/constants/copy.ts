@@ -116,12 +116,21 @@ export const COPY = {
   },
   cart: {
     title: 'My order',
+    desktopTitle: 'Your order',
     closeAriaLabel: 'Close cart',
     totalLabel: 'Total',
     checkoutAlt: 'Checkout',
+    checkoutLabel: (total: number) => `Checkout ₪${total}`,
+    orderHistoryLabel: 'Order history',
     cartAriaLabel: (count: number) => `Cart, ${count} items`,
     emptyLine1: 'Your bag is',
     emptyLine2: 'empty',
+    desktopEmptyLine1: 'Your bag',
+    desktopEmptyLine2: 'is empty',
+    addCommentTitle: 'Add a comment',
+    commentPlaceholder:
+      'Special requests, allergies, dietary restrictions, etc.',
+    unitPrice: (price: number) => `₪${price.toFixed(2)}`,
   },
   dishDetail: {
     closeAriaLabel: 'Close dish details',

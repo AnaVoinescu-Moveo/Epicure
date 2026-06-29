@@ -10,21 +10,6 @@ import { useEscapeKey } from '@/hooks/useEscapeKey';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import styles from './CartPanel.module.css';
 
-function groupByRestaurant(items: CartItem[]) {
-  const groups: { key: string; name: string; items: CartItem[] }[] = [];
-  for (const item of items) {
-    const key = item.dish.restaurant?.documentId ?? 'unknown';
-    const name = item.dish.restaurant?.name ?? '';
-    let group = groups.find((g) => g.key === key);
-    if (!group) {
-      group = { key, name, items: [] };
-      groups.push(group);
-    }
-    group.items.push(item);
-  }
-  return groups;
-}
-
 function lineDescription(item: CartItem) {
   const parts: string[] = [];
   if (item.side) parts.push(item.side);
@@ -32,8 +17,17 @@ function lineDescription(item: CartItem) {
   return parts.join(' | ');
 }
 
+function OrderHistoryButton() {
+  return (
+    <button type="button" className={styles.orderHistoryBtn}>
+      {COPY.cart.orderHistoryLabel}
+    </button>
+  );
+}
+
 export function CartPanel() {
-  const { items, isOpen, closeCart, totalPrice } = useCart();
+  const { items, isOpen, closeCart, totalPrice, comment, setComment } =
+    useCart();
   const panelRef = useRef<HTMLDivElement>(null);
 
   useScrollLock(isOpen);
@@ -69,12 +63,20 @@ export function CartPanel() {
             <br />
             {COPY.cart.emptyLine2}
           </p>
+          <p className={styles.desktopEmptyMessage}>
+            {COPY.cart.desktopEmptyLine1}
+            <br />
+            {COPY.cart.desktopEmptyLine2}
+          </p>
+          <div className={styles.desktopEmptyFooter}>
+            <OrderHistoryButton />
+          </div>
         </div>
       </>
     );
   }
 
-  const groups = groupByRestaurant(items);
+  const restaurantName = items[0]?.dish.restaurant?.name ?? '';
 
   return (
     <>
@@ -87,52 +89,79 @@ export function CartPanel() {
         aria-label={COPY.cart.title}
       >
         <h2 className={styles.title}>{COPY.cart.title}</h2>
+        <h2 className={styles.desktopTitle}>{COPY.cart.desktopTitle}</h2>
 
         <div className={styles.scrollArea}>
-          {groups.map((group) => (
-            <div key={group.key} className={styles.restaurantGroup}>
-              <p className={styles.restaurantName}>{group.name}</p>
-              {group.items.map((item) => {
-                const description = lineDescription(item);
-                const imageUrl = item.dish.image
-                  ? strapiUrl(item.dish.image.url)
-                  : null;
-                return (
-                  <div key={item.id} className={styles.dishCard}>
-                    <div className={styles.imageWrapper}>
-                      {imageUrl ? (
-                        <Image
-                          src={imageUrl}
-                          alt={
-                            item.dish.image?.alternativeText ?? item.dish.name
-                          }
-                          fill
-                          className={styles.image}
-                        />
-                      ) : (
-                        <div className={styles.imagePlaceholder} />
-                      )}
+          <p className={styles.restaurantName}>{restaurantName}</p>
+          {items.map((item) => {
+            const description = lineDescription(item);
+            const imageUrl = item.dish.image
+              ? strapiUrl(item.dish.image.url)
+              : null;
+            return (
+              <div key={item.id} className={styles.dishCard}>
+                <div className={styles.imageWrapper}>
+                  {imageUrl ? (
+                    <Image
+                      src={imageUrl}
+                      alt={item.dish.image?.alternativeText ?? item.dish.name}
+                      fill
+                      className={styles.image}
+                    />
+                  ) : (
+                    <div className={styles.imagePlaceholder} />
+                  )}
+                </div>
+
+                {/* Mobile content */}
+                <div className={styles.dishInfo}>
+                  <p className={styles.titleRow}>
+                    <span className={styles.qtyX}>{item.quantity} x</span>{' '}
+                    <span className={styles.dishName}>{item.dish.name}</span>
+                  </p>
+                  {description && (
+                    <p className={styles.optionsRow}>{description}</p>
+                  )}
+                  <p className={styles.price}>
+                    {COPY.dishDetail.shekelSign}
+                    {item.dish.price * item.quantity}
+                  </p>
+                </div>
+
+                {/* Desktop content */}
+                <div className={styles.desktopDishInfo}>
+                  <div className={styles.desktopTopRow}>
+                    <div className={styles.desktopQuantityBox}>
+                      {item.quantity}
                     </div>
-                    <div className={styles.dishInfo}>
-                      <p className={styles.titleRow}>
-                        <span className={styles.qtyX}>{item.quantity} x</span>{' '}
-                        <span className={styles.dishName}>
-                          {item.dish.name}
-                        </span>
-                      </p>
-                      {description && (
-                        <p className={styles.optionsRow}>{description}</p>
-                      )}
-                      <p className={styles.price}>
-                        {COPY.dishDetail.shekelSign}
-                        {item.dish.price * item.quantity}
+                    <div className={styles.desktopNamePrice}>
+                      <p className={styles.desktopDishName}>{item.dish.name}</p>
+                      <p className={styles.desktopUnitPrice}>
+                        {COPY.cart.unitPrice(item.dish.price)}
                       </p>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          ))}
+                  {description && (
+                    <p className={styles.desktopOptionsRow}>{description}</p>
+                  )}
+                </div>
+                <p className={styles.desktopTotalPrice}>
+                  {COPY.cart.unitPrice(item.dish.price * item.quantity)}
+                </p>
+              </div>
+            );
+          })}
+
+          <div className={styles.commentSection}>
+            <div className={styles.commentDivider} />
+            <p className={styles.commentTitle}>{COPY.cart.addCommentTitle}</p>
+            <textarea
+              className={styles.commentTextarea}
+              placeholder={COPY.cart.commentPlaceholder}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className={styles.footer}>
@@ -148,6 +177,13 @@ export function CartPanel() {
               height={48}
             />
           </button>
+        </div>
+
+        <div className={styles.desktopFooter}>
+          <button type="button" className={styles.desktopCheckoutBtn}>
+            {COPY.cart.checkoutLabel(totalPrice)}
+          </button>
+          <OrderHistoryButton />
         </div>
       </div>
     </>

@@ -23,12 +23,23 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
     new Set(),
   );
   const [quantity, setQuantity] = useState(1);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!selectedDish) return;
     setSelectedSide(null);
     setSelectedChanges(new Set());
     setQuantity(1);
+    // Only the desktop layout needs this: that overlay is position: absolute
+    // anchored at the document's top, so the page must scroll up to reveal
+    // it. On mobile the overlay is position: fixed (covers the viewport),
+    // so scrolling the real page underneath just strands the user at the
+    // top once they close it, for no visible benefit while it's open.
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      window.scrollTo({ top: 0 });
+    }
+    scrollRef.current?.scrollTo({ top: 0 });
   }, [selectedDish?.documentId]);
 
   useScrollLock(!!selectedDish);
@@ -62,7 +73,7 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
           <Image src="/icons/whiteX.svg" alt="" width={18} height={18} />
         </button>
 
-        <div className={styles.scroll}>
+        <div className={styles.scroll} ref={scrollRef}>
           <div className={styles.header}>
             <button
               type="button"
