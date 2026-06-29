@@ -1,0 +1,322 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background-color: transparent;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 201;
+  width: 100%;
+  background-color: var(--color-white);
+}
+
+/* ── Top bar ────────────────────────────────────────────── */
+
+.topBar {
+  width: 100%;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 10px 0px #00000012;
+}
+
+.closeBtn {
+  width: 20px;
+  height: 20px;
+  margin-left: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.desktopCloseBtn {
+  display: none;
+}
+
+/* ── Content ────────────────────────────────────────────── */
+
+.content {
+  padding-bottom: 40px;
+}
+
+.title {
+  margin: 40px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 2.67px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 14px 32px 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+  text-align: center;
+}
+
+/* ── Inputs ─────────────────────────────────────────────── */
+
+.input {
+  display: block;
+  width: 260px;
+  margin: 0 auto;
+  padding: 0 0 8px;
+  border: none;
+  border-bottom: 0.5px solid #000000;
+  outline: none;
+  background: none;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+}
+
+.input::placeholder {
+  color: #000000;
+}
+
+.title + .input,
+.subtitle + .input {
+  margin-top: 40px;
+}
+
+.input + .input {
+  margin-top: 24px;
+}
+
+.passwordWrapper {
+  position: relative;
+  width: 260px;
+  margin: 24px auto 0;
+}
+
+.passwordWrapper + .passwordWrapper {
+  margin-top: 24px;
+}
+
+.passwordWrapper .input {
+  width: 100%;
+  margin: 0;
+  padding-right: 28px;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ── Error ──────────────────────────────────────────────── */
+
+.error {
+  margin: 12px 32px 0;
+  color: var(--color-error);
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 1.23px;
+  text-align: center;
+}
+
+/* ── Login button ───────────────────────────────────────── */
+
+.loginBtn {
+  display: block;
+  width: 206px;
+  height: 48px;
+  margin: 40px auto 0;
+  padding: 5px 15px;
+  background-color: #979797;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 1.97px;
+  text-transform: uppercase;
+}
+
+.loginBtn:not(:disabled) {
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.loginBtn:disabled {
+  cursor: not-allowed;
+}
+
+/* ── Forgot password ────────────────────────────────────── */
+
+.forgotPassword {
+  display: block;
+  margin: 16px auto 0;
+  background: none;
+  border: none;
+  cursor: default;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  letter-spacing: 1.97px;
+  text-align: center;
+  color: #000000;
+}
+
+/* ── Divider ────────────────────────────────────────────── */
+
+.divider {
+  display: flex;
+  align-items: center;
+  width: 260px;
+  gap: 12px;
+  margin: 49px auto 0;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background-color: #979797;
+}
+
+.dividerText {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+  color: #979797;
+}
+
+/* ── Sign up button (secondary) ─────────────────────────── */
+
+.signUpBtn {
+  display: block;
+  width: 206px;
+  height: 48px;
+  margin: 40px auto 0;
+  padding: 5px 15px;
+  background-color: var(--color-white);
+  border: 1px solid #000000;
+  color: #000000;
+  cursor: pointer;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 1.97px;
+  text-transform: uppercase;
+}
+
+/* ── Desktop ────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .backdrop {
+    background-color: #000000b2;
+  }
+
+  .modal {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 573px;
+    min-height: 582px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .topBar {
+    display: none;
+  }
+
+  .desktopCloseBtn {
+    display: flex;
+    position: absolute;
+    top: -26px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0;
+  }
+
+  .title {
+    margin-top: 0;
+    font-size: 24px;
+  }
+
+  .subtitle {
+    width: auto;
+    white-space: nowrap;
+    margin: 20px auto 0;
+    font-size: 18px;
+  }
+
+  .title + .input,
+  .subtitle + .input {
+    margin-top: 60px;
+  }
+
+  .input {
+    width: 343px;
+  }
+
+  .input + .input {
+    margin-top: 76px;
+  }
+
+  .passwordWrapper {
+    width: 343px;
+    margin-top: 76px;
+  }
+
+  .passwordWrapper + .passwordWrapper {
+    margin-top: 76px;
+  }
+
+  .loginBtn {
+    padding: 5px 24px;
+  }
+
+  .forgotPassword {
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  .divider {
+    width: 343px;
+    margin: 40px auto 0;
+  }
+}

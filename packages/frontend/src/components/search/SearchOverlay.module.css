@@ -59,5 +59,10 @@
 /* ── Search input: 31px from sides, 37px below title bottom ─ */
 
 .inputWrapper {
+  display: flex;
+  justify-content: center;
   padding: 24px 31px;
+  /* iOS Safari auto-zooms the whole page when a focused input's font-size
+     is under 16px — this input autoFocuses on open, so it must stay >= 16px. */
+  --search-font-size: 16px;
 }

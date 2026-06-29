@@ -7,6 +7,9 @@ import { DishModalProvider } from '../context/DishModalContext';
 import { DishDetailOverlay } from '../components/dishes/DishDetailOverlay';
 import { CartProvider } from '../context/CartContext';
 import { CartPanel } from '../components/cart/CartPanel';
+import { AuthModalProvider } from '../context/AuthModalContext';
+import { SignInModal } from '../components/auth/SignInModal';
+import { SearchProvider } from '../context/SearchContext';
 
 export const metadata = {
   title: {
@@ -27,11 +30,16 @@ export default function RootLayout({
         <RestaurantsFilterProvider>
           <CartProvider>
             <DishModalProvider>
-              <Header />
-              <main>{children}</main>
-              <Footer />
-              <DishDetailOverlay footer={<Footer />} />
-              <CartPanel />
+              <AuthModalProvider>
+                <SearchProvider>
+                  <Header />
+                  <main>{children}</main>
+                  <Footer />
+                  <DishDetailOverlay footer={<Footer />} />
+                  <CartPanel />
+                  <SignInModal />
+                </SearchProvider>
+              </AuthModalProvider>
             </DishModalProvider>
           </CartProvider>
         </RestaurantsFilterProvider>

@@ -5,6 +5,7 @@ import { MobileMenu } from './MobileMenu';
 import { NavLinks } from './NavLinks';
 import { HeaderSearch } from './HeaderSearch';
 import { HeaderIcons } from './HeaderIcons';
+import { ProfileButton } from './ProfileButton';
 import { getAllRestaurants } from '@/services/restaurantService';
 import { getAllChefs } from '@/services/chefService';
 import { getHeader } from '@/services/headerService';
@@ -59,15 +60,7 @@ export async function Header() {
         {/* Right icons */}
         <div className={styles.rightIcons}>
           <HeaderSearch restaurants={restaurants} chefs={chefs} />
-          <button type="button" className={styles.iconBtn} aria-label="Profile">
-            <Image
-              src="/icons/profile.png"
-              alt=""
-              width={20}
-              height={20}
-              className={`${styles.iconSm} ${styles.profileIcon}`}
-            />
-          </button>
+          <ProfileButton />
           <HeaderIcons />
         </div>
       </div>

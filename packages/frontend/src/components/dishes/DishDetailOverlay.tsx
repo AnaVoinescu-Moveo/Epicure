@@ -6,6 +6,8 @@ import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
 import { useDishModal } from '@/context/DishModalContext';
 import { useCart } from '@/context/CartContext';
+import { useAuthModal } from '@/context/AuthModalContext';
+import { useSearch } from '@/context/SearchContext';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
@@ -18,6 +20,8 @@ interface DishDetailOverlayProps {
 export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
   const { selectedDish, closeDish } = useDishModal();
   const { addItem } = useCart();
+  const { closeAuth } = useAuthModal();
+  const { closeSearch } = useSearch();
   const [selectedSide, setSelectedSide] = useState<string | null>(null);
   const [selectedChanges, setSelectedChanges] = useState<Set<string>>(
     new Set(),
@@ -239,6 +243,8 @@ export function DishDetailOverlay({ footer }: DishDetailOverlayProps) {
               type="button"
               className={styles.addToBagBtn}
               onClick={() => {
+                closeAuth();
+                closeSearch();
                 addItem(
                   selectedDish,
                   selectedSide,
