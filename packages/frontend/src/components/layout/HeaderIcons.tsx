@@ -1,49 +1,28 @@
+'use client';
+
 import Image from 'next/image';
 import { COPY } from '../../constants/copy';
+import { useCart } from '../../context/CartContext';
 import styles from './HeaderIcons.module.css';
 
 export function HeaderIcons() {
+  const { isOpen, openCart, closeCart, totalCount } = useCart();
+
   return (
-    <div className={styles.rightIcons}>
-      <button
-        type="button"
-        className={styles.iconBtn}
-        aria-label={COPY.header.searchAriaLabel}
-      >
-        <Image
-          src="/icons/search.png"
-          alt=""
-          width={20}
-          height={20}
-          className={`${styles.iconSm} ${styles.searchIcon}`}
-        />
-      </button>
-      <button
-        type="button"
-        className={styles.iconBtn}
-        aria-label={COPY.header.profileAriaLabel}
-      >
-        <Image
-          src="/icons/profile.png"
-          alt=""
-          width={20}
-          height={20}
-          className={`${styles.iconSm} ${styles.profileIcon}`}
-        />
-      </button>
-      <button
-        type="button"
-        className={styles.iconBtn}
-        aria-label={COPY.header.cartAriaLabel}
-      >
-        <Image
-          src="/icons/card.png"
-          alt=""
-          width={20}
-          height={20}
-          className={`${styles.iconSm} ${styles.cartIcon}`}
-        />
-      </button>
-    </div>
+    <button
+      type="button"
+      className={styles.cartBtn}
+      aria-label={COPY.cart.cartAriaLabel(totalCount)}
+      onClick={() => (isOpen ? closeCart() : openCart())}
+    >
+      <Image
+        src="/icons/card.png"
+        alt=""
+        width={20}
+        height={20}
+        className={`${styles.iconSm} ${styles.cartIcon}`}
+      />
+      {totalCount > 0 && <span className={styles.badge}>{totalCount}</span>}
+    </button>
   );
 }

@@ -1,0 +1,205 @@
+.backdrop {
+  position: fixed;
+  top: var(--header-height-mobile);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background-color: transparent;
+}
+
+.panel {
+  position: fixed;
+  top: var(--header-height-mobile);
+  left: 0;
+  z-index: 201;
+  width: 100%;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  box-shadow: 2px 4px 10px 0px #afafaf40;
+}
+
+/* ── Empty state ────────────────────────────────────────── */
+
+.emptyPanel {
+  position: fixed;
+  top: var(--header-height-mobile);
+  left: 0;
+  z-index: 201;
+  width: 100%;
+  max-width: 380px;
+  height: 218px;
+  padding: 16px 12px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-white);
+  box-shadow: 2px 4px 10px 0px #afafaf40;
+}
+
+.emptyIcon {
+  margin-top: 61px;
+}
+
+.emptyMessage {
+  margin: 20px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 1.97px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ── Title ──────────────────────────────────────────────── */
+
+.title {
+  margin: 16px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 2.67px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ── Scrollable dish list ───────────────────────────────── */
+
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.restaurantGroup {
+  margin-top: 20px;
+}
+
+.restaurantGroup:first-child {
+  margin-top: 0;
+}
+
+.restaurantName {
+  margin: 0 0 20px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: 1.97px;
+  text-align: center;
+}
+
+.dishCard {
+  position: relative;
+  width: calc(100% - 40px);
+  height: 96px;
+  margin: 0 20px 20px;
+  display: flex;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-border);
+}
+
+.dishInfo {
+  flex: 1;
+  padding: 12px 12px 12px 24px;
+  background-color: var(--color-card);
+}
+
+.titleRow {
+  margin: 0;
+}
+
+.qtyX,
+.dishName {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  letter-spacing: 2.67px;
+}
+
+.qtyX {
+  font-size: 14px;
+  line-height: 26px;
+  text-align: center;
+}
+
+.dishName {
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.optionsRow {
+  margin: 8px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.23px;
+}
+
+.price {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+  text-align: center;
+}
+
+/* ── Fixed footer: total + checkout ────────────────────────── */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 24px;
+}
+
+.totalRow {
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 2.67px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.checkoutBtn {
+  display: block;
+  width: 206px;
+  height: 48px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.checkoutBtn img {
+  width: 100%;
+  height: 100%;
+}

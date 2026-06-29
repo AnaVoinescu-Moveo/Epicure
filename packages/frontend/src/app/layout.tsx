@@ -5,6 +5,8 @@ import { COPY } from '../constants/copy';
 import { RestaurantsFilterProvider } from '../context/RestaurantsFilterContext';
 import { DishModalProvider } from '../context/DishModalContext';
 import { DishDetailOverlay } from '../components/dishes/DishDetailOverlay';
+import { CartProvider } from '../context/CartContext';
+import { CartPanel } from '../components/cart/CartPanel';
 
 export const metadata = {
   title: {
@@ -23,12 +25,15 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <RestaurantsFilterProvider>
-          <DishModalProvider>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-            <DishDetailOverlay footer={<Footer />} />
-          </DishModalProvider>
+          <CartProvider>
+            <DishModalProvider>
+              <Header />
+              <main>{children}</main>
+              <Footer />
+              <DishDetailOverlay footer={<Footer />} />
+              <CartPanel />
+            </DishModalProvider>
+          </CartProvider>
         </RestaurantsFilterProvider>
       </body>
     </html>

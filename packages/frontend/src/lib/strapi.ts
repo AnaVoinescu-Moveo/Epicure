@@ -105,4 +105,5 @@ export interface Dish {
   isVegetarian: boolean;
   isVegan: boolean;
   image: StrapiImage | null;
+  restaurant: { documentId: string; name: string } | null;
 }
