@@ -9,8 +9,14 @@ import { QueryFailedError } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { RegisterPayload } from './dto/register.dto';
 import { LoginPayload } from './dto/login.dto';
-import { UserResponseDto } from './dto/user-response.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
+import { AuthResponseDto } from './dto/auth-response.dto';
+
+interface TokenSubject {
+  id: string;
+  email: string;
+  firstName: string;
+}
 
 @Injectable()
 export class AuthService {
@@ -19,7 +25,15 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(payload: RegisterPayload): Promise<UserResponseDto> {
+  private signToken(user: TokenSubject): string {
+    return this.jwtService.sign({
+      sub: user.id,
+      email: user.email,
+      firstName: user.firstName,
+    });
+  }
+
+  async register(payload: RegisterPayload): Promise<AuthResponseDto> {
     const existing = await this.usersService.findByEmail(payload.email);
     if (existing) {
       throw new ConflictException('Email already in use');
@@ -33,7 +47,10 @@ export class AuthService {
         payload.lastName,
       );
       const { id, email, firstName, lastName, createdAt } = user;
-      return { id, email, firstName, lastName, createdAt };
+      return {
+        user: { id, email, firstName, lastName, createdAt },
+        access_token: this.signToken({ id, email, firstName }),
+      };
     } catch (err) {
       if (
         err instanceof QueryFailedError &&
@@ -54,8 +71,6 @@ export class AuthService {
     if (!isMatch) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    return {
-      access_token: this.jwtService.sign({ sub: user.id, email: user.email }),
-    };
+    return { access_token: this.signToken(user) };
   }
 }
