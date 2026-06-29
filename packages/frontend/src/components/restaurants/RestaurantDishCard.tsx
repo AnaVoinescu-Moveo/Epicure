@@ -16,14 +16,10 @@ export function RestaurantDishCard({ dish }: Props) {
   const imageUrl = image ? strapiUrl(image.url) : null;
 
   return (
-    <article
+    <button
+      type="button"
       className={styles.card}
-      role="button"
-      tabIndex={0}
       onClick={() => openDish(dish)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') openDish(dish);
-      }}
     >
       <div className={styles.imageWrapper}>
         {imageUrl ? (
@@ -48,6 +44,6 @@ export function RestaurantDishCard({ dish }: Props) {
           </span>
         </div>
       </div>
-    </article>
+    </button>
   );
 }
