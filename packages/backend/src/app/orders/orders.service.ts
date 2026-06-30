@@ -5,6 +5,9 @@ import { Order } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderResponseDto } from './dto/order-response.dto';
 
+const RETENTION_LIMIT = 15;
+const RETENTION_DAYS = 365;
+
 @Injectable()
 export class OrdersService {
   constructor(
@@ -58,7 +61,31 @@ export class OrdersService {
     });
 
     const saved = await this.ordersRepository.save(order);
+    await this.pruneOldOrders(userId);
     return this.toDto(saved);
+  }
+
+  // Keeps at most RETENTION_LIMIT orders, and never anything older than
+  // RETENTION_DAYS — an order survives only if it satisfies both. Run
+  // synchronously after each order is created since there's no
+  // scheduler/cron infrastructure in this app to do it as a background job.
+  private async pruneOldOrders(userId: number): Promise<void> {
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - RETENTION_DAYS);
+
+    const orders = await this.ordersRepository.find({
+      where: { user: { id: userId } },
+      order: { createdAt: 'DESC' },
+      select: { id: true, createdAt: true },
+    });
+
+    const idsToDelete = orders
+      .filter((order, index) => index >= RETENTION_LIMIT || order.createdAt < cutoff)
+      .map((order) => order.id);
+
+    if (idsToDelete.length > 0) {
+      await this.ordersRepository.delete(idsToDelete);
+    }
   }
 
   async getOrderHistory(userId: number): Promise<OrderResponseDto[]> {

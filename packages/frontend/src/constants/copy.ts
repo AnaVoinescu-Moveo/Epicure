@@ -160,6 +160,14 @@ export const COPY = {
     unitPrice: (price: number) => `₪${price.toFixed(2)}`,
     deleteItemAriaLabel: (dishName: string) => `Remove ${dishName} from cart`,
   },
+  restaurantSwitch: {
+    closeAriaLabel: 'Cancel and go back',
+    title: 'Delete order?',
+    description:
+      'You can order from only one restaurant per order. Going to another restaurant will erase all the items currently in your cart.',
+    deleteLabel: 'Delete',
+    backToOrderLabel: 'Back to order',
+  },
   checkout: {
     closeAriaLabel: 'Close checkout',
     pageTitle: 'Checkout',
@@ -190,6 +198,17 @@ export const COPY = {
     arriveInLabel: 'Arrive in',
     minLabel: 'min',
     bubbleAriaLabel: 'View delivery status',
+  },
+  orderHistory: {
+    pageTitle: 'Your order history',
+    emptyMessage: "You haven't placed any orders yet.",
+    rowArrowAlt: 'View order summary',
+    summaryTitle: 'Order summary',
+    orderAgainLabel: 'Order again',
+    itemUnavailableNotice: (names: string[]) =>
+      `${names.join(', ')} ${names.length === 1 ? 'is' : 'are'} no longer available and ${names.length === 1 ? 'was' : 'were'} skipped.`,
+    closeAriaLabel: 'Close order summary',
+    genericError: 'Could not load your order history. Please try again.',
   },
   dishDetail: {
     closeAriaLabel: 'Close dish details',

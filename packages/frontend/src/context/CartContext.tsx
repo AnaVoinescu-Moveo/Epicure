@@ -9,9 +9,17 @@ import {
   useState,
 } from 'react';
 import type { Dish } from '@/lib/strapi';
+import { useIsDesktop } from '@/hooks/useIsDesktop';
 
 export interface CartItem {
   id: string;
+  dish: Dish;
+  side: string | null;
+  changes: string[];
+  quantity: number;
+}
+
+export interface PendingRestaurantSwitch {
   dish: Dish;
   side: string | null;
   changes: string[];
@@ -35,6 +43,9 @@ interface CartContextValue {
   totalPrice: number;
   comment: string;
   setComment: (text: string) => void;
+  pendingRestaurantSwitch: PendingRestaurantSwitch | null;
+  confirmRestaurantSwitch: () => void;
+  cancelRestaurantSwitch: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -49,11 +60,30 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [comment, setComment] = useState('');
+  const [pendingRestaurantSwitch, setPendingRestaurantSwitch] =
+    useState<PendingRestaurantSwitch | null>(null);
   const itemsRef = useRef(items);
   itemsRef.current = items;
+  const isDesktop = useIsDesktop();
+  const isDesktopRef = useRef(isDesktop);
+  isDesktopRef.current = isDesktop;
 
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
+
+  // Replaces the cart entirely with a single item — used both when a
+  // restaurant switch is confirmed via window.confirm (mobile) and via the
+  // desktop confirmation modal (confirmRestaurantSwitch below).
+  const replaceCartWith = useCallback(
+    (dish: Dish, side: string | null, changes: string[], quantity: number) => {
+      setComment('');
+      setItems([
+        { id: lineId(dish, side, changes), dish, side, changes, quantity },
+      ]);
+      setIsOpen(true);
+    },
+    [],
+  );
 
   const addItem = useCallback(
     (dish: Dish, side: string | null, changes: string[], quantity: number) => {
@@ -64,17 +94,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         currentItems.length > 0 && currentRestaurantId !== newRestaurantId;
 
       if (isDifferentRestaurant) {
+        if (isDesktopRef.current) {
+          setPendingRestaurantSwitch({ dish, side, changes, quantity });
+          return;
+        }
         const confirmed = window.confirm(
           `Adding this dish will clear your current order from ${
             currentItems[0].dish.restaurant?.name ?? 'this restaurant'
           }. Continue?`,
         );
         if (!confirmed) return;
-        setComment('');
-        setItems([
-          { id: lineId(dish, side, changes), dish, side, changes, quantity },
-        ]);
-        setIsOpen(true);
+        replaceCartWith(dish, side, changes, quantity);
         return;
       }
 
@@ -92,8 +122,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       });
       setIsOpen(true);
     },
-    [],
+    [replaceCartWith],
   );
+
+  const confirmRestaurantSwitch = useCallback(() => {
+    setPendingRestaurantSwitch((pending) => {
+      if (pending) {
+        replaceCartWith(pending.dish, pending.side, pending.changes, pending.quantity);
+      }
+      return null;
+    });
+  }, [replaceCartWith]);
+
+  const cancelRestaurantSwitch = useCallback(() => {
+    setPendingRestaurantSwitch(null);
+  }, []);
 
   const removeItem = useCallback((id: string) => {
     setItems((prev) => prev.filter((item) => item.id !== id));
@@ -127,6 +170,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         totalPrice,
         comment,
         setComment,
+        pendingRestaurantSwitch,
+        confirmRestaurantSwitch,
+        cancelRestaurantSwitch,
       }}
     >
       {children}

@@ -4,6 +4,18 @@ export function formatMMSS(totalSeconds: number): string {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
+// "29-03-2022, 11:54"
+export function formatOrderDate(date: Date | string): string {
+  const d = typeof date === 'string' ? new Date(date) : date;
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const day = pad(d.getDate());
+  const month = pad(d.getMonth() + 1);
+  const year = d.getFullYear();
+  const hours = pad(d.getHours());
+  const minutes = pad(d.getMinutes());
+  return `${day}-${month}-${year}, ${hours}:${minutes}`;
+}
+
 export function isOpenNow(
   openingTime: string | null,
   closingTime: string | null,
