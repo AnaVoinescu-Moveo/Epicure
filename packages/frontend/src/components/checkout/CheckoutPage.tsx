@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
 import { useCart, type CartItem } from '@/context/CartContext';
-import { apiPost, ApiError } from '@/lib/api';
+import { useOrderConfirmation } from '@/context/OrderConfirmationContext';
+import { ApiError } from '@/lib/api';
 import {
   isValidName,
   isValidAddress,
@@ -29,6 +30,7 @@ function lineDescription(item: CartItem) {
 export function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, comment, clearCart } = useCart();
+  const { placeOrder } = useOrderConfirmation();
 
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
@@ -79,7 +81,7 @@ export function CheckoutPage() {
     setIsSubmitting(true);
     setError(null);
     try {
-      await apiPost('/orders', {
+      await placeOrder({
         restaurantId: restaurant.documentId,
         restaurantName: restaurant.name,
         items: items.map((item) => ({

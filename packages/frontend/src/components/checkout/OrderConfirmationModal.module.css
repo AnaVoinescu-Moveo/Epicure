@@ -1,0 +1,127 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 260;
+  background-color: #000000b2;
+}
+
+.modal {
+  position: fixed;
+  top: var(--header-height-mobile);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 261;
+  width: 376px;
+  max-width: calc(100% - 24px);
+  height: 544px;
+  padding: 48px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-white);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: #000000;
+  cursor: pointer;
+}
+
+.title {
+  margin: 48px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 26px;
+  letter-spacing: 2.67px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 32px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+  text-align: center;
+}
+
+.timerRow {
+  margin: 67px 0 0;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding-left: 54px;
+}
+
+.timerLabel {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 26px;
+  letter-spacing: 2.67px;
+}
+
+.timerValue {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 30px;
+  letter-spacing: 1.97px;
+}
+
+.itemsList {
+  margin: 48px 0 0;
+  width: 100%;
+  max-height: 160px;
+  overflow-y: auto;
+  padding: 0 54px 0 54px;
+}
+
+.itemRow {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 26px;
+  letter-spacing: 2.67px;
+}
+
+.itemRow + .itemRow {
+  margin-top: 16px;
+}
+
+.itemQty {
+  flex: 1;
+}
+
+.itemPrice {
+  flex-shrink: 0;
+}
+
+.totalRow {
+  margin-top: auto;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 2.67px;
+  text-align: center;
+  text-transform: uppercase;
+}

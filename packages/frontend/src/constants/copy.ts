@@ -181,6 +181,14 @@ export const COPY = {
     invalidCvvError: 'CVV must be 3 or 4 digits.',
     invalidExpiryError: 'Please enter a valid, non-expired date (MM/YYYY).',
   },
+  orderConfirmation: {
+    closeAriaLabel: 'Close order confirmation',
+    title: 'Order received',
+    subtitle: 'Your food is in process',
+    arriveInLabel: 'Arrive in',
+    minLabel: 'min',
+    bubbleAriaLabel: 'View delivery status',
+  },
   dishDetail: {
     closeAriaLabel: 'Close dish details',
     chooseASideTitle: 'Choose a side',

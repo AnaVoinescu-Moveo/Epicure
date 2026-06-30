@@ -10,6 +10,9 @@ import { CartPanel } from '../components/cart/CartPanel';
 import { AuthModalProvider } from '../context/AuthModalContext';
 import { SignInModal } from '../components/auth/SignInModal';
 import { SearchProvider } from '../context/SearchContext';
+import { OrderConfirmationProvider } from '../context/OrderConfirmationContext';
+import { OrderConfirmationModal } from '../components/checkout/OrderConfirmationModal';
+import { FloatingDeliveryBubble } from '../components/checkout/FloatingDeliveryBubble';
 
 export const metadata = {
   title: {
@@ -32,12 +35,16 @@ export default function RootLayout({
             <DishModalProvider>
               <AuthModalProvider>
                 <SearchProvider>
-                  <Header />
-                  <main>{children}</main>
-                  <Footer />
-                  <DishDetailOverlay footer={<Footer />} />
-                  <CartPanel />
-                  <SignInModal />
+                  <OrderConfirmationProvider>
+                    <Header />
+                    <main>{children}</main>
+                    <Footer />
+                    <DishDetailOverlay footer={<Footer />} />
+                    <CartPanel />
+                    <SignInModal />
+                    <OrderConfirmationModal />
+                    <FloatingDeliveryBubble />
+                  </OrderConfirmationProvider>
                 </SearchProvider>
               </AuthModalProvider>
             </DishModalProvider>
