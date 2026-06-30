@@ -1,3 +1,8 @@
+/* On mobile this is a full-screen takeover — the global Header is already
+   hidden on this route by HeaderVisibility, but the global Footer and
+   FloatingDeliveryBubble are still rendered as siblings in layout.tsx and
+   need to stay covered here. Desktop wants the real Footer visible below
+   this page instead, so the desktop override switches to normal flow. */
 .page {
   position: fixed;
   inset: 0;
@@ -43,10 +48,18 @@
   object-fit: contain;
 }
 
+.desktopHeader {
+  display: none;
+}
+
 /* ── Scrollable content ─────────────────────────────────── */
 
 .content {
   flex-shrink: 0;
+}
+
+.desktopOrderCard {
+  display: none;
 }
 
 .sectionTitle,
@@ -81,6 +94,10 @@
 }
 
 /* ── Order summary ──────────────────────────────────────── */
+
+.mobileOrderSummary {
+  flex-shrink: 0;
+}
 
 .dishList {
   max-height: 150px;
@@ -208,4 +225,282 @@
 
 .completePaymentBtn:disabled {
   cursor: not-allowed;
+}
+
+/* ── Desktop ────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .page {
+    position: static;
+    height: auto;
+    z-index: auto;
+    padding-bottom: 64px;
+  }
+
+  /* Mobile-only blocks hidden on desktop */
+  .header,
+  .mobileOrderSummary,
+  .footer {
+    display: none;
+  }
+
+  .desktopHeader {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: var(--header-height-desktop);
+    padding: 0 127px;
+  }
+
+  .desktopLogoGroup {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+  }
+
+  .desktopLogoText {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 200;
+    font-size: 27px;
+    line-height: 1;
+    letter-spacing: 1.35px;
+    color: #000000;
+    white-space: nowrap;
+  }
+
+  .desktopHeaderTitle {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 200;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 1.92px;
+    text-transform: uppercase;
+  }
+
+  .desktopCardsRow {
+    display: flex;
+    width: fit-content;
+    gap: 32px;
+    margin: 32px auto 0;
+  }
+
+  .content {
+    width: 408px;
+    height: 708px;
+    padding: 32px 24px;
+    box-shadow: 2px 4px 10px 0px #afafaf40;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .sectionTitle {
+    margin-top: 0;
+  }
+
+  .paymentSectionTitle {
+    margin: 48px 0 0 19.5px;
+  }
+
+  .field {
+    margin-top: 52px;
+  }
+
+  .firstPaymentField {
+    margin-top: 40px;
+  }
+
+  .desktopOrderCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 408px;
+    height: 708px;
+    padding: 32px 24px;
+    gap: 48px;
+    box-shadow: 2px 4px 10px 0px #afafaf40;
+  }
+
+  .desktopOrderTitle {
+    flex-shrink: 0;
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 35px;
+    letter-spacing: 1.25px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .desktopDishList {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .desktopDishRow {
+    position: relative;
+    width: 100%;
+    height: 96px;
+    margin-bottom: 12px;
+    display: flex;
+  }
+
+  .desktopDishInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 12px 12px 12px 24px;
+    background-color: var(--color-card);
+  }
+
+  .desktopTopRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .desktopQuantityBox {
+    flex-shrink: 0;
+    width: 31px;
+    height: 31px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.57px solid #979797;
+    border-radius: 3.43px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 18.12px;
+    line-height: 18.12px;
+    letter-spacing: 1.98px;
+    color: #de9200;
+  }
+
+  .desktopNamePrice {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .desktopDishName {
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: 1.97px;
+    text-align: center;
+  }
+
+  .desktopUnitPrice {
+    margin: 8px 0 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 13px;
+    letter-spacing: 1.42px;
+    color: #de9200;
+  }
+
+  .desktopOptionsRow {
+    margin: 8px 0 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 200;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 1.23px;
+  }
+
+  .desktopTotalPrice {
+    display: block;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 1.97px;
+  }
+
+  .desktopCommentSection {
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .desktopCommentDivider {
+    width: 136px;
+    height: 0;
+    margin: 0 auto;
+    border: 0.5px solid #979797;
+    border-radius: 2px;
+  }
+
+  .desktopCommentTitle {
+    margin: 23px 0 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: 1.97px;
+    text-align: center;
+  }
+
+  .desktopCommentTextarea {
+    display: block;
+    width: 100%;
+    height: 122px;
+    margin: 30px 0 0;
+    padding: 12px;
+    border: 0.6px solid #979797;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 200;
+    font-size: 12px;
+    letter-spacing: 1.29px;
+    resize: none;
+  }
+
+  .desktopCommentTextarea::placeholder {
+    color: #979797;
+  }
+
+  .payBtn {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 215px;
+    height: 48px;
+    padding: 5px 16px;
+    border: 1px solid #979797;
+    background-color: #979797;
+    cursor: not-allowed;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1.97px;
+    text-transform: uppercase;
+    color: var(--color-white);
+  }
+
+  .payBtnValid {
+    border-color: #000000;
+    background-color: #000000;
+    cursor: pointer;
+  }
+
+  .payBtnLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 }

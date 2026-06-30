@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { strapiUrl } from '@/lib/strapi';
 import { COPY } from '@/constants/copy';
 import { useCart, type CartItem } from '@/context/CartContext';
@@ -27,9 +28,40 @@ function lineDescription(item: CartItem) {
   return parts.join(' | ');
 }
 
+function LockIcon({ open }: { open: boolean }) {
+  return (
+    <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
+      <rect
+        x="1"
+        y="7"
+        width="12"
+        height="8"
+        rx="1.5"
+        stroke="#ffffff"
+        strokeWidth="1.3"
+      />
+      {open ? (
+        <path
+          d="M3.5 7V4.5a3.5 3.5 0 0 1 6.5-1.8"
+          stroke="#ffffff"
+          strokeWidth="1.3"
+          fill="none"
+        />
+      ) : (
+        <path
+          d="M3.5 7V4.5a3.5 3.5 0 0 1 7 0V7"
+          stroke="#ffffff"
+          strokeWidth="1.3"
+          fill="none"
+        />
+      )}
+    </svg>
+  );
+}
+
 export function CheckoutPage() {
   const router = useRouter();
-  const { items, totalPrice, comment, clearCart } = useCart();
+  const { items, totalPrice, comment, setComment, clearCart } = useCart();
   const { placeOrder } = useOrderConfirmation();
 
   const [fullName, setFullName] = useState('');
@@ -125,64 +157,167 @@ export function CheckoutPage() {
         />
       </header>
 
-      <div className={styles.content}>
-        <h2 className={styles.sectionTitle}>
-          {COPY.checkout.deliveryDetailsTitle}
-        </h2>
-        <FloatingLabelInput
-          label={COPY.checkout.fullNameLabel}
-          value={fullName}
-          onChange={setFullName}
-          className={styles.field}
-        />
-        <FloatingLabelInput
-          label={COPY.checkout.addressLabel}
-          value={address}
-          onChange={setAddress}
-          className={styles.field}
-        />
-        <FloatingLabelInput
-          label={COPY.checkout.phoneNumberLabel}
-          type="tel"
-          value={phoneNumber}
-          onChange={setPhoneNumber}
-          error={phoneError}
-          className={styles.field}
-        />
+      <header className={styles.desktopHeader}>
+        <Link
+          href="/"
+          className={styles.desktopLogoGroup}
+          aria-label="Epicure home"
+        >
+          <Image
+            src="/icons/logoMobile.png"
+            alt="Epicure"
+            width={33}
+            height={32}
+            className={styles.logo}
+          />
+          <span className={styles.desktopLogoText}>EPICURE</span>
+        </Link>
+        <h1 className={styles.desktopHeaderTitle}>{COPY.checkout.pageTitle}</h1>
+      </header>
 
-        <h2 className={styles.paymentSectionTitle}>
-          {COPY.checkout.paymentDetailsTitle}
-        </h2>
-        <FloatingLabelInput
-          label={COPY.checkout.cardNumberLabel}
-          value={cardNumber}
-          onChange={setCardNumber}
-          error={cardNumberError}
-          className={`${styles.field} ${styles.firstPaymentField}`}
-        />
-        <FloatingLabelInput
-          label={COPY.checkout.nameOnCardLabel}
-          value={nameOnCard}
-          onChange={setNameOnCard}
-          className={styles.field}
-        />
-        <FloatingLabelInput
-          label={COPY.checkout.cvvLabel}
-          type="tel"
-          value={cvv}
-          onChange={setCvv}
-          error={cvvError}
-          className={styles.field}
-        />
-        <FloatingLabelInput
-          label={COPY.checkout.expiryDateLabel}
-          type="tel"
-          value={expiryDate}
-          onChange={(value) => setExpiryDate(formatExpiryInput(value))}
-          error={expiryError}
-          className={styles.field}
-        />
+      <div className={styles.desktopCardsRow}>
+        <div className={styles.content}>
+          <h2 className={styles.sectionTitle}>
+            {COPY.checkout.deliveryDetailsTitle}
+          </h2>
+          <FloatingLabelInput
+            label={COPY.checkout.fullNameLabel}
+            value={fullName}
+            onChange={setFullName}
+            className={styles.field}
+          />
+          <FloatingLabelInput
+            label={COPY.checkout.addressLabel}
+            value={address}
+            onChange={setAddress}
+            className={styles.field}
+          />
+          <FloatingLabelInput
+            label={COPY.checkout.phoneNumberLabel}
+            type="tel"
+            value={phoneNumber}
+            onChange={setPhoneNumber}
+            error={phoneError}
+            className={styles.field}
+          />
 
+          <h2 className={styles.paymentSectionTitle}>
+            {COPY.checkout.paymentDetailsTitle}
+          </h2>
+          <FloatingLabelInput
+            label={COPY.checkout.cardNumberLabel}
+            value={cardNumber}
+            onChange={setCardNumber}
+            error={cardNumberError}
+            className={`${styles.field} ${styles.firstPaymentField}`}
+          />
+          <FloatingLabelInput
+            label={COPY.checkout.nameOnCardLabel}
+            value={nameOnCard}
+            onChange={setNameOnCard}
+            className={styles.field}
+          />
+          <FloatingLabelInput
+            label={COPY.checkout.cvvLabel}
+            type="tel"
+            value={cvv}
+            onChange={setCvv}
+            error={cvvError}
+            className={styles.field}
+          />
+          <FloatingLabelInput
+            label={COPY.checkout.expiryDateLabel}
+            type="tel"
+            value={expiryDate}
+            onChange={(value) => setExpiryDate(formatExpiryInput(value))}
+            error={expiryError}
+            className={styles.field}
+          />
+
+          {error && <p className={styles.error}>{error}</p>}
+        </div>
+
+        <div className={styles.desktopOrderCard}>
+          <h2 className={styles.desktopOrderTitle}>{COPY.cart.desktopTitle}</h2>
+          <div className={styles.desktopDishList}>
+            {items.map((item) => {
+              const description = lineDescription(item);
+              const imageUrl = item.dish.image
+                ? strapiUrl(item.dish.image.url)
+                : null;
+              return (
+                <div key={item.id} className={styles.desktopDishRow}>
+                  <div className={styles.imageWrapper}>
+                    {imageUrl ? (
+                      <Image
+                        src={imageUrl}
+                        alt={item.dish.image?.alternativeText ?? item.dish.name}
+                        fill
+                        className={styles.image}
+                      />
+                    ) : (
+                      <div className={styles.imagePlaceholder} />
+                    )}
+                  </div>
+                  <div className={styles.desktopDishInfo}>
+                    <div className={styles.desktopTopRow}>
+                      <div className={styles.desktopQuantityBox}>
+                        {item.quantity}
+                      </div>
+                      <div className={styles.desktopNamePrice}>
+                        <p className={styles.desktopDishName}>
+                          {item.dish.name}
+                        </p>
+                        <p className={styles.desktopUnitPrice}>
+                          {COPY.cart.unitPrice(item.dish.price)}
+                        </p>
+                      </div>
+                    </div>
+                    {description && (
+                      <p className={styles.desktopOptionsRow}>{description}</p>
+                    )}
+                  </div>
+                  <p className={styles.desktopTotalPrice}>
+                    {COPY.cart.unitPrice(item.dish.price * item.quantity)}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className={styles.desktopCommentSection}>
+            <div className={styles.desktopCommentDivider} />
+            <p className={styles.desktopCommentTitle}>
+              {COPY.cart.addCommentTitle}
+            </p>
+            <textarea
+              className={styles.desktopCommentTextarea}
+              placeholder={COPY.cart.commentPlaceholder}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </div>
+
+          <button
+            type="button"
+            className={
+              isFormValid
+                ? `${styles.payBtn} ${styles.payBtnValid}`
+                : styles.payBtn
+            }
+            disabled={!isFormValid || isSubmitting}
+            onClick={handleCompletePayment}
+          >
+            <span className={styles.payBtnLeft}>
+              <LockIcon open={!isFormValid} />
+              {COPY.checkout.payLabel}
+            </span>
+            <span>{COPY.cart.unitPrice(totalPrice)}</span>
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.mobileOrderSummary}>
         <h2 className={styles.orderTitle}>{COPY.checkout.myOrderTitle}</h2>
         <div className={styles.dishList}>
           {items.map((item) => {
@@ -221,8 +356,6 @@ export function CheckoutPage() {
             );
           })}
         </div>
-
-        {error && <p className={styles.error}>{error}</p>}
       </div>
 
       <div className={styles.footer}>

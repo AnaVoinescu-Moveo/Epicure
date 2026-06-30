@@ -79,6 +79,7 @@
 
 .scrollArea {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   margin-top: 8px;
 }
@@ -399,6 +400,7 @@
 
   .commentSection {
     display: block;
+    flex-shrink: 0;
     margin-top: 27px;
   }
 
