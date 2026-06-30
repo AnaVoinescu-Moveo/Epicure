@@ -19,6 +19,12 @@ interface AuthModalContextValue {
   closeAuth: () => void;
   setMode: (mode: AuthMode) => void;
   isAuthenticated: boolean;
+  // False until the localStorage token has been read on mount. Consumers
+  // that gate access on isAuthenticated (e.g. redirecting guests away from
+  // a protected route) must wait for this to be true first — otherwise a
+  // genuinely logged-in user looks logged-out for one render and gets
+  // bounced before their token has had a chance to load.
+  isAuthReady: boolean;
   userEmail: string | null;
   userName: string | null;
   login: (token: string) => void;
@@ -59,6 +65,7 @@ export function AuthModalProvider({ children }: { children: React.ReactNode }) {
   const [mode, setMode] = useState<AuthMode>('login');
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
   const openAuth = useCallback((initialMode: AuthMode = 'login') => {
     setMode(initialMode);
@@ -88,16 +95,22 @@ export function AuthModalProvider({ children }: { children: React.ReactNode }) {
     try {
       stored = localStorage.getItem(TOKEN_STORAGE_KEY);
     } catch {
+      setIsAuthReady(true);
       return;
     }
-    if (!stored) return;
+    if (!stored) {
+      setIsAuthReady(true);
+      return;
+    }
     const decoded = decodeToken(stored);
     if (!decoded) {
       logout();
+      setIsAuthReady(true);
       return;
     }
     setUserEmail(decoded.email ?? null);
     setUserName(decoded.firstName ?? null);
+    setIsAuthReady(true);
   }, [logout]);
 
   return (
@@ -109,6 +122,7 @@ export function AuthModalProvider({ children }: { children: React.ReactNode }) {
         closeAuth,
         setMode,
         isAuthenticated: userEmail !== null,
+        isAuthReady,
         userEmail,
         userName,
         login,

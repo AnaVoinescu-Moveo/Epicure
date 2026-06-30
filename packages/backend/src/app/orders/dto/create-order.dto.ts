@@ -29,6 +29,15 @@ export class OrderItemDto {
   @IsInt()
   @IsPositive()
   quantity!: number;
+
+  @IsOptional()
+  @IsString()
+  side?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  changes?: string[];
 }
 
 export class CreateOrderDto {
