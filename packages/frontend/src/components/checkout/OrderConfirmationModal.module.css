@@ -86,8 +86,11 @@
 }
 
 .itemsList {
-  flex: 1;
-  min-height: 0;
+  /* Capped (not flex:1) so a short order stays compact instead of
+     stretching to fill the modal — totalRow's margin-top:auto still pushes
+     it to the bottom either way. Only scrolls internally once content
+     exceeds the cap. */
+  max-height: 160px;
   margin: 32px 0 24px;
   width: 100%;
   overflow-y: auto;

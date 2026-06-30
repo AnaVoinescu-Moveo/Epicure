@@ -298,6 +298,8 @@ export function CheckoutPage() {
             />
           </div>
 
+          {error && <p className={styles.desktopError}>{error}</p>}
+
           <button
             type="button"
             className={

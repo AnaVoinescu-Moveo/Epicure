@@ -79,6 +79,9 @@
 
 .scrollArea {
   flex: 1;
+  /* Flex items default to min-height:auto, which lets content grow past
+     the panel's fixed height instead of scrolling internally — min-height:0
+     is what makes flex:1 + overflow-y:auto actually cap and scroll. */
   min-height: 0;
   overflow-y: auto;
   margin-top: 8px;
