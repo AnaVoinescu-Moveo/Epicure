@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './order.entity';
@@ -10,6 +10,8 @@ const RETENTION_DAYS = 365;
 
 @Injectable()
 export class OrdersService {
+  private readonly logger = new Logger(OrdersService.name);
+
   constructor(
     @InjectRepository(Order)
     private readonly ordersRepository: Repository<Order>,
@@ -61,7 +63,20 @@ export class OrdersService {
     });
 
     const saved = await this.ordersRepository.save(order);
-    await this.pruneOldOrders(userId);
+
+    // Best-effort cleanup — the order is already saved, so a transient
+    // failure here (e.g. a DB blip) must not turn an otherwise-successful
+    // order into an error response, which could prompt the client to retry
+    // and create a duplicate order.
+    try {
+      await this.pruneOldOrders(userId);
+    } catch (err) {
+      this.logger.error(
+        `Failed to prune old orders for user ${userId}`,
+        err instanceof Error ? err.stack : err,
+      );
+    }
+
     return this.toDto(saved);
   }
 
@@ -80,7 +95,9 @@ export class OrdersService {
     });
 
     const idsToDelete = orders
-      .filter((order, index) => index >= RETENTION_LIMIT || order.createdAt < cutoff)
+      .filter(
+        (order, index) => index >= RETENTION_LIMIT || order.createdAt < cutoff,
+      )
       .map((order) => order.id);
 
     if (idsToDelete.length > 0) {

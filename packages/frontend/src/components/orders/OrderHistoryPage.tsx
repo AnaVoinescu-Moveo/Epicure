@@ -50,12 +50,7 @@ export function OrderHistoryPage() {
                 aria-label={COPY.orderHistory.rowArrowAlt}
                 onClick={() => setSelectedOrder(order)}
               >
-                <Image
-                  src="/icons/Erow.svg"
-                  alt=""
-                  width={24}
-                  height={18}
-                />
+                <Image src="/icons/Erow.svg" alt="" width={24} height={18} />
               </button>
             </span>
           </li>
@@ -64,6 +59,7 @@ export function OrderHistoryPage() {
 
       {selectedOrder && (
         <OrderSummaryModal
+          key={selectedOrder.id}
           order={selectedOrder}
           onClose={() => setSelectedOrder(null)}
         />

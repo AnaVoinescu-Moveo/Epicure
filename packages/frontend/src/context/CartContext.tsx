@@ -65,8 +65,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const itemsRef = useRef(items);
   itemsRef.current = items;
   const isDesktop = useIsDesktop();
-  const isDesktopRef = useRef(isDesktop);
-  isDesktopRef.current = isDesktop;
 
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
@@ -94,7 +92,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         currentItems.length > 0 && currentRestaurantId !== newRestaurantId;
 
       if (isDifferentRestaurant) {
-        if (isDesktopRef.current) {
+        if (isDesktop) {
           setPendingRestaurantSwitch({ dish, side, changes, quantity });
           return;
         }
@@ -122,17 +120,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       });
       setIsOpen(true);
     },
-    [replaceCartWith],
+    [isDesktop, replaceCartWith],
   );
 
   const confirmRestaurantSwitch = useCallback(() => {
-    setPendingRestaurantSwitch((pending) => {
-      if (pending) {
-        replaceCartWith(pending.dish, pending.side, pending.changes, pending.quantity);
-      }
-      return null;
-    });
-  }, [replaceCartWith]);
+    if (!pendingRestaurantSwitch) return;
+    const { dish, side, changes, quantity } = pendingRestaurantSwitch;
+    replaceCartWith(dish, side, changes, quantity);
+    setPendingRestaurantSwitch(null);
+  }, [pendingRestaurantSwitch, replaceCartWith]);
 
   const cancelRestaurantSwitch = useCallback(() => {
     setPendingRestaurantSwitch(null);

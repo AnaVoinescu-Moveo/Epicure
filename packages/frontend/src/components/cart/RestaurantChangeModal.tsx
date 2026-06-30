@@ -7,8 +7,11 @@ import { useEscapeKey } from '@/hooks/useEscapeKey';
 import styles from './RestaurantChangeModal.module.css';
 
 export function RestaurantChangeModal() {
-  const { pendingRestaurantSwitch, confirmRestaurantSwitch, cancelRestaurantSwitch } =
-    useCart();
+  const {
+    pendingRestaurantSwitch,
+    confirmRestaurantSwitch,
+    cancelRestaurantSwitch,
+  } = useCart();
 
   useEscapeKey(cancelRestaurantSwitch, pendingRestaurantSwitch !== null);
 

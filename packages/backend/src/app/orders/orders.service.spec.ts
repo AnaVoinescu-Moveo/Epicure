@@ -174,6 +174,14 @@ describe('OrdersService', () => {
 
       expect(repo.delete).toHaveBeenCalledWith([2, 3]);
     });
+
+    it('still returns the saved order even if pruning fails', async () => {
+      repo.find.mockRejectedValue(new Error('connection blip'));
+
+      const result = await service.createOrder(1, dto);
+
+      expect(result.id).toBe(mockSavedOrder().id);
+    });
   });
 
   describe('getOrderHistory', () => {
