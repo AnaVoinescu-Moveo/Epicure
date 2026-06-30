@@ -191,17 +191,17 @@ export function CartPanel() {
               </div>
             );
           })}
+        </div>
 
-          <div className={styles.commentSection}>
-            <div className={styles.commentDivider} />
-            <p className={styles.commentTitle}>{COPY.cart.addCommentTitle}</p>
-            <textarea
-              className={styles.commentTextarea}
-              placeholder={COPY.cart.commentPlaceholder}
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </div>
+        <div className={styles.commentSection}>
+          <div className={styles.commentDivider} />
+          <p className={styles.commentTitle}>{COPY.cart.addCommentTitle}</p>
+          <textarea
+            className={styles.commentTextarea}
+            placeholder={COPY.cart.commentPlaceholder}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
         </div>
 
         <div className={styles.footer}>

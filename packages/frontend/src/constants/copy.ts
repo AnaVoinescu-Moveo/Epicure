@@ -162,6 +162,8 @@ export const COPY = {
   },
   checkout: {
     closeAriaLabel: 'Close checkout',
+    pageTitle: 'Checkout',
+    payLabel: 'Pay',
     deliveryDetailsTitle: 'Delivery details',
     fullNameLabel: 'Full name',
     addressLabel: 'Address',

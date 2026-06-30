@@ -1,6 +1,7 @@
 import './global.css';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
+import { HeaderVisibility } from '../components/layout/HeaderVisibility';
 import { COPY } from '../constants/copy';
 import { RestaurantsFilterProvider } from '../context/RestaurantsFilterContext';
 import { DishModalProvider } from '../context/DishModalContext';
@@ -36,7 +37,9 @@ export default function RootLayout({
               <AuthModalProvider>
                 <SearchProvider>
                   <OrderConfirmationProvider>
-                    <Header />
+                    <HeaderVisibility>
+                      <Header />
+                    </HeaderVisibility>
                     <main>{children}</main>
                     <Footer />
                     <DishDetailOverlay footer={<Footer />} />
