@@ -1,13 +1,14 @@
 import './global.css';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
-import { HeaderVisibility } from '../components/layout/HeaderVisibility';
+import { RouteChrome } from '../components/layout/RouteChrome';
 import { COPY } from '../constants/copy';
 import { RestaurantsFilterProvider } from '../context/RestaurantsFilterContext';
 import { DishModalProvider } from '../context/DishModalContext';
 import { DishDetailOverlay } from '../components/dishes/DishDetailOverlay';
 import { CartProvider } from '../context/CartContext';
 import { CartPanel } from '../components/cart/CartPanel';
+import { RestaurantChangeModal } from '../components/cart/RestaurantChangeModal';
 import { AuthModalProvider } from '../context/AuthModalContext';
 import { SignInModal } from '../components/auth/SignInModal';
 import { SearchProvider } from '../context/SearchContext';
@@ -37,13 +38,12 @@ export default function RootLayout({
               <AuthModalProvider>
                 <SearchProvider>
                   <OrderConfirmationProvider>
-                    <HeaderVisibility>
-                      <Header />
-                    </HeaderVisibility>
-                    <main>{children}</main>
-                    <Footer />
+                    <RouteChrome header={<Header />} footer={<Footer />}>
+                      {children}
+                    </RouteChrome>
                     <DishDetailOverlay footer={<Footer />} />
                     <CartPanel />
+                    <RestaurantChangeModal />
                     <SignInModal />
                     <OrderConfirmationModal />
                     <FloatingDeliveryBubble />

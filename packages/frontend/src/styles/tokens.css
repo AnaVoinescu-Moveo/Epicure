@@ -17,6 +17,9 @@
   --header-height-mobile: 46px;
   --header-height-desktop: 64px;
 
+  /* Footer */
+  --footer-height-desktop: 84px;
+
   /* Layout */
   --max-width: 1440px;
   --page-padding-mobile: 16px;

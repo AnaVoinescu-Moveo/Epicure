@@ -1,0 +1,248 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 260;
+  background-color: #000000b2;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 261;
+  width: 497px;
+  height: 778px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-white);
+  box-shadow: 2px 4px 10px 0px #afafaf40;
+}
+
+.closeBtn {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.title {
+  flex-shrink: 0;
+  margin: 27px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 35px;
+  letter-spacing: 1.25px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.restaurantName {
+  flex-shrink: 0;
+  margin: 16px 0 20px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: 1.97px;
+  text-align: center;
+}
+
+.dishList {
+  flex: 1;
+  /* flex:1 + min-height:0 is required for overflow-y:auto to actually cap
+     and scroll within the modal instead of overflowing it — this is the
+     only scrollable region; everything else in the modal stays fixed.
+     max-height keeps it from dominating the modal when there's only a
+     couple of items. */
+  min-height: 0;
+  max-height: 260px;
+  width: 100%;
+  overflow-y: auto;
+  padding: 0 24px;
+}
+
+.dishRow {
+  position: relative;
+  width: 100%;
+  height: 96px;
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-border);
+}
+
+.dishInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 12px 12px 12px 24px;
+  background-color: var(--color-card);
+}
+
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.quantityBox {
+  flex-shrink: 0;
+  width: 31px;
+  height: 31px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.57px solid #979797;
+  border-radius: 3.43px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 18.12px;
+  line-height: 18.12px;
+  letter-spacing: 1.98px;
+  color: #de9200;
+}
+
+.namePrice {
+  display: flex;
+  flex-direction: column;
+}
+
+.dishName {
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+}
+
+.unitPrice {
+  margin: 8px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 1.42px;
+  color: #de9200;
+}
+
+.optionsRow {
+  margin: 8px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.23px;
+}
+
+.totalPrice {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+}
+
+.commentSection {
+  flex-shrink: 0;
+  width: 100%;
+  margin-top: 27px;
+}
+
+.commentDivider {
+  width: 136px;
+  height: 0;
+  margin: 0 auto;
+  border: 0.5px solid #979797;
+  border-radius: 2px;
+}
+
+.commentTitle {
+  margin: 23px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+  text-align: center;
+}
+
+.commentTextarea {
+  display: block;
+  width: calc(100% - 48px);
+  height: 122px;
+  margin: 30px 24px 0;
+  padding: 12px;
+  border: 0.6px solid #979797;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+  letter-spacing: 1.29px;
+  resize: none;
+}
+
+.commentTextarea::placeholder {
+  color: #979797;
+}
+
+.notice {
+  flex-shrink: 0;
+  margin: 12px 24px 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+  color: var(--color-error);
+  text-align: center;
+}
+
+.orderAgainBtn {
+  flex-shrink: 0;
+  margin: 16px 0 24px;
+  width: 206px;
+  height: 48px;
+  padding: 5px 24px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 1.97px;
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: #000000;
+  border: 1px solid #000000;
+  color: var(--color-white);
+}
+
+.orderAgainBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

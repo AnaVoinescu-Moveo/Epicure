@@ -28,13 +28,15 @@ describe('OrdersService', () => {
     create: jest.Mock;
     save: jest.Mock;
     find: jest.Mock;
+    delete: jest.Mock;
   };
 
   beforeEach(async () => {
     repo = {
       create: jest.fn(),
       save: jest.fn(),
-      find: jest.fn(),
+      find: jest.fn().mockResolvedValue([]),
+      delete: jest.fn(),
     };
 
     const module = await Test.createTestingModule({
@@ -84,7 +86,7 @@ describe('OrdersService', () => {
       repo.create.mockReturnValue(saved);
       repo.save.mockResolvedValue(saved);
 
-      const result = await service.createOrder(1, dtoWithFloats);
+      await service.createOrder(1, dtoWithFloats);
 
       const passedToCreate = repo.create.mock.calls[0][0];
       expect(passedToCreate.total).toBe(Math.round(10.005 * 3 * 100) / 100);
@@ -118,6 +120,67 @@ describe('OrdersService', () => {
       const result = await service.createOrder(1, dto);
 
       expect(result).not.toHaveProperty('user');
+    });
+  });
+
+  describe('createOrder retention pruning', () => {
+    const dto: CreateOrderDto = {
+      restaurantId: 'rest-1',
+      restaurantName: 'The Blue Door',
+      items: [
+        { dishId: 'd1', dishName: 'Truffle Pasta', price: 28.5, quantity: 2 },
+      ],
+    } as CreateOrderDto;
+
+    const orderAt = (id: number, daysAgo: number): Order => {
+      const createdAt = new Date();
+      createdAt.setDate(createdAt.getDate() - daysAgo);
+      return mockSavedOrder({ id, createdAt });
+    };
+
+    beforeEach(() => {
+      repo.create.mockReturnValue(mockSavedOrder());
+      repo.save.mockResolvedValue(mockSavedOrder());
+    });
+
+    it('does nothing when the user has 15 or fewer recent orders', async () => {
+      repo.find.mockResolvedValue(
+        Array.from({ length: 15 }, (_, i) => orderAt(i + 1, i)),
+      );
+
+      await service.createOrder(1, dto);
+
+      expect(repo.delete).not.toHaveBeenCalled();
+    });
+
+    it('deletes orders beyond the 15 most recent', async () => {
+      repo.find.mockResolvedValue(
+        Array.from({ length: 17 }, (_, i) => orderAt(i + 1, i)),
+      );
+
+      await service.createOrder(1, dto);
+
+      expect(repo.delete).toHaveBeenCalledWith([16, 17]);
+    });
+
+    it('deletes orders older than a year even if under the 15 cap', async () => {
+      repo.find.mockResolvedValue([
+        orderAt(1, 10),
+        orderAt(2, 400),
+        orderAt(3, 366),
+      ]);
+
+      await service.createOrder(1, dto);
+
+      expect(repo.delete).toHaveBeenCalledWith([2, 3]);
+    });
+
+    it('still returns the saved order even if pruning fails', async () => {
+      repo.find.mockRejectedValue(new Error('connection blip'));
+
+      const result = await service.createOrder(1, dto);
+
+      expect(result.id).toBe(mockSavedOrder().id);
     });
   });
 

@@ -1,0 +1,30 @@
+.fixedShell {
+  position: relative;
+}
+
+.fixedHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fixedContent {
+  position: fixed;
+  top: var(--header-height-desktop);
+  bottom: var(--footer-height-desktop);
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+}
+
+.fixedFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border-top: 1px solid var(--color-border);
+}
