@@ -3,6 +3,8 @@ export interface OrderItem {
   dishName: string;
   price: number;
   quantity: number;
+  side?: string;
+  changes?: string[];
 }
 
 export interface Order {

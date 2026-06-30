@@ -1,0 +1,211 @@
+.page {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+
+.header {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--header-height-mobile);
+  box-shadow: 0px 2px 10px 0px #00000012;
+}
+
+.closeBtn {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background-color: var(--color-white);
+  border: none;
+  cursor: pointer;
+}
+
+.logo {
+  width: 33px;
+  height: 32px;
+  object-fit: contain;
+}
+
+/* ── Scrollable content ─────────────────────────────────── */
+
+.content {
+  flex-shrink: 0;
+}
+
+.sectionTitle,
+.orderTitle {
+  margin: 24px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 2.67px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.paymentSectionTitle {
+  margin: 24px 0 0 19.5px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 2.67px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.field {
+  margin-top: 36px;
+}
+
+.firstPaymentField {
+  margin-top: 28px;
+}
+
+/* ── Order summary ──────────────────────────────────────── */
+
+.dishList {
+  max-height: 150px;
+  margin: 16px 19.5px 24px;
+  overflow-y: auto;
+}
+
+.dishCard {
+  position: relative;
+  height: 96px;
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-border);
+}
+
+.dishInfo {
+  flex: 1;
+  padding: 12px 12px 12px 24px;
+  background-color: var(--color-card);
+}
+
+.titleRow {
+  margin: 0;
+}
+
+.qtyX,
+.dishName {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  letter-spacing: 2.67px;
+}
+
+.qtyX {
+  font-size: 14px;
+  line-height: 26px;
+}
+
+.dishName {
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.optionsRow {
+  margin: 8px 0 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.23px;
+}
+
+.price {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 1.97px;
+}
+
+.error {
+  margin: 16px 19.5px 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+  color: #c0392b;
+  text-align: center;
+}
+
+/* ── Footer: total + complete payment ──────────────────── */
+
+.footer {
+  flex-shrink: 0;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 24px;
+}
+
+.totalRow {
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 2.67px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.completePaymentBtn {
+  display: block;
+  width: 335px;
+  height: 48px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.completePaymentBtn img {
+  width: 100%;
+  height: 100%;
+}
+
+.completePaymentBtn:disabled {
+  cursor: not-allowed;
+}
